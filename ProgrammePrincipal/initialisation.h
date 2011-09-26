@@ -19,8 +19,7 @@
 
 void initppal(void);
 void testInit(void);
-void testEEPROM(void);
-void write_mess_eep(unsigned short ad, unsigned char *p);
+
 
 
 

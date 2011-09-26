@@ -30,109 +30,85 @@
 //Programme principal
 //=============================================================================
 void main (void)
-{	
-unsigned short tx_i=0;
-struct analogMesures anMes0;
-initppal();
+{	struct analogMesures anMes0;
+ short i;
 
-
-anMes0=lectureAN();
-		//Initialisation générale
+//anMes0=lectureAN();
+	initppal();		//Initialisation générale
 	
+	//Initialisation USART
+	Open1USART(USART_TX_INT_OFF &
+	              USART_RX_INT_ON &
+	              USART_ASYNCH_MODE &
+	              USART_EIGHT_BIT &
+	              USART_CONT_RX , 51); //baud 38400
+		IPR1bits.RC1IP=0;
+
+//	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREFPLUS | ADC_REF_VDD_VREFMINUS);
+//	initAN33();
+//	ADCON1=0b00000101;
 
 
 //=============================================================================
 //Test des valeurs converties
 //=============================================================================
-/*
+ledOK=1;
+pause_ms(1000);
+
+
 while(1)
 {
-	printf("%d;%d;%d;%d;%d\n\r", acquisitionX(),  acquisitionZ(), acquisitionG(),acquisitionVrefplus(),acquisitionVrefminus());
-	pause_ms(20);
+i=angleTangage(acquisitionX(), acquisitionZ(), acquisitionG(), 0, i, 10);
+pause_ms(100);
+printf("\r\n%ddD",i);
+
+	if(PORTCbits.RC2) calibrageTangage();
 }
-*/
-//INTCONbits.GIE=0;
 
 
 
-//=============================================================================
-//Test calibrage
-//=============================================================================
-/*calibrageTangage();
-while(1);*/
+
+
+
+i=0x00;
+
+printf("\r\n");
+for(i=0;i<10;i++)
+{
+	Busy_eep (); printf("%d(%d) ",Read_b_eep(i),i);
+}
+
+while(1);
+
+
+calibrageTangage();
+
+printf("\r\n");
+for(i=0;i<10;i++)
+{
+	Busy_eep (); printf("%d(%d) ",Read_b_eep(i),i);
+}
+
+
+while(1)
+{
+	
+	printf("%d;%d;%d;%d;%d\r\n", acquisitionX(),  acquisitionZ(), acquisitionG(),acquisitionVrefplus(),acquisitionVrefminus());
+	pause_ms(10);
+//	initAN33();
+//	ADCON1=0b00000101;
+//	pause_ms(20);
+}
+
+
+
 
 //=============================================================================
 //Test de la fonction testInit
 //=============================================================================
-//	OpenTimer0(TIMER_INT_OFF & T0_16BIT & T0_SOURCE_INT & T0_PS_1_256); 
+	OpenTimer0(TIMER_INT_OFF & T0_16BIT & T0_SOURCE_INT & T0_PS_1_256); 
 	// Incrémentation toutes les 0.032ms
-//	testInit();		//Test permettant de savoir si la miqmobile est stable 
-					// avant que la boucle d'asservissement se mette en place
-
-
-
-//=============================================================================
-//Test écriture EEPROM
-//=============================================================================
-
-//testEEPROM();
-
-
-//=============================================================================
-//Test envoi données PC
-//=============================================================================
-/*
-	switch(tx_i)			// tx_i prend à chaque boucle une valeur différente 
-							// et permet donc d'envoyer une donnée différente
-	{
-	case(0):						// Suite d'exemple qui peuvent être envoyés
-		printf("Gyro: ");
-		envoiPC(anMes0.anGyro);
-		break;
-	case(1):
-		printf("ACCX: ");
-		envoiPC(anMes0.anAccX);
-		break;
-	case(2):
-		printf("ACCZ: ");
-		envoiPC(anMes0.anAccZ);
-		break;
-	case(3):
-		printf("Guidon: ");
-		envoiPC(anMes0.anGuidon);
-		break;
-	case(4):
-		printf("Batterie: ");
-		envoiPC(anMes0.anBatterie);
-		break;
-	case(5):
-		printf("Angle: ");
-		envoiPC(anMes0.anGyro);
-		break;
-	case(6):
-		printf("Consigned: ");
-		envoiPC(anMes0.anGyro);
-		break;
-	case(7):
-		printf("Consigneg: ");
-		envoiPC(anMes0.anGyro);
-		break;
-	}
-	if(tx_i==7)				// 7 représente le nombre de données envoyées
-							// Nous avons donc par exemple toutes les valeurs
-							// lues par le PC après 7 cycles d'asservissement
-		{tx_i=0;}
-	else
-		{tx_i++;}
-
-*/
-
-//=============================================================================
-//Une fois tous les effectués, écriture pas à pas du programme ppal en commentaires
-//=============================================================================
-//	OpenTimer0(TIMER_INT_OFF & T0_16BIT & T0_SOURCE_INT & T0_PS_1_256); 
-	// Incrémentation toutes les 0.032ms
-//	testInit();		//Test permettant de savoir si la miqmobile est stable 
+	testInit();		//Test permettant de savoir si la miqmobile est stable 
 					// avant que la boucle d'asservissement se mette en place
 
 
@@ -164,7 +140,6 @@ while(1);*/
 
 
 }
-
 
 
 

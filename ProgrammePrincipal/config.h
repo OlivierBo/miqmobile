@@ -8,7 +8,7 @@
 
 #pragma config FOSC   = INTIO67		// oscillateur interne
 #pragma config PLLCFG   = ON		//4 x PLL activée
-#pragma config 	PRICLKEN = ON		//Primary clock is always enabled  
+#pragma config PRICLKEN = ON		//Primary clock is always enabled  
 #pragma config FCMEN = OFF			// Fail safe Clock monitor désactivée
 #pragma config IESO = OFF			// Pas de possibilité de passer en oscillateur interne ou externe
 #pragma config PWRTEN = OFF			//Power up timer disabled 
@@ -17,6 +17,7 @@
 #pragma config WRTD = OFF			// EEPROM non protégée en écriture
 #pragma config DEBUG  = ON			// Debug ON
 #pragma config MCLRE  = EXTMCLR		// Enable MCLRE for reset function								
+
 #pragma config LVP=OFF
 
 #endif

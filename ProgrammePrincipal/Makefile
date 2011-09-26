@@ -1,0 +1,52 @@
+# MPLAB IDE generated this makefile for use with GNU make.
+# Project: ppal.mcp
+# Date: Wed Sep 21 13:24:53 2011
+
+AS = MPASMWIN.exe
+CC = mcc18.exe
+LD = mplink.exe
+AR = mplib.exe
+RM = rm
+
+ppal.cof : main.o interruption.o codeur.o initialisation.o conversion.o tangage.o consigne.o time.o parametrage.o commoteur.o compc.o compan.o
+	$(LD) /p18F45K22 /l"G:\MCC18\lib" /l"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\lib" /k"G:\MCC18\bin\LKR" /k"G:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin\LKR" "main.o" "interruption.o" "codeur.o" "initialisation.o" "conversion.o" "tangage.o" "consigne.o" "time.o" "parametrage.o" "commoteur.o" "compc.o" "compan.o" /u_CRUNTIME /z__MPLAB_BUILD=1 /m"ppal.map" /w /o"ppal.cof"
+
+main.o : main.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h codeur.h tangage.h time.h main.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h interruption.h config.h initialisation.h conversion.h parametrage.h commoteur.h compan.h compc.h consigne.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "main.c" -fo="main.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+interruption.o : interruption.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h interruption.c interruption.h include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "interruption.c" -fo="interruption.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+codeur.o : codeur.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h codeur.h codeur.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "codeur.c" -fo="codeur.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+initialisation.o : initialisation.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h tangage.h initialisation.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h initialisation.h conversion.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "initialisation.c" -fo="initialisation.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+conversion.o : conversion.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h conversion.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h conversion.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "conversion.c" -fo="conversion.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+tangage.o : tangage.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h tangage.h tangage.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "tangage.c" -fo="tangage.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+consigne.o : consigne.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h codeur.h include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h consigne.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "consigne.c" -fo="consigne.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+time.o : time.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h time.h time.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "time.c" -fo="time.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+parametrage.o : parametrage.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h time.h parametrage.c include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h parametrage.h conversion.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "parametrage.c" -fo="parametrage.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+commoteur.o : commoteur.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h commoteur.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "commoteur.c" -fo="commoteur.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+compc.o : compc.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h compc.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "compc.c" -fo="compc.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+compan.o : compan.c ../../../../../../../MCC18/h/stdio.h ../../../../../../../MCC18/h/math.h ../../../../../../../MCC18/h/stdlib.h ../../../../../../../MCC18/h/delays.h ../../../../../../../MCC18/h/timers.h ../../../../../../../MCC18/h/usart.h ../../../../../../../MCC18/h/adc.h ../../../../../../../MCC18/h/EEP.h ../../../../../../../MCC18/h/i2c.h include.h ../../../../../../../MCC18/h/p18cxxx.h ../../../../../../../MCC18/h/p18f45k22.h ../../../../../../../MCC18/h/stdarg.h ../../../../../../../MCC18/h/stddef.h ../../../../../../../MCC18/h/pconfig.h compan.h
+	$(CC) -p=18F45K22 /i"C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin" -I"G:\MCC18\h" "compan.c" -fo="compan.o" -Ou- -Ot- -Ob- -Op- -Or- -Od- -Opa-
+
+clean : 
+	$(RM) "main.o" "interruption.o" "codeur.o" "initialisation.o" "conversion.o" "tangage.o" "consigne.o" "time.o" "parametrage.o" "commoteur.o" "compc.o" "compan.o" "ppal.cof" "ppal.hex" "ppal.map"
+
