@@ -2,7 +2,6 @@
 #include "initialisation.h"
 #include "tangage.h"
 #include "conversion.h"
-#include "time.h"
 
 	//-------------------initppal--------------------------------------------------
 	//Initialisations des différents modules
@@ -62,7 +61,6 @@ void initppal(void)
 		TRISCbits.RC0=0;
 		TRISDbits.RD0=0;
 		TRISDbits.RD1=0;
-		TRISDbits.RD2=0;
 		LATAbits.LATA4=0;
 		LATAbits.LATA6=0;
 		LATAbits.LATA7=0;
@@ -71,20 +69,15 @@ void initppal(void)
 		LATDbits.LATD1=0;
 		// RA4: gyro haut ; RA7 : Led attente ; RA6 : led OK ; RC0 : guidon droit ; RD0 : gyro bas ; RD1 : guidon gauche
 
+	//rajout adrien (pas sur que ces pattes soient libres)
+		TRISCbits.RC2=1;
+		TRISCbits.RC3=1;
+
 
 	
 
 	// penser à désactiver les interruptions
 
-		//Initialisation USART
-	Open1USART(USART_TX_INT_OFF &
-	              USART_RX_INT_ON &
-	              USART_ASYNCH_MODE &
-	              USART_EIGHT_BIT &
-	              USART_CONT_RX , 51); //baud 38400
-		IPR1bits.RC1IP=0;
-
-pause_ms(50);
 }
 
 
@@ -165,59 +158,4 @@ CloseTimer0();
 			
 }
 
-void testEEPROM(void)
-{	int i=0;
-	char *data0;
-	char buffer[11];
-	char data1[]="Ecrire un chiffre entre 0 et 9 \n";
-	char data2[]="Ecrire un commentaire 10 caracteres max \n";
-	char data3[]="Ecriture EEPROM OK \n";
-	unsigned short Memoire=0x00;
-
-	while(Busy1USART());		//Attente d'utilisation de la communication
-	puts1USART((char*) data1);  // Ecriture de la chaine de caractères data1
-	while (!DataRdy1USART());	// Attente d'une réponse
-	buffer[0]=Read1USART();		// Lecture du caractère lu par le PC
-	Write_b_eep(Memoire,*buffer);  // Ecriture en EEPROM
-	Busy_eep();						// Attente de find'écriture
-	Memoire++;						// On sélectionne l'octet suivant de la mémoire
-	while (Busy1USART());
-	puts1USART((char*) data3);
-	while (Busy1USART());
-	puts1USART((char*) data2);
-	while (Busy1USART());
-	
-	for(i=0;i<10;i++)				// Boucle pour la lecture des 10 caractères
-		{
-		while (!DataRdy1USART());
-		buffer[i]=Read1USART();
-		}
-	write_mess_eep(Memoire, buffer);  	// Ecriture du message lu au module USART dans l'EEPROM
-	while (Busy1USART());
-	puts1USART((char*) data2);
-	Memoire=0;
-	while (Busy1USART());
-	*data0=Read_b_eep(Memoire);		// Lecture dans EEPROM
-	puts1USART(data0);				//Affichage de la valeur lue
-	puts1USART((char*)"\n");
-	for(i=1;i<11;i++)				// Boucle lecture EEPROM et affichage du message
-		{
-		*data0=Read_b_eep(i);
-		while (Busy1USART());
-		puts1USART(data0);
-		}
-}
-
-
-
-void write_mess_eep(unsigned short ad, unsigned char *p)
-{
-while(*p)
-	{
-	Write_b_eep(ad,*p);
-	Busy_eep();
-	ad++;
-	*p++;
-	}
-}
 

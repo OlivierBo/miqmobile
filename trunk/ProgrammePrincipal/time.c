@@ -7,7 +7,7 @@ void pause_ms(unsigned short ms)
 {
 
 unsigned short i,ms100;
-unsigned short ms10,ms1;
+unsigned char ms10,ms1;
 ms100=ms/100;
 ms10=(ms%100)/10;
 ms1=ms%10;

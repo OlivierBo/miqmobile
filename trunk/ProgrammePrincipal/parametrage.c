@@ -2,8 +2,24 @@
 #include "parametrage.h"
 #include "time.h"
 #include "conversion.h"
+#include <EEP.h>
 
 
+#define LedHaut PORTAbits.RA4
+#define LedBas PORTDbits.RD0
+#define LedGauche PORTDbits.RD1
+#define LedDroite PORTCbits.RC0
+#define LedMilieu PORTAbits.RA7
+
+#define boutonValidation PORTCbits.RC2
+#define boutonAnnulation PORTCbits.RC3
+
+#define OK 1
+#define ERREUR 0
+#define ON 1
+#define OFF 0
+
+#define MEMOIRE_CAPTEUR 0x00
 
 
 
@@ -15,7 +31,8 @@ short calibrageTangage(void)
 
 
 	long temp=0;
-	short i, tAccX0 = 0, tAccX1 = 0, tAccZ0 = 0, tAccZ1 = 0, tGyro0 = 0, tGyro1 = 0;
+	short tAccX0 = 0, tAccX1 = 0, tAccZ0 = 0, tAccZ1 = 0, tGyro0 = 0, tGyro1 = 0;
+	long i;
 
 	//etape 1 : signaler qu'on est en mode calibrage
 	LedHaut = ON;
@@ -92,13 +109,23 @@ short calibrageTangage(void)
 	LedMilieu = OFF;
 	
 
-/*
+
 	while(boutonValidation==0)
 	{
-		if(boutonAnnulation) return ERREUR;
+		if(boutonAnnulation) 
+		{
+		   	LedHaut = OFF;
+			LedBas = OFF;
+			LedGauche = OFF;
+			LedDroite = OFF;
+			LedMilieu = ON;
+			pause_ms(500);
+			LedMilieu = OFF;
+			return ERREUR;
+		}
 	}
-*/
-/*
+
+
 	//etape 9 : si on veut conserver les paramètres, on les enregistre
 	i=MEMOIRE_CAPTEUR;
 	Write_b_eep (i, tAccX0); Busy_eep (); i++;
@@ -110,7 +137,19 @@ short calibrageTangage(void)
 
 	LedMilieu = ON;
 	pause_ms(500);
-	*/
+	LedHaut = OFF;
+	LedBas = OFF;
+	LedGauche = OFF;
+	LedDroite = OFF;
+	LedMilieu = OFF;
+
+printf("\r\nA%d",tAccX0);
+printf("\r\nA%d",tAccX1);
+printf("\r\nA%d",tAccZ0);
+printf("\r\nA%d",tAccZ1);
+printf("\r\nA%d",tGyro0);
+printf("\r\nA%d",tGyro1);
+	
 
 	return OK;
 

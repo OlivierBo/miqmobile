@@ -18,10 +18,11 @@ short angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaP
 //xpp est l'accélération lue par les codeurs, à donner en 10g mm/s²
 	
 //calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
-	signed short tAccX0 = 504, tAccX1 = 94, tAccZ0 = 504, tAccZ1 = 94, tGyro0 = 444, tGyro1 = 47;
-	char a = 20; //[0;100] , a = 100 => 100% de confiance dans l'accéléromètre	
+	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971;
+	long a = 15; //[0;100] , a = 100 => 100% de confiance dans l'accéléromètre	
 
 	signed short accX,accZ,gyro,tetaAcc,tetaGyro,teta;
+long temp;
 
 	//conversion tension > vitesse en °/secondes, accélération en 10g.mm/s²
 	accX = 100*(tAccX-tAccX0)/tAccX1;
@@ -43,8 +44,9 @@ short angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaP
 //barycentre - filtre de Kalman 
 	//teta en decidegrés
 	//a entre 0 et 100 inclus
-	teta = ( a * tetaAcc + (100-a) * tetaGyro ) / (100);
-
+	
+temp = ( a * tetaAcc + (100-a) * tetaGyro ) / (100);
+teta=temp;
 	return teta;
 }
 

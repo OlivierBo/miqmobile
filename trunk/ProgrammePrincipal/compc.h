@@ -3,9 +3,6 @@
 
 
 
-void envoiPC(unsigned short d);
-
-
 #endif
 
 

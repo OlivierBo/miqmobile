@@ -2,6 +2,17 @@
 #include "conversion.h"
 
 
+//short anAccX, anGyro, anAccZ, anGuidon, anBatterie;		// Variables pour les entrées analogiques
+
+/*struct analogMesures{
+	short anAccX;
+	short anGyro;
+	short anAccZ;
+	short anGuidon;
+	short anBatterie;
+};*/
+
+//struct analogMesures anMes;
 
 
 //-------------------Lecture_AN--------------------------------------------------
@@ -40,7 +51,7 @@ OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREF
 
 short acquisitionX(void)
 {
-	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VDD);
+	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREFPLUS | ADC_REF_VDD_VREFMINUS );
 	SelChanConvADC(ADC_CH1);
 	while(BusyADC());
 	return ReadADC();
@@ -48,7 +59,7 @@ short acquisitionX(void)
 
 short acquisitionG(void)
 {
-	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VDD );
+	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREFPLUS );
 	SelChanConvADC(ADC_CH0);
 	while(BusyADC());
 	return ReadADC();
@@ -56,7 +67,7 @@ short acquisitionG(void)
 
 short acquisitionZ(void)
 {
-	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VDD );
+	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREFPLUS | ADC_REF_VDD_VREFMINUS );
 	SelChanConvADC(ADC_CH4);
 	while(BusyADC());
 	return ReadADC();
