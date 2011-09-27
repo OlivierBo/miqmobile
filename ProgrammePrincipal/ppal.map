@@ -1,5 +1,5 @@
 MPLINK 4.38, Linker
-Linker Map File - Created Wed Sep 21 17:43:39 2011
+Linker Map File - Created Tue Sep 27 09:08:23 2011
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -31,43 +31,41 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
            .code_t0read.o       code   0x002598    program   0x00003e
            .code_t0open.o       code   0x0025d6    program   0x000038
              .stringtable    romdata   0x00260e    program   0x000031
-        .idata_u1open.o_i    romdata   0x00263f    program   0x000000
-         .romdata_compc.o    romdata   0x00263f    program   0x000000
+       .idata_fxm3232.o_i    romdata   0x00263f    program   0x000000
+       .romdata_adcbusy.o    romdata   0x00263f    program   0x000000
       .romdata_fxd3232u.o    romdata   0x00263f    program   0x000000
-      .idata_fxd3232u.o_i    romdata   0x00263f    program   0x000000
+      .idata_fxd1616u.o_i    romdata   0x00263f    program   0x000000
+      .romdata_busy_eep.o    romdata   0x00263f    program   0x000000
        .romdata_t0close.o    romdata   0x00263f    program   0x000000
+       .idata_t0close.o_i    romdata   0x00263f    program   0x000000
        .idata_adcopen.o_i    romdata   0x00263f    program   0x000000
-       .romdata_adcopen.o    romdata   0x00263f    program   0x000000
-        .idata_t0open.o_i    romdata   0x00263f    program   0x000000
+       .romdata_adcread.o    romdata   0x00263f    program   0x000000
+        .idata_t0read.o_i    romdata   0x00263f    program   0x000000
         .romdata_t0read.o    romdata   0x00263f    program   0x000000
-        .idata_read_B.o_i    romdata   0x00263f    program   0x000000
         .romdata_read_B.o    romdata   0x00263f    program   0x000000
   .idata_adcselchconv.o_i    romdata   0x00263f    program   0x000000
-  .romdata_adcselchconv.o    romdata   0x00263f    program   0x000000
-       .idata_write_B.o_i    romdata   0x00263f    program   0x000000
        .romdata_write_B.o    romdata   0x00263f    program   0x000000
-        .idata_printf.o_i    romdata   0x00263f    program   0x000000
+        .romdata___init.o    romdata   0x00263f    program   0x000000
         .romdata_printf.o    romdata   0x00263f    program   0x000000
+      .idata_vfprintf.o_i    romdata   0x00263f    program   0x000000
+          .idata_putc.o_i    romdata   0x00263f    program   0x000000
     .idata__user_putc.o_i    romdata   0x00263f    program   0x000000
-    .romdata__user_putc.o    romdata   0x00263f    program   0x000000
          .idata_c018i.o_i    romdata   0x00263f    program   0x000000
-         .romdata_c018i.o    romdata   0x00263f    program   0x000000
-          .idata_main.o_i    romdata   0x00263f    program   0x000000
           .romdata_main.o    romdata   0x00263f    program   0x000000
-.idata_initialisation.o_i    romdata   0x00263f    program   0x000000
+  .idata_interruption.o_i    romdata   0x00263f    program   0x000000
+        .romdata_codeur.o    romdata   0x00263f    program   0x000000
 .romdata_initialisation.o    romdata   0x00263f    program   0x000000
-    .idata_conversion.o_i    romdata   0x00263f    program   0x000000
     .romdata_conversion.o    romdata   0x00263f    program   0x000000
-       .idata_tangage.o_i    romdata   0x00263f    program   0x000000
+      .idata_consigne.o_i    romdata   0x00263f    program   0x000000
+          .idata_time.o_i    romdata   0x00263f    program   0x000000
           .romdata_time.o    romdata   0x00263f    program   0x000000
-     .idata_commoteur.o_i    romdata   0x00263f    program   0x000000
-     .romdata_commoteur.o    romdata   0x00263f    program   0x000000
-         .idata_compc.o_i    romdata   0x00263f    program   0x000000
+   .idata_parametrage.o_i    romdata   0x00263f    program   0x000000
+ .idata_communication.o_i    romdata   0x00263f    program   0x000000
+         .romdata_compc.o    romdata   0x00263f    program   0x000000
             .code_compc.o       code   0x002640    program   0x000000
-            .code_c018i.o       code   0x002640    program   0x000000
-             D10KTCYXCODE       code   0x002640    program   0x00002e
-        .code_commoteur.o       code   0x002640    program   0x000000
            .code_stdout.o       code   0x002640    program   0x000000
+           .code_codeur.o       code   0x002640    program   0x000000
+             D10KTCYXCODE       code   0x002640    program   0x00002e
      .code_adcselchconv.o       code   0x00266e    program   0x00002e
          .code_fxd1616u.o       code   0x00269c    program   0x00002c
      .code_interruption.o       code   0x0026c8    program   0x000026
@@ -79,41 +77,40 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
               D10TCYXCODE       code   0x00278a    program   0x000016
           .code_adcread.o       code   0x0027a0    program   0x000012
       .romdata_vfprintf.o    romdata   0x0027b2    program   0x000011
-        .romdata_codeur.o    romdata   0x0027c3    program   0x000000
         .idata_codeur.o_i    romdata   0x0027c3    program   0x000000
   .romdata_interruption.o    romdata   0x0027c3    program   0x000000
-        .idata_compan.o_i    romdata   0x0027c3    program   0x000000
-  .idata_interruption.o_i    romdata   0x0027c3    program   0x000000
+  .romdata_adcselchconv.o    romdata   0x0027c3    program   0x000000
+        .idata_read_B.o_i    romdata   0x0027c3    program   0x000000
+       .idata_write_B.o_i    romdata   0x0027c3    program   0x000000
         .idata___init.o_i    romdata   0x0027c3    program   0x000000
-        .romdata___init.o    romdata   0x0027c3    program   0x000000
+        .idata_printf.o_i    romdata   0x0027c3    program   0x000000
         .romdata_stdout.o    romdata   0x0027c3    program   0x000000
-        .romdata_compan.o    romdata   0x0027c3    program   0x000000
-      .idata_vfprintf.o_i    romdata   0x0027c3    program   0x000000
           .romdata_putc.o    romdata   0x0027c3    program   0x000000
-          .idata_putc.o_i    romdata   0x0027c3    program   0x000000
-       .idata_t0close.o_i    romdata   0x0027c3    program   0x000000
-      .romdata_busy_eep.o    romdata   0x0027c3    program   0x000000
-      .idata_fxd1616u.o_i    romdata   0x0027c3    program   0x000000
-      .romdata_fxd1616u.o    romdata   0x0027c3    program   0x000000
+          .idata_main.o_i    romdata   0x0027c3    program   0x000000
+    .romdata__user_putc.o    romdata   0x0027c3    program   0x000000
+         .romdata_c018i.o    romdata   0x0027c3    program   0x000000
+ .romdata_communication.o    romdata   0x0027c3    program   0x000000
    .romdata_parametrage.o    romdata   0x0027c3    program   0x000000
-   .idata_parametrage.o_i    romdata   0x0027c3    program   0x000000
-      .idata_busy_eep.o_i    romdata   0x0027c3    program   0x000000
-       .idata_fxm3232.o_i    romdata   0x0027c3    program   0x000000
-       .romdata_fxm3232.o    romdata   0x0027c3    program   0x000000
-          .idata_time.o_i    romdata   0x0027c3    program   0x000000
-        .romdata_u1open.o    romdata   0x0027c3    program   0x000000
+         .idata_compc.o_i    romdata   0x0027c3    program   0x000000
+      .romdata_fxd1616u.o    romdata   0x0027c3    program   0x000000
+      .idata_fxd3232u.o_i    romdata   0x0027c3    program   0x000000
       .romdata_consigne.o    romdata   0x0027c3    program   0x000000
-        .idata_t0read.o_i    romdata   0x0027c3    program   0x000000
-       .romdata_adcread.o    romdata   0x0027c3    program   0x000000
-       .idata_adcread.o_i    romdata   0x0027c3    program   0x000000
+       .romdata_fxm3232.o    romdata   0x0027c3    program   0x000000
+      .idata_busy_eep.o_i    romdata   0x0027c3    program   0x000000
+        .idata_u1open.o_i    romdata   0x0027c3    program   0x000000
+        .romdata_u1open.o    romdata   0x0027c3    program   0x000000
        .idata_adcbusy.o_i    romdata   0x0027c3    program   0x000000
+.idata_initialisation.o_i    romdata   0x0027c3    program   0x000000
+       .idata_adcread.o_i    romdata   0x0027c3    program   0x000000
+    .idata_conversion.o_i    romdata   0x0027c3    program   0x000000
         .romdata_t0open.o    romdata   0x0027c3    program   0x000000
-       .romdata_adcbusy.o    romdata   0x0027c3    program   0x000000
+        .idata_t0open.o_i    romdata   0x0027c3    program   0x000000
+       .romdata_adcopen.o    romdata   0x0027c3    program   0x000000
+       .idata_tangage.o_i    romdata   0x0027c3    program   0x000000
        .romdata_tangage.o    romdata   0x0027c3    program   0x000000
-      .idata_consigne.o_i    romdata   0x0027c3    program   0x000000
+    .code_communication.o       code   0x0027c4    program   0x000000
          .code_consigne.o       code   0x0027c4    program   0x000000
-           .code_codeur.o       code   0x0027c4    program   0x000000
-           .code_compan.o       code   0x0027c4    program   0x000000
+            .code_c018i.o       code   0x0027c4    program   0x000000
           .code_t0close.o       code   0x0027c4    program   0x000006
          .code_busy_eep.o       code   0x0027ca    program   0x000006
            .code___init.o       code   0x0027d0    program   0x000002
@@ -145,7 +142,6 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
          .udata_fxm3232.o      udata   0x000078       data   0x000000
         .idata_fxd3232u.o      idata   0x000078       data   0x000000
         .udata_fxd3232u.o      udata   0x000078       data   0x000000
-        .idata_fxd1616u.o      idata   0x000078       data   0x000000
       .idata__user_putc.o      idata   0x000078       data   0x000000
       .udata__user_putc.o      udata   0x000078       data   0x000000
             .idata_putc.o      idata   0x000078       data   0x000000
@@ -163,6 +159,7 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
     .udata_adcselchconv.o      udata   0x000078       data   0x000000
           .idata_read_B.o      idata   0x000078       data   0x000000
           .udata_read_B.o      udata   0x000078       data   0x000000
+           .idata_c018i.o      idata   0x000078       data   0x000000
             .udata_main.o      udata   0x000078       data   0x000000
             .idata_main.o      idata   0x000078       data   0x000000
     .udata_interruption.o      udata   0x000078       data   0x000000
@@ -178,22 +175,20 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
         .idata_consigne.o      idata   0x000078       data   0x000000
             .udata_time.o      udata   0x000078       data   0x000000
             .idata_time.o      idata   0x000078       data   0x000000
-     .udata_parametrage.o      udata   0x000078       data   0x000000
+        .idata_fxd1616u.o      idata   0x000078       data   0x000000
         .udata_fxd1616u.o      udata   0x000078       data   0x000000
-           .idata_c018i.o      idata   0x000078       data   0x000000
          .idata_t0close.o      idata   0x000078       data   0x000000
          .udata_t0close.o      udata   0x000078       data   0x000000
         .idata_busy_eep.o      idata   0x000078       data   0x000000
         .udata_busy_eep.o      udata   0x000078       data   0x000000
          .idata_adcbusy.o      idata   0x000078       data   0x000000
          .udata_adcbusy.o      udata   0x000078       data   0x000000
-          .idata_compan.o      idata   0x000078       data   0x000000
-          .udata_compan.o      udata   0x000078       data   0x000000
+   .idata_communication.o      idata   0x000078       data   0x000000
+   .udata_communication.o      udata   0x000078       data   0x000000
            .idata_compc.o      idata   0x000078       data   0x000000
            .udata_compc.o      udata   0x000078       data   0x000000
-       .idata_commoteur.o      idata   0x000078       data   0x000000
-       .udata_commoteur.o      udata   0x000078       data   0x000000
      .idata_parametrage.o      idata   0x000078       data   0x000000
+     .udata_parametrage.o      udata   0x000078       data   0x000000
                    .stack      udata   0x000500       data   0x000100
               SFR_BANKED0      udata   0x000f38       data   0x000028
             SFR_UNBANKED0      udata   0x000f60       data   0x0000a0
@@ -245,7 +240,7 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                  FXD3232U   0x00250c    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxd3232u.c
                  FXM1616S   0x002102    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxm1616s.asm
                   FXM3232   0x002388    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxm3232.c
-     InterruptHandlerHigh   0x0026c8    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
+     InterruptHandlerHigh   0x0026c8    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
                Open1USART   0x002316    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\USART\u1open.c
                   OpenADC   0x00245e    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcopen.c
                OpenTimer0   0x0025d6    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\Timers\t0open.c
@@ -272,12 +267,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
        ___return_lbl00001   0x00000c    program     static                          
        ___return_lbl00002   0x0021f8    program     static                          
        ___return_lbl00003   0x00001c    program     static                          
-               __config_0   0x300001    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_1   0x300002    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_2   0x300003    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_3   0x300005    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_4   0x300006    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_5   0x30000b    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
+               __config_0   0x300001    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_1   0x300002    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_2   0x300003    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_3   0x300005    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_4   0x300006    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_5   0x30000b    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
                    __init   0x0027d0    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\__init.c
                    __pa_0   0x00096c    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                    __pa_1   0x000974    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
@@ -326,12 +321,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                    __pa_7   0x0009da    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                    __pa_8   0x0009e6    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                    __pa_9   0x000a08    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
-               __string_0   0x002639    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
-               __string_0   0x00262a    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_0   0x002631    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-               __string_1   0x002627    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_2   0x00261f    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_3   0x00260e    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
+               __string_0   0x002639    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
+               __string_0   0x00262a    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_0   0x002631    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+               __string_1   0x002627    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_2   0x00261f    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_3   0x00260e    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
               __tmplbl_42   0x000b02    program     static                          
               __tmplbl_43   0x00094a    program     static                          
               __tmplbl_44   0x000930    program     static                          
@@ -343,25 +338,25 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                  _startup   0x002752    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
               _usart_putc   0x00276e    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\USART\_usartpc.asm
                _user_putc   0x000006    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\_user_putc.c
-      acquisitionBatterie   0x001f00    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionG   0x001e12    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-        acquisitionGuidon   0x001ed0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-     acquisitionVrefminus   0x001ea0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-      acquisitionVrefplus   0x001e70    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionX   0x001de4    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionZ   0x001e42    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             angleTangage   0x0012d2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-         calibrageTangage   0x000c4e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
+      acquisitionBatterie   0x001f00    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionG   0x001e12    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+        acquisitionGuidon   0x001ed0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+     acquisitionVrefminus   0x001ea0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+      acquisitionVrefplus   0x001e70    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionX   0x001de4    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionZ   0x001e42    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             angleTangage   0x0012d2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+         calibrageTangage   0x000c4e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
                 compare_l   0x002748    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\proc\p18F45K22.asm
                 copy_loop   0x0021ce    program     static                          
             copy_one_byte   0x0021d4    program     static                          
                      done   0x0021f8    program     static                          
              done_copying   0x0021e2    program     static                          
                   endloop   0x0026c2    program     static                          
-                 fonction   0x000008    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-                 initAN33   0x001dd0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-                initInter   0x0026ec    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-                 initppal   0x00168a    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
+                 fonction   0x000008    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+                 initAN33   0x001dd0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+                initInter   0x0026ec    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+                 initppal   0x00168a    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
                   isdigit   0x0026ee    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
                      jEnd   0x002412    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\strlen.asm
                      jEnd   0x00244a    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\slenpgm.asm
@@ -369,17 +364,17 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                     jLoop   0x002408    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\strlen.asm
                    jMatch   0x00270e    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
                  jNoMatch   0x002710    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
-                lectureAN   0x001c60    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
+                lectureAN   0x001c60    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
                      loop   0x00277e    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\USART\_usartpc.asm
                      loop   0x00251a    program     static                          
                      loop   0x0026a6    program     static                          
                      loop   0x002762    program     static                          
                    loop_h   0x002740    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\proc\p18F45K22.asm
                    loop_l   0x00274a    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\proc\p18F45K22.asm
-             lowInterrupt   0x000018    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-          lowInterruption   0x0026da    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-                     main   0x00197e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-                 pause_ms   0x001f30    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\time.c
+             lowInterrupt   0x000018    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+          lowInterruption   0x0026da    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+                     main   0x00197e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+                 pause_ms   0x001f30    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\time.c
                    printf   0x0021fa    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\printf.c
                      putc   0x002292    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\putc.c
                  s_digits   0x0027b2    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
@@ -387,7 +382,7 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                    strlen   0x0023f8    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\strlen.asm
                 strlenpgm   0x002414    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\slenpgm.asm
                      test   0x002176    program     static                          
-                 testInit   0x0016e2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
+                 testInit   0x0016e2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
                  vfprintf   0x000058    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                zero_block   0x002740    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\proc\p18F45K22.asm
                    ADCON0   0x000fc2       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\proc\p18F45K22.asm
@@ -831,12 +826,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\printf.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\putc.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\time.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\time.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcopen.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcread.c
@@ -849,12 +844,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                  data_ptr   0x000073       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
                      prom   0x00006c       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
                    stdout   0x000076       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\stdout.c
-                    tAccX   0x000060       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                    tAccZ   0x000062       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                    tGyro   0x000064       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                       te   0x00006a       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                 tetaPrec   0x000068       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                      xpp   0x000066       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
+                    tAccX   0x000060       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                    tAccZ   0x000062       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                    tGyro   0x000064       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                       te   0x00006a       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                 tetaPrec   0x000068       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                      xpp   0x000066       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
 
 
 
@@ -864,10 +859,10 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                    _entry   0x000000    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
        ___return_lbl00000   0x000004    program     static                          
                _user_putc   0x000006    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\_user_putc.c
-                 fonction   0x000008    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
+                 fonction   0x000008    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
        ___return_lbl00001   0x00000c    program     static                          
                   BusyADC   0x00000e    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcbusy.c
-             lowInterrupt   0x000018    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
+             lowInterrupt   0x000018    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
        ___return_lbl00003   0x00001c    program     static                          
             s_put_n_chars   0x00002c    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                  vfprintf   0x000058    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
@@ -922,21 +917,21 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                   __pa_44   0x000c2e    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                   __pa_45   0x000c38    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                   __pa_46   0x000c44    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
-         calibrageTangage   0x000c4e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
-             angleTangage   0x0012d2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                 initppal   0x00168a    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-                 testInit   0x0016e2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-                     main   0x00197e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-                lectureAN   0x001c60    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-                 initAN33   0x001dd0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionX   0x001de4    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionG   0x001e12    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-             acquisitionZ   0x001e42    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-      acquisitionVrefplus   0x001e70    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-     acquisitionVrefminus   0x001ea0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-        acquisitionGuidon   0x001ed0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-      acquisitionBatterie   0x001f00    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-                 pause_ms   0x001f30    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\time.c
+         calibrageTangage   0x000c4e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
+             angleTangage   0x0012d2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                 initppal   0x00168a    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+                 testInit   0x0016e2    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+                     main   0x00197e    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+                lectureAN   0x001c60    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+                 initAN33   0x001dd0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionX   0x001de4    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionG   0x001e12    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+             acquisitionZ   0x001e42    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+      acquisitionVrefplus   0x001e70    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+     acquisitionVrefminus   0x001ea0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+        acquisitionGuidon   0x001ed0    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+      acquisitionBatterie   0x001f00    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+                 pause_ms   0x001f30    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\time.c
                  FXD1616S   0x00204e    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxd1616s.asm
                   DA1616S   0x002060    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxd1616s.asm
                    D1616S   0x002070    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\fxd1616s.asm
@@ -980,12 +975,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
        ___return_lbl00000   0x00258c    program     static                          
                ReadTimer0   0x002598    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\Timers\t0read.c
                OpenTimer0   0x0025d6    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\Timers\t0open.c
-               __string_3   0x00260e    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_2   0x00261f    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_1   0x002627    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_0   0x00262a    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __string_0   0x002631    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-               __string_0   0x002639    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
+               __string_3   0x00260e    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_2   0x00261f    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_1   0x002627    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_0   0x00262a    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __string_0   0x002631    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+               __string_0   0x002639    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
              Delay10KTCYx   0x002640    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\delays\d10ktcyx.asm
                     D10Kx   0x00264a    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\delays\d10ktcyx.asm
                    D10K_1   0x00264c    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\delays\d10ktcyx.asm
@@ -997,9 +992,9 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                      loop   0x0026a6    program     static                          
                   endloop   0x0026c2    program     static                          
        ___return_lbl00000   0x0026c6    program     static                          
-     InterruptHandlerHigh   0x0026c8    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-          lowInterruption   0x0026da    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
-                initInter   0x0026ec    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\interruption.c
+     InterruptHandlerHigh   0x0026c8    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+          lowInterruption   0x0026da    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
+                initInter   0x0026ec    program     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\interruption.c
                   isdigit   0x0026ee    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
                    jMatch   0x00270e    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
                  jNoMatch   0x002710    program     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\isdigit.asm
@@ -1029,12 +1024,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
               CloseTimer0   0x0027c4    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\Timers\t0close.c
                  Busy_eep   0x0027ca    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\EEP\busy_eep.c
                    __init   0x0027d0    program     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\__init.c
-               __config_0   0x300001    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_1   0x300002    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_2   0x300003    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_3   0x300005    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_4   0x300006    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-               __config_5   0x30000b    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
+               __config_0   0x300001    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_1   0x300002    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_2   0x300003    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_3   0x300005    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_4   0x300006    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+               __config_5   0x30000b    program     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
                      SIGN   0x000000       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\cmath18.asm
             __FPFLAGSbits   0x000001       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\cmath18.asm
                 __FPFLAGS   0x000001       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\math\cmath18.asm
@@ -1066,12 +1061,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\printf.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\vfprintf.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\stdclib\putc.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\conversion.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\initialisation.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\time.c
-                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\parametrage.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\conversion.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\initialisation.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\time.c
+                  __tmp_0   0x000014       data     static G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\parametrage.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\USART\u1open.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcopen.c
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\ADC\adcread.c
@@ -1079,12 +1074,12 @@ Linker Map File - Created Wed Sep 21 17:43:39 2011
                   __tmp_0   0x000014       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\pmc_common\EEP\read_B.c
             DelayCounter2   0x000028       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\delays\delayd2.asm
             DelayCounter1   0x000029       data     extern C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\delays\delayd1.asm
-                    tAccX   0x000060       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                    tAccZ   0x000062       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                    tGyro   0x000064       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                      xpp   0x000066       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                 tetaPrec   0x000068       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
-                       te   0x00006a       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\tangage.c
+                    tAccX   0x000060       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                    tAccZ   0x000062       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                    tGyro   0x000064       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                      xpp   0x000066       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                 tetaPrec   0x000068       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
+                       te   0x00006a       data     extern G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\tangage.c
                      prom   0x00006c       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
                 curr_byte   0x00006f       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
                curr_entry   0x000071       data     static C:\Program Files\Microchip\mplabc18\v3.37\src\traditional\startup\c018i.c
