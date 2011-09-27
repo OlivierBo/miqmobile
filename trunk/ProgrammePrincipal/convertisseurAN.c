@@ -1,5 +1,5 @@
 #include "include.h"
-#include "conversion.h"
+#include "convertisseurAN.h"
 
 
 //short anAccX, anGyro, anAccZ, anGuidon, anBatterie;		// Variables pour les entrées analogiques
