@@ -1,8 +1,8 @@
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 63 : type qualifier mismatch in assignment
-Warning[2058] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 65 : call of function without prototype
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 75 : type qualifier mismatch in assignment
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 78 : type qualifier mismatch in assignment
-Warning[2058] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 84 : call of function without prototype
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 86 : type qualifier mismatch in assignment
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 89 : type qualifier mismatch in assignment
-Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\ppal 10_05\main.c 96 : type qualifier mismatch in assignment
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 62 : type qualifier mismatch in assignment
+Warning[2058] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 64 : call of function without prototype
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 74 : type qualifier mismatch in assignment
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 77 : type qualifier mismatch in assignment
+Warning[2058] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 83 : call of function without prototype
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 85 : type qualifier mismatch in assignment
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 88 : type qualifier mismatch in assignment
+Warning[2066] G:\Users\Adrien\Documents\0 Cours\miq 5\M2\miqmobile\ProgrammePrincipal\main.c 95 : type qualifier mismatch in assignment

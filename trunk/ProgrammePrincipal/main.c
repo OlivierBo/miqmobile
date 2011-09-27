@@ -19,8 +19,7 @@
 #include "tangage.h"
 #include "time.h"
 #include "parametrage.h"
-#include "commoteur.h"
-#include "compan.h"
+#include "communication.h"
 #include "compc.h"
 #include "consigne.h"
 
