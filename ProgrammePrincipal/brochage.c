@@ -1,7 +1,7 @@
 #include "include.h"
-#include "initialisation.h"
+#include "brochage.h"
 #include "tangage.h"
-#include "conversion.h"
+#include "convertisseurAN.h"
 
 	//-------------------initppal--------------------------------------------------
 	//Initialisations des différents modules

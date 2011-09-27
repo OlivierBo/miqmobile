@@ -14,13 +14,12 @@
 #include "interruption.h"
 #include "config.h"
 #include "codeur.h"
-#include "initialisation.h"
-#include "conversion.h"
+#include "brochage.h"
+#include "convertisseurAN.h"
 #include "tangage.h"
 #include "time.h"
 #include "parametrage.h"
 #include "communication.h"
-#include "compc.h"
 #include "consigne.h"
 
 
