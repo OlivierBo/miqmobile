@@ -1,5 +1,6 @@
 #include "interruption.h"
 #include "include.h"
+#include "asserv.h"
 
 
 //=============================================================================
@@ -12,6 +13,8 @@
 void InterruptHandlerHigh(void)
 {
  //Ecrire ici
+
+	//compteur de temps
 }
 
 #pragma code interruption = 0x08
@@ -28,6 +31,10 @@ void fonction (void)
 void lowInterruption(void)
 {
   //Ecrire ici
+
+	//les rx
+	//les mesure du gyro
+
 }
 
 #pragma code low_vector=0x18

@@ -1,27 +1,45 @@
 #ifndef BROCHAGE_H
 #define BROCHAGE_H
 
-#define ledGyroHaut PORTAbits.RA4
-#define ledGyroBas PORTDbits.RD0
-#define ledAttente PORTAbits.RA7
-#define ledOK PORTAbits.RA6
-#define ledGuidonDroit PORTCbits.RC0
-#define ledGuidonGauche PORTDbits.RD1
+#define GYRO PORTAbits.RA0
+#define ACC_X PORTAbits.RA1
+#define LED_HAUT LATAbits.LATA4
+#define ACC_Z PORTAbits.RA5
+#define LED_CENTRE_VERTE LATAbits.LATA6
+#define LED_CENTRE_ORANGE LATAbits.LATA7
+#define CODEUR_A_DROITE PORTBbits.RB0
+#define CODEUR_A_GAUCHE PORTBbits.RB1
+#define CODEUR_B_DROITE PORTBbits.RB3
+#define CODEUR_B_GAUCHE PORTBbits.RB4
+#define PATTE_PGC PORTBbits.RB6
+#define PATTE_PGD PORTBbits.RB7
+#define LED_DROITE LATCbits.LATC0
+#define LED_TEMOIN LATCbits.LATC1
+#define BOUTON_VERT PORTCbits.RC2
+#define BOUTON_ROUGE PORTCbits.RC3
+#define LED_ERREUR LATCbits.LATC4
+#define USART_TX1 LATCbits.LATC6
+#define USART_RX1 PORTCbits.RC7
+#define LED_BAS LATDbits.LATD0
+#define LED_GAUCHE LATDbits.LATD1
+#define LED_USART2 LATDbits.LATD2
+#define LED_USART1 LATDbits.LATD3
+#define PRESENCE_UTILISATEUR PORTDbits.RD5
+#define BOUTON_LIMITATION PORTDbits.RD5
+#define USART_TX2 LATDbits.LATD6
+#define USART_RX2 PORTDbits.RD7
+#define POTENTIOMETRE_GUIDON PORTEbits.RE0
+#define BATTERIE PORTEbits.RE1
+#define ACC_CENTRIFUGE PORTEbits.RE2
 
-#define minGyro 100
-#define maxGyro 500
-#define minGuidon 100
-#define maxGuidon 500
-#define nombreDeMesuresOk 10
 
-
-
-
-void initppal(void);
-void testInit(void);
-
-
-
+#define CH_GYRO ADC_CH0
+#define CH_ACC_X ADC_CH1
+#define CH_ACC_Z ADC_CH4
+#define CH_PRESENCE_UTILISATEUR ADC_CH13
+#define CH_POTENTIOMETRE_GUIDON ADC_CH5
+#define CH_BATTERIE ADC_CH6
+#define CH_ACC_CENTRIFUGE ADC_CH7
 
 #endif
 
