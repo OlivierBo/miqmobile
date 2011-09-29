@@ -1,5 +1,15 @@
 #include "include.h"
-#include "time.h"
+#include "tools.h"
+
+
+short acquisition(char channel)
+{
+	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VDD);
+	SelChanConvADC(channel); 
+	while(BusyADC());
+	return ReadADC();
+}
+
 
 
 

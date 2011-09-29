@@ -26,7 +26,10 @@
 #include <i2c.h>		//Fonction pour la communication I2C
 
 
-
+#define OK 1
+#define ERREUR 0
+#define LED_ON 1
+#define LED_OFF 0
 
 //=============================================================================
 //Definition de constantes
