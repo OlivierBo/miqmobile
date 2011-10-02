@@ -10,7 +10,12 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
+		<Item Name="Checksum.vi" Type="VI" URL="../Checksum.vi"/>
+		<Item Name="DataDecoder.vi" Type="VI" URL="../DataDecoder.vi"/>
+		<Item Name="IDByteDecoder.vi" Type="VI" URL="../IDByteDecoder.vi"/>
+		<Item Name="IDByteToNotes.vi" Type="VI" URL="../IDByteToNotes.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
+		<Item Name="StartByteDecoder.vi" Type="VI" URL="../../../StartByteDecoder.vi"/>
 		<Item Name="Dépendances" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="BuildHelpPath.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/BuildHelpPath.vi"/>
@@ -48,6 +53,7 @@
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
 			<Item Name="GlobalVar.vi" Type="VI" URL="../GlobalVar.vi"/>
+			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
 		</Item>
 		<Item Name="Spécifications de construction" Type="Build"/>
 	</Item>
