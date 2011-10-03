@@ -1,5 +1,6 @@
 #include "include.h"
 #include "tools.h"
+#include "brochage.h"
 
 
 short acquisition(char channel)
@@ -28,7 +29,7 @@ Delay10KTCYx (80); //100ms
 if(ms10)
 Delay10KTCYx (8*ms10); // delay de 1000 x 8 x 4/32000000 = 10 ms
 
-//max 32 ms - max utilisé : 1ms
+//max 32 ms - max utilisÃ© : 1ms
 if(ms1)
 Delay1KTCYx (8*ms1); // delay de 1000 x 8 x 4/32000000 = 1 ms
 
