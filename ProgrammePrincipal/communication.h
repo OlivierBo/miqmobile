@@ -11,7 +11,6 @@
 #define LG_TRAME_INF_COUPLED 1
 #define TYPE_TRAME_INF_ERREUR_CARTE_COURANT 12	
 #define LG_TRAME_INF_ERREUR_CARTE_COURANT 1
-	
 #define TYPE_TRAME_INF_VITESSEG 13	
 #define LG_TRAME_INF_VITESSEG 2
 #define TYPE_TRAME_INF_VITESSED 14	
@@ -50,7 +49,6 @@
 #define LG_TRAME_INF_DISTANCE_PARCOURUE 2
 #define TYPE_TRAME_INF_ETAT_BATTERIE 24
 #define LG_TRAME_INF_ETAT_BATTERIE 2
-	
 #define TYPE_TRAME_CON_STOP 153	
 #define LG_TRAME_CON_STOP 0
 #define TYPE_TRAME_CON_DEPART 154	
@@ -67,11 +65,20 @@
 #define LG_TRAME_CON_SATURATION_VITESSE 2
 #define TYPE_TRAME_INF_ANGLE_HORS_INTERVALLE 29	
 #define LG_TRAME_INF_ANGLE_HORS_INTERVALLE 1
-
-#define TYPE_TRAME_CON_RECHARGER_COEF 150
+#define TYPE_TRAME_CON_RECHARGER_COEF 159
 #define LG_TRAME_CON_RECHARGER_COEF 1
 
 
+#define DEBUT_TRAME 0b01110010
+#define TRAME_ERR_NOERR 0
+#define TRAME_ERR_TYPE 1
+#define TRAME_ERR_CHECK 2
+#define TRAME_ERR_DEBUT 3
+
+void envoiTrameUart1 (char type, void * data, char data_length);
+void interruptionRx(unsigned char rxByte, char erreurDepassement);
+
+extern volatile unsigned char CON_DEPART;
 
 #endif
 
