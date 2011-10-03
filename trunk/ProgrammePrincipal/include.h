@@ -24,7 +24,8 @@
 #include <adc.h>		//Fonction pour la conversion A/D
 #include <EEP.h>		//Fonction pour la mémoire EEPROM
 #include <i2c.h>		//Fonction pour la communication I2C
-
+#include <portb.h>
+#include <timers.h>
 
 #define OK 1
 #define ERREUR 0

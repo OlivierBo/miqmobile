@@ -1,6 +1,6 @@
 #include "include.h"
 #include "communication.h"
-#include <usart.h>
+
 
 /* Déclaration des variables globales définies dans xbee_comm.h */
 volatile unsigned char CON_DEPART;
@@ -45,11 +45,11 @@ void interruptionRx1(unsigned char rxByte) {
 
 	
 	//Teste s'il y a dépassement de capacité du tampon de réception
-	if (U1STAbits.OERR) {
+	if (RCSTA1bits.OERR) {
 		rxCount = 0;	//On recommence à 0
 		checkSum = 0;
 		trameErr = TRAME_ERR_NOERR;
-	} U1STAbits.OERR = 0;
+	} RCSTA1bits.OERR = 0;
 	
     trameBuf[rxCount] = rxByte;		//Enregistre l'octet reçu dans le buffer de réception
 

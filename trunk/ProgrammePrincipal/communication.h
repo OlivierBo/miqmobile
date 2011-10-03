@@ -76,7 +76,7 @@
 #define TRAME_ERR_DEBUT 3
 
 void envoiTrameUart1 (char type, void * data, char data_length);
-void interruptionRx(unsigned char rxByte, char erreurDepassement);
+void interruptionRx1(unsigned char rxByte);
 
 extern volatile unsigned char CON_DEPART;
 

@@ -11,7 +11,7 @@
 #pragma config PRICLKEN = ON		//Primary clock is always enabled  
 #pragma config FCMEN = OFF			// Fail safe Clock monitor désactivée
 #pragma config IESO = OFF			// Pas de possibilité de passer en oscillateur interne ou externe
-#pragma config PWRTEN = OFF			//Power up timer disabled 
+#pragma config PWRTEN = ON			//Power up timer ENABLED
 #pragma config BOREN = OFF			// Brown-out Reset disabled in hardware and software
 #pragma config WDTEN = OFF			// Watchdog désactivé
 #pragma config WRTD = OFF			// EEPROM non protégée en écriture
