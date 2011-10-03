@@ -2,16 +2,16 @@
 #include "communication.h"
 #include <usart.h>
 
-/* Déclaration des variables globales définies dans xbee_comm.h */
+/* DÃ©claration des variables globales dÃ©finies dans xbee_comm.h */
 volatile unsigned char CON_DEPART;
 
 
 
-//! Fonction générique d'envoi de trame (sans buffer !)
+//! Fonction gÃ©nÃ©rique d'envoi de trame (sans buffer !)
 void envoiTrameUart1 (char type, void * data, char data_length) {
 	unsigned char checksum, i;
 	
-	//Envoi de l'octet de début
+	//Envoi de l'octet de dÃ©but
 	while(Busy1USART());
 	Write1USART(DEBUT_TRAME);
 	checksum = DEBUT_TRAME;
@@ -19,7 +19,7 @@ void envoiTrameUart1 (char type, void * data, char data_length) {
 	while(Busy1USART());
 	Write1USART(type);
 	checksum += type;
-	//Envoi des données
+	//Envoi des donnÃ©es
 	for (i = 0; i < data_length; i++) {
 		while(Busy1USART());
 		Write1USART(((char*)(data))[i]);
@@ -32,34 +32,32 @@ void envoiTrameUart1 (char type, void * data, char data_length) {
 
 
 
-void interruptionRx(unsigned char rxByte, char erreurDepassement) {
-// Tampon réception de caractère
-//parametre 2 : erreur = U1STAbits.OERR; if (U1STAbits.OERR) U1STAbits.OERR = 0;
-
+void interruptionRx1(unsigned char rxByte) {
+// Tampon rÃ©ception de caractÃ¨re
     unsigned char resetTrame = FALSE;					// Flag de reset des compteurs de trame (en cas de fin de trame ou d'erreur)
     //Ces variables sont en statique car leur valeur ne change pas entre 2 appels MAIS on n'en a pas besoin ailleurs
-    static unsigned char rxCount = 0;					//Nombre d'octets réceptionnés
-    static unsigned char checkSum = 0;					//Somme de contrôle courante
+    static unsigned char rxCount = 0;					//Nombre d'octets rÃ©ceptionnÃ©s
+    static unsigned char checkSum = 0;					//Somme de contrÃ´le courante
     static unsigned char trameErr = TRAME_ERR_NOERR;	//Indique si une erreur est survenue
-    static unsigned char trameBuf [10];	//Buffer de réception trame
+    static unsigned char trameBuf [10];	//Buffer de rÃ©ception trame
     static unsigned char curTrameType = 0;				//Le XBee peut recevoir plusieurs types de trames 
     static unsigned char curTrameLength = 0;			//Ces deux variables contiennent le type et la longueur de la trame actuelle
 
 	
-	//Teste s'il y a dépassement de capacité du tampon de réception
-	if (erreurDepassement) {
-		rxCount = 0;	//On recommence à 0
+	//Teste s'il y a dÃ©passement de capacitÃ© du tampon de rÃ©ception
+	if (U1STAbits.OERR) {
+		rxCount = 0;	//On recommence Ã  0
 		checkSum = 0;
 		trameErr = TRAME_ERR_NOERR;
-	}
+	} U1STAbits.OERR = 0;
 	
-    trameBuf[rxCount] = rxByte;		//Enregistre l'octet reçu dans le buffer de réception
+    trameBuf[rxCount] = rxByte;		//Enregistre l'octet reÃ§u dans le buffer de rÃ©ception
 
-    //Premier octet de la trame : on attend l'octet de départ (@)
+    //Premier octet de la trame : on attend l'octet de dÃ©part (@)
     if (rxCount == 0) {
 	    trameErr += TRAME_ERR_DEBUT * (rxByte != DEBUT_TRAME);
 	}  
-	//Deuxième octet : indique le type de trame. On enregistre le type et la longueur de trame attendue
+	//DeuxiÃ¨me octet : indique le type de trame. On enregistre le type et la longueur de trame attendue
 	else if (rxCount == 1) {
 		curTrameType = rxByte;
 		switch (curTrameType) {
@@ -100,7 +98,7 @@ void interruptionRx(unsigned char rxByte, char erreurDepassement) {
 			default: trameErr += TRAME_ERR_TYPE;
 		}	
 	}
-	//Octets suivants : données de la trame
+	//Octets suivants : donnÃ©es de la trame
 	//Dernier octet : checksum
 	else if (rxCount == curTrameLength - 1) {
 		trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
@@ -116,13 +114,13 @@ void interruptionRx(unsigned char rxByte, char erreurDepassement) {
 	}
 		
 	//Si fin de trame ou erreur
-	//Remet le compteur de trame, la somme de controle et l'erreur à zéro
+	//Remet le compteur de trame, la somme de controle et l'erreur Ã  zÃ©ro
 	if (resetTrame || trameErr != TRAME_ERR_NOERR) {		
-		rxCount = 0;	//On recommence à 0
+		rxCount = 0;	//On recommence Ã  0
 		checkSum = 0;
 		trameErr = TRAME_ERR_NOERR;
 	} 
-	//Met à jour la somme de contrôle avec l'octer reçu et passe à l'octet suivant pour le prochain appel
+	//Met Ã  jour la somme de contrÃ´le avec l'octer reÃ§u et passe Ã  l'octet suivant pour le prochain appel
 	else {	
 		checkSum += rxByte;
 		rxCount++;	
