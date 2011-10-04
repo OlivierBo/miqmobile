@@ -40,34 +40,27 @@ void main (void)
 {
 	//struct analogMesures anMes0;
  short i;
+unsigned short blabla=9;
 
-//anMes0=lectureAN();
 	initppal();		//Initialisation générale
 	
-	//Initialisation USART
-	Open1USART(USART_TX_INT_OFF &
-	              USART_RX_INT_ON &
-	              USART_ASYNCH_MODE &
-	              USART_EIGHT_BIT &
-	              USART_CONT_RX , 51); //baud 38400
-		IPR1bits.RC1IP=0;
-
-//	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VREFPLUS | ADC_REF_VDD_VREFMINUS);
-//	initAN33();
-//	ADCON1=0b00000101;
-
 
 //=============================================================================
 //Test des valeurs converties
 //=============================================================================
 LED_TEMOIN=LED_ON;
-pause_ms(1000);
+pauseMs(1000);
+
+
+
+writeEeprom(&blabla, 5,  2);
+readEeprom(&blabla, 5,  2);
 
 
 while(1)
 {
-i=angleTangage(acquisition(CH_ACC_X), acquisition(CH_ACC_Z), acquisition(CH_GYRO), 0, i, 10);
-pause_ms(100);
+angleTangage(acquisition(CH_ACC_X), acquisition(CH_ACC_Z), acquisition(CH_GYRO), 0, i, 10);
+pauseMs(100);
 printf(printf_main_angle,i);
 
 	if(PORTCbits.RC2) calibrageTangage();

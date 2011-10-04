@@ -1,6 +1,7 @@
 #include "interruption.h"
 #include "include.h"
 #include "asserv.h"
+#include "tools.h"
 
 
 
@@ -25,6 +26,7 @@ void InterruptHandlerHigh()
 	if(PIR2bits.TMR3IF) //timer 3 = globalTime
 	{
 		WriteTimer3(64535); 
+		globalTime++;
 		PIR2bits.TMR3IF=0;
 	}
 

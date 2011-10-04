@@ -6,29 +6,48 @@
 
 const far rom char printf_tangage_1[]="/r/n%d";
 
+//calibration
+short tAccX0 = 0, tAccX1 = 0, tAccZ0 = 0, tAccZ1 = 0, tGyro0 = 0, tGyro1 = 0;
 
-short tAccX, tAccZ, tGyro, xpp, tetaPrec, te;
-
-struct ang{
-	short angle;
-	short vAngulaire;
-};
-
-#define MEMOIRE_CAPTEUR 0x00
+//valeurs courantes (pour ne pas devoir les recalculer)
+short tetaAngle=0, tetaVitesse=0;
+char defautBorne=0;
 
 
+void recupererValeurDeCalibration()
+{
+	unsigned short i=EEPROM_CALIBRATION;
+	unsigned char longueur = 2;
+
+	readEeprom(&tAccX0, i, longueur); i+=longueur;
+	readEeprom(&tAccX1, i, longueur); i+=longueur;
+	readEeprom(&tAccZ0, i, longueur); i+=longueur;
+	readEeprom(&tAccZ1, i, longueur); i+=longueur;
+	readEeprom(&tGyro0, i, longueur); i+=longueur;
+	readEeprom(&tGyro1, i, longueur); i+=longueur;
+}
+
+void enregistrerValeurDeCalibration()
+{
+	unsigned short i=EEPROM_CALIBRATION;
+	unsigned char longueur = 2;
+
+	writeEeprom(&tAccX0, i, longueur); i+=longueur;
+	writeEeprom(&tAccX1, i, longueur); i+=longueur;
+	writeEeprom(&tAccZ0, i, longueur); i+=longueur;
+	writeEeprom(&tAccZ1, i, longueur); i+=longueur;
+	writeEeprom(&tGyro0, i, longueur); i+=longueur;
+	writeEeprom(&tGyro1, i, longueur); i+=longueur;
+}
 
 
 
-//a placer dans tangage.c**********************************************************
+
 
 short calibrageTangage(void)
 {
-	
-
-
 	long temp=0;
-	short tAccX0 = 0, tAccX1 = 0, tAccZ0 = 0, tAccZ1 = 0, tGyro0 = 0, tGyro1 = 0;
+	
 	long i;
 	//etape 1 : signaler qu'on est en mode calibrage
 	LED_HAUT = LED_ON;
@@ -36,12 +55,12 @@ short calibrageTangage(void)
 	LED_GAUCHE = LED_OFF;
 	LED_DROITE = LED_OFF;
 	LED_CENTRE_VERTE = LED_OFF;
-	pause_ms(2000);
+	pauseMs(2000);
 
 
 	//etape 2 : avertir de la mesure de la verticale
 	LED_GAUCHE = LED_ON;
-	pause_ms(1500);
+	pauseMs(1500);
 
 	//etape 3 : mesurer la verticale pendant 1s à une fréquence de 20Hz
 	LED_CENTRE_VERTE = LED_ON;
@@ -50,7 +69,7 @@ short calibrageTangage(void)
 		tAccX0+=acquisition(CH_ACC_X);
 		tAccZ1+=acquisition(CH_ACC_Z);
 		tGyro0+=acquisition(CH_GYRO);
-		pause_ms(50);
+		pauseMs(50);
 	}
 	tAccX0/=20;
 	tAccZ1/=20;
@@ -61,14 +80,14 @@ short calibrageTangage(void)
 	LED_GAUCHE = LED_OFF;
 	LED_CENTRE_VERTE = LED_OFF;
 	LED_BAS = LED_ON;
-	pause_ms(1500);
+	pauseMs(1500);
 
 	//etape 5 : mesurer la rotation pendant 3s à 1kHz
 	LED_CENTRE_VERTE = LED_ON;
 	for(i=0;i<3000;i++)
 	{
 		temp+=acquisition(CH_GYRO);
-		pause_ms(1);
+		pauseMs(1);
 	}
 	temp-=tGyro0;
 
@@ -83,7 +102,7 @@ short calibrageTangage(void)
 	LED_BAS = LED_OFF;
 	LED_DROITE = LED_ON;
 	LED_CENTRE_VERTE = LED_OFF;
-	pause_ms(1500);
+	pauseMs(1500);
 
 	//etape 7 : mesurer l'horizontale (20 points de mesure)
 	LED_CENTRE_VERTE = LED_ON;
@@ -91,7 +110,7 @@ short calibrageTangage(void)
 	{
 		tAccX1+=acquisition(CH_ACC_X);
 		tAccZ0+=acquisition(CH_ACC_Z);
-		pause_ms(50);
+		pauseMs(50);
 	}
 	tAccX1/=20;
 	tAccZ0/=20;
@@ -116,7 +135,7 @@ short calibrageTangage(void)
 			LED_GAUCHE = LED_OFF;
 			LED_DROITE = LED_OFF;
 			LED_CENTRE_VERTE = LED_ON;
-			pause_ms(500);
+			pauseMs(500);
 			LED_CENTRE_VERTE = LED_OFF;
 			return ERREUR;
 		}
@@ -124,29 +143,17 @@ short calibrageTangage(void)
 
 
 	//etape 9 : si on veut conserver les paramètres, on les enregistre
-	i=MEMOIRE_CAPTEUR;
-	Write_b_eep (i, tAccX0); Busy_eep (); i++;
-	Write_b_eep (i, tAccX1); Busy_eep (); i++;
-	Write_b_eep (i, tAccZ0); Busy_eep (); i++;
-	Write_b_eep (i, tAccZ1); Busy_eep (); i++;
-	Write_b_eep (i, tGyro0); Busy_eep (); i++;
-	Write_b_eep (i, tGyro1); Busy_eep (); i++;
+	enregistrerValeurDeCalibration();
 
 	LED_CENTRE_VERTE = LED_ON;
-	pause_ms(500);
+	pauseMs(500);
 	LED_HAUT = LED_OFF;
 	LED_BAS = LED_OFF;
 	LED_GAUCHE = LED_OFF;
 	LED_DROITE = LED_OFF;
 	LED_CENTRE_VERTE = LED_OFF;
 
-printf(printf_tangage_1,tAccX0);
-printf(printf_tangage_1,tAccX1);
-printf(printf_tangage_1,tAccZ0);
-printf(printf_tangage_1,tAccZ1);
-printf(printf_tangage_1,tGyro0);
-printf(printf_tangage_1,tGyro1);
-	
+
 
 	return OK;
 
@@ -154,7 +161,9 @@ printf(printf_tangage_1,tGyro1);
 
 
 
-short angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te)
+
+
+void angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te)
 {
 //tAccX, tAccZ, tGyro
 	//sortie brute du CAN entre 0 et 1024
@@ -164,10 +173,10 @@ short angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaP
 	
 //calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
 	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971;
-	long a = 15; //[0;100] , a = 100 => 100% de confiance dans l'accéléromètre	
+	long a = 15; //[0;1000] , a = 1000 => 100% de confiance dans l'accéléromètre	
 
-	signed short accX,accZ,gyro,tetaAcc,tetaGyro,teta;
-long temp;
+	signed long accX,accZ,gyro,tetaAcc,tetaGyro,teta;
+
 
 	//conversion tension > vitesse en °/secondes, accélération en 10g.mm/s²
 	accX = 100*(tAccX-tAccX0)/tAccX1;
@@ -181,6 +190,8 @@ long temp;
 	//teta en decidegrés
 	//normalement : tetaAcc= 10*(57*((accX+accZ)-(xpp+100))/(100-xpp));
 	tetaAcc = ((accX+accZ-xpp-100)*57)/((100-xpp)/10);
+	if(tetaAcc>150) {tetaAcc=150;  defautBorne=1;}
+	if(tetaAcc<-150){tetaAcc=-150; defautBorne=1;}
 
 //calcul de l'angle donné par le gyro en decidegrés
 	//°/s * ms  => m° On divise par 100 pour l'avoir en decidegrés
@@ -188,11 +199,24 @@ long temp;
 
 //barycentre - filtre de Kalman 
 	//teta en decidegrés
-	//a entre 0 et 100 inclus
-	
-temp = ( a * tetaAcc + (100-a) * tetaGyro ) / (100);
-teta=temp;
-	return teta;
+	tetaAngle = ( a * tetaAcc + (1000-a) * tetaGyro ) / (1000); //a entre 0 et 1000 inclus
+
+	//vitesse en °/s
+	tetaVitesse = gyro; 
 }
 
 
+
+//emuler une classe c++
+short valeurTetaAngle(void)
+{
+	return tetaAngle;
+}
+short valeurtetaVitesse(void)
+{
+	return tetaVitesse;
+}
+char presenceDefautBorne(void)
+{
+	return defautBorne;
+}

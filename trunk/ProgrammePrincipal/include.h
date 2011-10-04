@@ -26,6 +26,9 @@
 #include <i2c.h>		//Fonction pour la communication I2C
 #include <portb.h>
 #include <timers.h>
+#include <string.h>
+
+
 
 #define OK 1
 #define ERREUR 0
