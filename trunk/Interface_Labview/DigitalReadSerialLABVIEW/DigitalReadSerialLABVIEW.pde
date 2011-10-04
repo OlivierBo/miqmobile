@@ -28,17 +28,11 @@ const int D7=7; //declaration constante de broche
 // --- Initialisation des fonctionnalités utilisées ---
 LiquidCrystal lcd(RS, E, D4, D5, D6, D7);// initialisation LCD en mode 4 bits 
 
-const char start=B11010;
-const char data1=B001;
-const char data2=B010;
-const char data3=B011;
-const char ordre=B1;
-const char info=B0;
-const char angle=19;
-const char vitesse_angulaire=30;
-const char acceleration=20;
+const char start=B1110010;
+const char coupleg=10;
+const char coupled=11;
+const char vitesseg=13;
 short ti=0;
-char debut;
 char octettype;
 char donnee0;
 char donnee1;
@@ -58,46 +52,34 @@ void loop() {
   switch(ti)
     {
     case 0:
-    debut= start << 3;
-    debut= debut | data2;
-    octettype= angle;
     donnee0=random(0,128);
-    donnee1=random(0,256);
-    Serial.print(debut);
-    Serial.print(octettype);
+    Serial.print(start);
+    Serial.print(coupleg);
     Serial.print(donnee0);
-    Serial.print(donnee1);
-    Serial.print(checksum(octettype, checksum(donnee0,donnee1)));
+    Serial.print(checksum(start, checksum(coupleg,donnee0)));
     break;
     
     case 1:
-    debut= start << 3;
-    debut= debut | data2;
-    octettype= vitesse_angulaire;
     donnee0=random(0,256);
-    donnee1=random(0,256);
-    Serial.print(debut);
-    Serial.print(octettype);
+    Serial.print(start);
+    Serial.print(coupled);
     Serial.print(donnee0);
-    Serial.print(donnee1);
-    Serial.print(checksum(octettype, checksum(donnee0,donnee1)));
+    Serial.print(checksum(start, checksum(coupled,donnee0)));
     break;
     
     case 2:
-    debut= start << 3;
-    debut= debut | data2;
-    octettype= acceleration;
-    donnee0=0;
+    donnee0=random(0,128);
     donnee1=random(0,128);
-    Serial.print(debut);
-    Serial.print(octettype);
+    Serial.print(start);
+    Serial.print(vitesseg);
     Serial.print(donnee0);
     Serial.print(donnee1);
-    Serial.print(checksum(octettype, checksum(donnee0,donnee1)));
+    Serial.print(checksum(checksum(start,vitesseg), checksum(donnee0,donnee1)));
     break;
     }
   ti++;
   if(ti>=3){ti=0;}
+  delay(250);
   
   if (Serial.available() > 0)
 { 
