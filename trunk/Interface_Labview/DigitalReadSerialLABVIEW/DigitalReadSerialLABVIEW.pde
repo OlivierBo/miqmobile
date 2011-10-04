@@ -32,6 +32,8 @@ const char start=B1110010;
 const char coupleg=10;
 const char coupled=11;
 const char vitesseg=13;
+const char concoupleg=138;
+const char concoupled=139;
 short ti=0;
 char octettype;
 char donnee0;
@@ -78,17 +80,27 @@ void loop() {
     break;
     }
   ti++;
-  if(ti>=3){ti=0;}
-  delay(250);
+  if(ti>=21){ti=0;}
+  delay(10);
   
   if (Serial.available() > 0)
 { 
   rs=Serial.read();
   {
+    if(rs=start)
+      {
+      typeRecu=Serial.read();
+      switch(typeRecu)
+        case coupleg :
+        break;
+        
+        case coupled :
+        break;
+        
+      }
     lcd.setCursor(0,1);
     lcd.print(rs,HEX);
   }
-  delay(300);
 }
 
 }
