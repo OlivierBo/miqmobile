@@ -1,10 +1,17 @@
 #include "include.h"
 #include "asserv.h"
 #include "brochage.h"
+#include "tools.h"
 
 
 void boucleAsservissement(void)
 {
+	static unsigned short tempsPrec = 0;
+	unsigned short duree = tempsEcouleDepuisMs(tempsPrec);
+	tempsPrec=globalTime;
+	if(duree>1000) duree=0;	//ca fait plus d'une seconde que l'asserv n'a pas été appelé
+	
+
 	//verifier si l'utilisateur est encore
 		//si non, initier la procédure d'arret
 	

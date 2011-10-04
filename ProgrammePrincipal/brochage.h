@@ -48,6 +48,14 @@
 #define CH_BATTERIE ADC_CH6
 #define CH_ACC_CENTRIFUGE ADC_CH7
 
+
+//paramètres de l'eeprom
+#define EEPROM_START	0
+#define EEPROM_END		1023
+
+#define EEPROM_CALIBRATION	100
+
+
 #endif
 
 
