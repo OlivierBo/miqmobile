@@ -2,25 +2,25 @@
 #define CODEUR_H
 
 struct roues{
-	short vitesseGauche;
-	short vitesseDroit;
-	short positionGauche;
-	short positionDroit;
-	short accGauche;
-	short accDroit;
+  long vitesseGauche; //mm/s
+  long vitesseDroit; //mm/s
+  long positionGauche; //mm
+  long positionDroit; //mm
+  long accGauche; //10g mm/s²
+  long accDroit; //10g mm/s²
+  long distanceMoyenneParcourue; //m
 };
 
 //fonctions publiques
-void interruptionCodeur(void);
-
-void initCodeurs(void);
-unsigned long distanceMoyenneCodeur(void);
-short vitesseCodeurDroit(short deltaT);
-short vitesseCodeurGauche(short deltaT);
-short accelerationCodeurDroit(short deltaT);
-short accelerationCodeurGauche(short deltaT);
+void interruptionCodeurG(void);
+void interruptionCodeurD(void);
+void initCodeurs(short rayon);
+void lancerCalculsCodeur(short deltaT, short coefFiltre);
 
 
+
+//roue.vitesseGauche=4100;
+//#define USE_AND_MASKS
 
 #endif
 
