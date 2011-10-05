@@ -78,8 +78,6 @@
 void envoiTrameUart1 (char type, void * data, char data_length);
 void interruptionRx1(unsigned char rxByte);
 
-extern volatile unsigned char CON_DEPART;
-
 #endif
 
 

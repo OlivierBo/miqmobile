@@ -2,45 +2,16 @@
 #include "tangage.h"
 #include "tools.h"
 #include "brochage.h"
+#include "variablesGlobales.h"
 
 
 const far rom char printf_tangage_1[]="/r/n%d";
 
-//calibration
-short tAccX0 = 0, tAccX1 = 0, tAccZ0 = 0, tAccZ1 = 0, tGyro0 = 0, tGyro1 = 0;
+
 
 //valeurs courantes (pour ne pas devoir les recalculer)
 short tetaAngle=0, tetaVitesse=0;
 char defautBorne=0;
-
-
-void recupererValeurDeCalibration()
-{
-	unsigned short i=EEPROM_CALIBRATION;
-	unsigned char longueur = 2;
-
-	readEeprom(&tAccX0, i, longueur); i+=longueur;
-	readEeprom(&tAccX1, i, longueur); i+=longueur;
-	readEeprom(&tAccZ0, i, longueur); i+=longueur;
-	readEeprom(&tAccZ1, i, longueur); i+=longueur;
-	readEeprom(&tGyro0, i, longueur); i+=longueur;
-	readEeprom(&tGyro1, i, longueur); i+=longueur;
-}
-
-void enregistrerValeurDeCalibration()
-{
-	unsigned short i=EEPROM_CALIBRATION;
-	unsigned char longueur = 2;
-
-	writeEeprom(&tAccX0, i, longueur); i+=longueur;
-	writeEeprom(&tAccX1, i, longueur); i+=longueur;
-	writeEeprom(&tAccZ0, i, longueur); i+=longueur;
-	writeEeprom(&tAccZ1, i, longueur); i+=longueur;
-	writeEeprom(&tGyro0, i, longueur); i+=longueur;
-	writeEeprom(&tGyro1, i, longueur); i+=longueur;
-}
-
-
 
 
 
@@ -172,9 +143,7 @@ void angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPr
 //xpp est l'accélération lue par les codeurs, à donner en 10g mm/s²
 	
 //calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
-	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971;
-	long a = 15; //[0;1000] , a = 1000 => 100% de confiance dans l'accéléromètre	
-
+	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971; 
 	signed long accX,accZ,gyro,tetaAcc,tetaGyro,teta;
 
 
@@ -199,7 +168,7 @@ void angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPr
 
 //barycentre - filtre de Kalman 
 	//teta en decidegrés
-	tetaAngle = ( a * tetaAcc + (1000-a) * tetaGyro ) / (1000); //a entre 0 et 1000 inclus
+	tetaAngle = ( COEF_KALMAN10 * tetaAcc + (1000-COEF_KALMAN10) * tetaGyro ) / (1000); //a entre 0 et 1000 inclus
 
 	//vitesse en °/s
 	tetaVitesse = gyro; 

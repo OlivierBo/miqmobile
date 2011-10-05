@@ -18,7 +18,7 @@
 #include "tools.h"
 #include "communication.h"
 #include "consigne.h"
-
+#include "variablesGlobales.h"
 #include "config.h"
 
 
@@ -43,6 +43,10 @@ void main (void)
 unsigned short blabla=9;
 
 	initppal();		//Initialisation générale
+
+	//chargerTousLesCoef();
+	genererCoefParDefaut();
+	chargerValeurDeCalibration();
 	
 
 //=============================================================================
