@@ -54,6 +54,7 @@
 #define EEPROM_END		1023
 
 #define EEPROM_CALIBRATION	100
+#define EEPROM_COEF	140
 
 
 #endif

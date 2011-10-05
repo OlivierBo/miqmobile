@@ -1,37 +1,39 @@
 #include "include.h"
 #include "codeur.h"
 #include "consigne.h"
+#include "variablesGlobales.h"
 
 
-short pid_K=1, pid_D=1;
-
-short coupleMoyen(short consigne, short angle, short vitesseAngle)
+short coupleMoyen(short consigne, short angle, short vitesseAngle) //en degré et degré/s (à redim)
 {
 	//calcul de l'erreur
 	short erreur = consigne - angle;
-	short sortie;
+	short sortie10; //vaut 10 fois la consigne de couple réel (voulu)
 	
 	//calcul de la dérivée de l'erreur
 	// Derreur = Dconsigne - Dangle, avec consigne = cte ->
 	// Derreur = - Dangle = - vitesseAngle;
 
 
-	sortie = erreur * pid_K - vitesseAngle * pid_D; //en N
+	sortie10 = erreur * PRINC_PID_K10 - vitesseAngle * PRINC_PID_D10; //en N
 
-	//redim pour changer l'unité et s'adapter à l'échelle (32 000 = couple max du moteur)
 
-	return sortie;
+
+	return sortie10;
+
+//le couple total des deux moteurs (limité par le pont en H) avant le reducteur
+//max 255
+
+
 }
 
 
-
-short coef_guidon=30;
 
 void partagerCouple(short* coupleG, short* coupleD, short couple, short vitesseG, short vitesseD, short guidon) //guidon + = aller + vite à gauche dc tourner a droite
 {
 	short dvN = vitesseG-vitesseD;
 	short dvG = guidon / 5;
-	short cons = (dvN - dvG) * coef_guidon;
+	short cons = (dvN - dvG) * PRINC_DIR10;
 	*coupleG = couple/2 - cons;
 	*coupleD = couple/2 + cons;
 
