@@ -42,6 +42,7 @@
 #define q 4.888e-3	//quantum pour un CAN 10bits 0v-5v
 #define qbis 3.226e-3	//quantum pour un CAN 10bits 0v-3.3v
 
+#define USE_AND_MASKS
 
 #endif
 

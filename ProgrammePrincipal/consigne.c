@@ -4,22 +4,21 @@
 #include "variablesGlobales.h"
 
 
-short coupleMoyen(short consigne, short angle, short vitesseAngle) //en degré et degré/s (à redim)
+float coupleTotal(float consigne, float angle, float vitesseAngle) //en degré et degré/s 
 {
 	//calcul de l'erreur
-	short erreur = consigne - angle;
-	short sortie10; //vaut 10 fois la consigne de couple réel (voulu)
+	float erreur = consigne - angle;
+	float sortie; 
 	
 	//calcul de la dérivée de l'erreur
 	// Derreur = Dconsigne - Dangle, avec consigne = cte ->
 	// Derreur = - Dangle = - vitesseAngle;
 
 
-	sortie10 = erreur * PRINC_PID_K10 - vitesseAngle * PRINC_PID_D10; //en N
+	sortie = erreur * PRINC_PID_K - vitesseAngle * PRINC_PID_D; //en N
 
 
-
-	return sortie10;
+	return sortie;
 
 //le couple total des deux moteurs (limité par le pont en H) avant le reducteur
 //max 255
@@ -29,13 +28,15 @@ short coupleMoyen(short consigne, short angle, short vitesseAngle) //en degré et
 
 
 
-void partagerCouple(short* coupleG, short* coupleD, short couple, short vitesseG, short vitesseD, short guidon) //guidon + = aller + vite à gauche dc tourner a droite
+struct Sconsigne partagerCouple(float couple, float vitesseG, float vitesseD, float guidon) //guidon + = aller + vite à gauche dc tourner a droite
 {
-	short dvN = vitesseG-vitesseD;
-	short dvG = guidon / 5;
-	short cons = (dvN - dvG) * PRINC_DIR10;
-	*coupleG = couple/2 - cons;
-	*coupleD = couple/2 + cons;
+	float dvN = vitesseG-vitesseD;
+	float dvG = guidon / 5;
+	float cons = (dvN - dvG) * PRINC_DIR;
+	struct Sconsigne lescouples;
+	lescouples.coupleG = couple/2 - cons;
+	lescouples.coupleD = couple/2 + cons;
+	lescouples.coupleT=couple;
 
 	//60.dv/(2.pi.distance roue a roue) = nb de tours sur soi meme/min
 	//dif de vit lin = guidon.pi.e(m)/30

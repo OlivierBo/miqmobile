@@ -8,11 +8,7 @@
 const far rom char printf_tangage_1[]="/r/n%d";
 
 
-
-//valeurs courantes (pour ne pas devoir les recalculer)
-short tetaAngle=0, tetaVitesse=0;
-char defautBorne=0;
-
+//degrés, degrés/s
 
 
 short calibrageTangage(void)
@@ -134,58 +130,42 @@ short calibrageTangage(void)
 
 
 
-void angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te)
+struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te)
 {
 //tAccX, tAccZ, tGyro
 	//sortie brute du CAN entre 0 et 1024
 //te en ms
 //tetaPrec en decidegrés
-//xpp est l'accélération lue par les codeurs, à donner en 10g mm/s²
+//xpp est l'accélération lue par les codeurs, à donner en m/s²
 	
 //calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
 	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971; 
-	signed long accX,accZ,gyro,tetaAcc,tetaGyro,teta;
+	float accX,accZ,gyro,tetaAcc,tetaGyro,teta; //redimensionnés et à l'chelle
+	struct Stangage angle;
 
 
-	//conversion tension > vitesse en °/secondes, accélération en 10g.mm/s²
-	accX = 100*(tAccX-tAccX0)/tAccX1;
-	accZ = 100*(tAccZ-tAccZ0)/tAccZ1;
-	gyro = -100*(tGyro-tGyro0)/tGyro1;
+	//conversion tension > vitesse en °/secondes, accélération en m/s²
+	accX = 9.81*(tAccX-tAccX0)/tAccX1;
+	accZ = 9.81*(tAccZ-tAccZ0)/tAccZ1;
+	gyro = -100.*(tGyro-tGyro0)/tGyro1;
 
 //calcul de l'angle donné par les accéléromètres
-	//mettre xpp en 10g mm/s²
-	//gm/s² = 100 . (10g mm/s²)
 	//rad->deg => *180/pi = 57.3
-	//teta en decidegrés
-	//normalement : tetaAcc= 10*(57*((accX+accZ)-(xpp+100))/(100-xpp));
-	tetaAcc = ((accX+accZ-xpp-100)*57)/((100-xpp)/10);
-	if(tetaAcc>150) {tetaAcc=150;  defautBorne=1;}
-	if(tetaAcc<-150){tetaAcc=-150; defautBorne=1;}
+	tetaAcc = ((accX+accZ-xpp-9.81)*57.3)/(9.81-xpp);
+	if(tetaAcc>15) {tetaAcc=15;  angle.defautBorne=1;}
+	if(tetaAcc<-15){tetaAcc=-15; angle.defautBorne=1;}
 
 //calcul de l'angle donné par le gyro en decidegrés
-	//°/s * ms  => m° On divise par 100 pour l'avoir en decidegrés
-	tetaGyro = gyro*te/100 + tetaPrec;
+	//°/s * ms  => m° On divise par 1000 pour l'avoir en degrés
+	tetaGyro = gyro*te/1000 + tetaPrec;
 
 //barycentre - filtre de Kalman 
-	//teta en decidegrés
-	tetaAngle = ( COEF_KALMAN10 * tetaAcc + (1000-COEF_KALMAN10) * tetaGyro ) / (1000); //a entre 0 et 1000 inclus
+	//teta en degrés
+	angle.teta = COEF_KALMAN * tetaAcc + (1000-COEF_KALMAN) * tetaGyro ; //a entre 0 et 1
 
 	//vitesse en °/s
-	tetaVitesse = gyro; 
+	angle.vitesse = gyro; 
+
+	return angle;
 }
 
-
-
-//emuler une classe c++
-short valeurTetaAngle(void)
-{
-	return tetaAngle;
-}
-short valeurtetaVitesse(void)
-{
-	return tetaVitesse;
-}
-char presenceDefautBorne(void)
-{
-	return defautBorne;
-}

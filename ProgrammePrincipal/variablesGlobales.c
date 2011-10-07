@@ -3,43 +3,41 @@
 #include "brochage.h"
 #include "tools.h"
 
-short PRINC_PID_K10;
-short PRINC_PID_D10;
-short PRINC_DIR10;
-short COEF_KALMAN10;
-short ACCELERATION_COEF_FILTRE;
+float PRINC_PID_K;
+float PRINC_PID_D;
+float PRINC_DIR;
+float COEF_KALMAN;
+float ACCELERATION_COEF_FILTRE;
 short tAccX0 , tAccX1, tAccZ0, tAccZ1, tGyro0, tGyro1;
 
 void genererCoefParDefaut()
 {
-	PRINC_PID_K10=20;
-	PRINC_PID_D10=10;
-	PRINC_DIR10=30;
-	COEF_KALMAN10=200;
-	ACCELERATION_COEF_FILTRE=5;
+	PRINC_PID_K=20;
+	PRINC_PID_D=10;
+	PRINC_DIR=30;
+	COEF_KALMAN=0.2;
+	ACCELERATION_COEF_FILTRE=0.5;
 }
 
 void chargerTousLesCoef(void)
 {
 	unsigned short i=EEPROM_COEF;
-	unsigned char longueur = 2;
-
-	readEeprom(&PRINC_PID_K10, i, longueur); i+=longueur;
-	readEeprom(&PRINC_PID_D10, i, longueur); i+=longueur;
-	readEeprom(&PRINC_DIR10, i, longueur); i+=longueur;
-	readEeprom(&COEF_KALMAN10, i, longueur); i+=longueur;
+	unsigned char longueur=4;
+	readEeprom(&PRINC_PID_K, i, longueur); i+=longueur;
+	readEeprom(&PRINC_PID_D, i, longueur); i+=longueur;
+	readEeprom(&PRINC_DIR, i, longueur); i+=longueur;
+	readEeprom(&COEF_KALMAN, i, longueur); i+=longueur;
 	readEeprom(&ACCELERATION_COEF_FILTRE, i, longueur); i+=longueur;
 }
 
 void enregistrerTousLesCoef(void)
 {
 	unsigned short i=EEPROM_COEF;
-	unsigned char longueur = 2;
-
-	writeEeprom(&PRINC_PID_K10, i, longueur); i+=longueur;
-	writeEeprom(&PRINC_PID_D10, i, longueur); i+=longueur;
-	writeEeprom(&PRINC_DIR10, i, longueur); i+=longueur;
-	writeEeprom(&COEF_KALMAN10, i, longueur); i+=longueur;
+	unsigned char longueur = 4; 
+	writeEeprom(&PRINC_PID_K, i, longueur); i+=longueur;
+	writeEeprom(&PRINC_PID_D, i, longueur); i+=longueur;
+	writeEeprom(&PRINC_DIR, i, longueur); i+=longueur;
+	writeEeprom(&COEF_KALMAN, i, longueur); i+=longueur;
 	writeEeprom(&ACCELERATION_COEF_FILTRE, i, longueur); i+=longueur;
 }
 
