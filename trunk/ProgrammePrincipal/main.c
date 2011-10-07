@@ -41,6 +41,14 @@ void main (void)
 	//struct analogMesures anMes0;
  short i;
 unsigned short blabla=9;
+float b;
+short a;
+
+a=10;
+b=9.81;
+b*=a;
+a=b;
+
 
 	initppal();		//Initialisation générale
 
