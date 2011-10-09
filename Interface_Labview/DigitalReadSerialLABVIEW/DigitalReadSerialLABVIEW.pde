@@ -51,6 +51,7 @@ void setup() {
 }
 
 void loop() {
+ 
   switch(ti)
     {
     case 0:
