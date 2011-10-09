@@ -9,7 +9,7 @@ struct Stangage
 };
 
 
-struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te);
+struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, float xpp, float tetaPrec, float te);
 short calibrageTangage(void);
 
 

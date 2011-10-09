@@ -2,7 +2,9 @@
 #include "include.h"
 #include "asserv.h"
 #include "tools.h"
-
+#include "codeur.h"
+#include "communication.h"
+#include "brochage.h"
 
 
 //=============================================================================
@@ -59,25 +61,29 @@ void InterruptHandlerlow()
 
 	if(INTCON3bits.INT1IF) //codeur A GAUCHE
 	{
-		
+		interruptionCodeurG();
 		INTCON3bits.INT1IF=0;
 	}
 
 	if(INTCON3bits.INT2IF) //codeur A DROITE
 	{
-		
+		interruptionCodeurD();
 		INTCON3bits.INT2IF=0;
 	}
 	
 	if(PIR1bits.RC1IF) //usart1
 	{
 		caractere = RCREG1;
+		interruptionRx1(caractere);
+		LED_USART1=!LED_USART1;
 		PIR1bits.RC1IF;
 	}
 
 	if(PIR3bits.RC2IF) //usart2
 	{
 		caractere = RCREG2;
+		//interruptionRx2(caractere);
+		LED_USART2=!LED_USART2;
 		PIR3bits.RC2IF;
 	}
 
@@ -89,7 +95,7 @@ void InterruptHandlerlow()
 
 	if(INTCONbits.TMR0IF) //timer0 : clignotement de led
 	{
-		
+		LED_TEMOIN =! LED_TEMOIN;
 		INTCONbits.TMR0IF=0;
 	}
 
