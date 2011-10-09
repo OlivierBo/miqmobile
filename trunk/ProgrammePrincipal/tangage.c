@@ -14,8 +14,11 @@ const far rom char printf_tangage_1[]="/r/n%d";
 short calibrageTangage(void)
 {
 	long temp=0;
-	
+
 	long i;
+	tAccX0=0; tAccX1=0; tAccZ0=0; tAccZ1=0; tGyro0=0; tGyro1=0;
+
+	
 	//etape 1 : signaler qu'on est en mode calibrage
 	LED_HAUT = LED_ON;
 	LED_BAS = LED_OFF;
@@ -104,6 +107,7 @@ short calibrageTangage(void)
 			LED_CENTRE_VERTE = LED_ON;
 			pauseMs(500);
 			LED_CENTRE_VERTE = LED_OFF;
+			chargerValeurDeCalibration();
 			return ERREUR;
 		}
 	}
@@ -130,7 +134,7 @@ short calibrageTangage(void)
 
 
 
-struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, short tetaPrec, short te)
+struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, float xpp, float tetaPrec, float te)
 {
 //tAccX, tAccZ, tGyro
 	//sortie brute du CAN entre 0 et 1024
@@ -138,8 +142,7 @@ struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, s
 //tetaPrec en decidegrés
 //xpp est l'accélération lue par les codeurs, à donner en m/s²
 	
-//calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
-	signed short tAccX0 = 608, tAccX1 = 136, tAccZ0 = 618, tAccZ1 = 99, tGyro0 = 301, tGyro1 = 971; 
+
 	float accX,accZ,gyro,tetaAcc,tetaGyro,teta; //redimensionnés et à l'chelle
 	struct Stangage angle;
 
@@ -152,16 +155,16 @@ struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, short xpp, s
 //calcul de l'angle donné par les accéléromètres
 	//rad->deg => *180/pi = 57.3
 	tetaAcc = ((accX+accZ-xpp-9.81)*57.3)/(9.81-xpp);
-	if(tetaAcc>15) {tetaAcc=15;  angle.defautBorne=1;}
-	if(tetaAcc<-15){tetaAcc=-15; angle.defautBorne=1;}
+	if(tetaAcc>15.) {tetaAcc=15.;  angle.defautBorne=1;}
+	if(tetaAcc<-15.){tetaAcc=-15.; angle.defautBorne=1;}
 
 //calcul de l'angle donné par le gyro en decidegrés
 	//°/s * ms  => m° On divise par 1000 pour l'avoir en degrés
-	tetaGyro = gyro*te/1000 + tetaPrec;
+	tetaGyro = gyro*te/1000. + tetaPrec;
 
 //barycentre - filtre de Kalman 
 	//teta en degrés
-	angle.teta = COEF_KALMAN * tetaAcc + (1000-COEF_KALMAN) * tetaGyro ; //a entre 0 et 1
+	angle.teta = COEF_KALMAN * tetaAcc + (1.-COEF_KALMAN) * tetaGyro ; //a entre 0 et 1
 
 	//vitesse en °/s
 	angle.vitesse = gyro; 

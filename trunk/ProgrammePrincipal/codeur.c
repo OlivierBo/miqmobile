@@ -19,7 +19,7 @@ void interruptionCodeurD(void)
 }
 
 
-void initCodeurs(float rayon)
+void initCodeurs(void)
 {
 	//init codeur est aussi appelé lorsque le programme principal fait un reset
 	//penser à mettre toutes les variables à 0...

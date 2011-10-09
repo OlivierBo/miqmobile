@@ -8,6 +8,8 @@ float PRINC_PID_D;
 float PRINC_DIR;
 float COEF_KALMAN;
 float ACCELERATION_COEF_FILTRE;
+
+//calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
 short tAccX0 , tAccX1, tAccZ0, tAccZ1, tGyro0, tGyro1;
 
 void genererCoefParDefaut()
@@ -53,6 +55,8 @@ void chargerValeurDeCalibration()
 	readEeprom(&tAccZ1, i, longueur); i+=longueur;
 	readEeprom(&tGyro0, i, longueur); i+=longueur;
 	readEeprom(&tGyro1, i, longueur); i+=longueur;
+
+
 }
 
 void enregistrerValeurDeCalibration()
@@ -66,4 +70,27 @@ void enregistrerValeurDeCalibration()
 	writeEeprom(&tAccZ1, i, longueur); i+=longueur;
 	writeEeprom(&tGyro0, i, longueur); i+=longueur;
 	writeEeprom(&tGyro1, i, longueur); i+=longueur;
+
+}
+
+
+void chargerGuidon(void)
+{
+	unsigned short i=EEPROM_GUIDON;
+	unsigned char longueur = 2;
+
+	readEeprom(&tGuidonMax, i, longueur); i+=longueur;
+	readEeprom(&tGuidon0, i, longueur);   i+=longueur;
+	readEeprom(&guidonMax, i, longueur);  i+=longueur;
+
+}
+
+void enregistrerGuidon(void)
+{
+	unsigned short i=EEPROM_GUIDON;
+	unsigned char longueur = 2;
+
+	writeEeprom(&tGuidonMax, i, longueur); i+=longueur;
+	writeEeprom(&tGuidon0, i, longueur);   i+=longueur;
+	writeEeprom(&guidonMax, i, longueur);  i+=longueur;
 }

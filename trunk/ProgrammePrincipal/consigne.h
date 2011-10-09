@@ -10,6 +10,6 @@ struct Sconsigne
 
 float coupleTotal(float consigne, float angle, float vitesseAngle);
 struct Sconsigne partagerCouple(float couple, float vitesseG, float vitesseD, float guidon); //guidon + = aller + vite à gauche dc tourner a droite;
-
+float consigneAngle(float utilisationMoteur, float hysterisisAngleVise, float tangage);
 
 #endif

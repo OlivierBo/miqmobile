@@ -55,7 +55,7 @@
 
 #define EEPROM_CALIBRATION	100
 #define EEPROM_COEF	140
-
+#define EEPROM_GUIDON	180
 
 #endif
 
