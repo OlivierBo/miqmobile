@@ -8,9 +8,9 @@ dir_src=
 dir_bin=
 dir_tmp=
 dir_sin=
-dir_inc=C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin;G:\MCC18\h
-dir_lib=G:\MCC18\doc;G:\MCC18\lib;C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\lib
-dir_lkr=G:\MCC18\bin\LKR;G:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin\LKR
+dir_inc=C:\Program Files\Microchip\mplabc18\v3.40\bin;C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin;G:\MCC18\h
+dir_lib=C:\Program Files\Microchip\mplabc18\v3.40\lib;G:\MCC18\doc;G:\MCC18\lib;C:\Program Files (x86)\Microchip\mplabc18\v3.37.01\lib
+dir_lkr=C:\Program Files\Microchip\mplabc18\v3.40\bin\LKR;G:\MCC18\bin\LKR;G:\Program Files (x86)\Microchip\mplabc18\v3.37.01\bin\LKR
 [CAT_FILTERS]
 filter_src=*.asm;*.c
 filter_inc=*.h;*.inc
