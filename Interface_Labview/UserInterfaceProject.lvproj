@@ -17,6 +17,7 @@
 		<Item Name="IDByteToNotes.vi" Type="VI" URL="../IDByteToNotes.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
+		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
 		<Item Name="testgraphe.vi" Type="VI" URL="../testgraphe.vi"/>
 		<Item Name="Dépendances" Type="Dependencies">
