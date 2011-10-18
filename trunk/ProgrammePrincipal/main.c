@@ -24,10 +24,58 @@
 
 //liste des phrases des différents printf
 const far rom char printf_main_angle[]="\r\n%ddD";
-
+const far rom char printf_main_ok[]="\r\nok!";
+const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
 
 //déclaration de la fonction main (il n'y a pas de main.h, donc on la déclare ici)
 void main (void);
+void main_test(void);
+
+
+
+
+
+
+
+
+void main_test(void)
+{
+
+	unsigned char tab=1;
+	while(1)
+	{
+
+
+		for(tab=1;tab<34;tab*=2)
+		{
+			LED_HAUT = getbit(tab,0);
+			//pauseMs(1);
+			LED_BAS = getbit(tab,1);
+		//	pauseMs(1);
+			LED_GAUCHE = getbit(tab,2);
+		//	pauseMs(1);
+			LED_DROITE = getbit(tab,3);
+		//	pauseMs(1);
+			LED_CENTRE_VERTE = getbit(tab,4);
+		//	pauseMs(1);
+			LED_CENTRE_ORANGE = getbit(tab,5);
+		//	pauseMs(1);
+			printf( printf_main_angle, acquisition(CH_POTENTIOMETRE_GUIDON));
+			pauseMs(500);
+		}
+
+}
+while(1)
+{
+	LED_ERREUR=!LED_ERREUR;
+	pauseMs(500);
+}
+	
+
+while(1);
+}
+
+
 
 
 //=============================================================================
@@ -43,10 +91,12 @@ void main (void)
 	chargerGuidon();
 	pauseMs(1000);
 
+	//main_test();
+
 	while(1)
 	{
 		//si le démarrage est autorisé (verifier aussi la batterie un jour..)
-		if(testDemarrage()==OK)
+		if((testDemarrage()==OK)&&(0))
 		{
 			boucleAsservissement(1);  //reset des parametres static
 			continuer=1;
@@ -71,7 +121,9 @@ void main (void)
 			calibrerGuidon();
 		}
 		//envoi de données...
-		envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime), 1);
+		//envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime), 1);
+		printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
+
 	}
 
 

@@ -27,7 +27,7 @@ void InterruptHandlerHigh()
 {
 	if(PIR2bits.TMR3IF) //timer 3 = globalTime
 	{
-		WriteTimer3(64535); 
+		WriteTimer3(63535); 
 		globalTime++;
 		PIR2bits.TMR3IF=0;
 	}
@@ -87,10 +87,9 @@ void InterruptHandlerlow()
 		PIR3bits.RC2IF;
 	}
 
-	if(PIR5bits.TMR4IF) //timer4 : fonction appelable 1x/ms
+	if(PIR5bits.TMR5IF) //timer4 : fonction appelable 1x/ms
 	{
-		
-		PIR5bits.TMR4IF=0;
+		PIR5bits.TMR5IF=0;
 	}
 
 	if(INTCONbits.TMR0IF) //timer0 : clignotement de led

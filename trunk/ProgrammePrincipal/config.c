@@ -86,21 +86,20 @@ void initppal(void)
 
 
 	// activer les timers
-		//glabal time : incrément toutes les 1µs (priorité HAUTE)
-		OpenTimer3(TIMER_INT_ON & T3_16BIT_RW & T3_SOURCE_FOSC_4 & T3_OSC1EN_OFF & T3_SYNC_EXT_OFF & T3_PS_1_4 , 0) ;
-		WriteTimer3(64535); //une interruption chaque ms
+		//glabal time : incrément toutes les 1/2µs (priorité HAUTE)
+		OpenTimer3(TIMER_INT_ON & T3_16BIT_RW & T3_SOURCE_FOSC_4 & T3_OSC1EN_OFF & T3_SYNC_EXT_OFF &  T3_PS_1_8 , 0) ;
+		WriteTimer3(63535); //une interruption chaque ms
 		IPR2bits.TMR3IP=1;
 		//unsigned int ReadTimer3(void)  ;
-	
+
 		//timer clignotement de diode (2 interruptions par seconde) (priorité BASSE)
-		OpenTimer0(TIMER_INT_ON & T0_16BIT & T0_SOURCE_INT & T0_PS_1_32); 
+		OpenTimer0(TIMER_INT_ON & T0_16BIT & T0_SOURCE_INT & T0_PS_1_128); 
 		INTCON2bits.TMR0IP=0;
 
 		//timer pour lancer une fonction dans une interruption (priorité BASSE)
-		OpenTimer4(TIMER_INT_ON & T4_PS_1_16 & T4_POST_1_1 );
-		IPR5bits.TMR4IP=0;
-		//a peu de chose pres, une interruption par milliseconde. On peut changer la valeur de post jusqu'à 16 de 1 en 1 pour augmenter ce temps
-
+		//OpenTimer5(TIMER_INT_ON & T5_16BIT_RW &  T5_SOURCE_FOSC_4 & T5_OSC1EN_OFF & T5_PS_1_8 & T5_SYNC_EXT_OFF, 0) ;
+		//IPR5bits.TMR5IP=0;
+		//ici 15Hz*255
 
 	// activer les interruptions INT
 	OpenRB0INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_HIGH & PORTB_PULLUPS_OFF );//(priorité HAUTE)
@@ -109,9 +108,9 @@ void initppal(void)
 		//INTCON2bits.INTEDG0: External Interrupt 0 Edge Select bit  = 0 : falling
 
 	//Initialisation USART (priorité BASSE)
-	Open1USART(USART_TX_INT_OFF &   USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH & USART_CONT_RX , 25); 
+	Open1USART(USART_TX_INT_OFF &   USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_LOW & USART_CONT_RX , 25); 
 	IPR1bits.RC1IP=0;
-	Open2USART(USART_TX_INT_OFF &   USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_HIGH & USART_CONT_RX , 25); 
+	Open2USART(USART_TX_INT_OFF &   USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_LOW & USART_CONT_RX , 25); 
 	IPR3bits.RC2IP=0;
 
 	//USART_BRGH_HIGH USART_BRGH_LOW
@@ -132,7 +131,8 @@ void initppal(void)
 	PIR1bits.RC1IF=0; // EUSART1 Receive Interrupt Flag bit (cleared when RCREG1 is read) 
 	PIR2bits.TMR3IF=0;
 	PIR3bits.RC2IF=0; // EUSART2 Receive Interrupt Flag bit (cleared by reading RCREG2)
-	PIR5bits.TMR4IF=0;
+	PIR5bits.TMR5IF=0;
+
 
 	RCONbits.IPEN=1;
 	INTCONbits.GIEL=1;
