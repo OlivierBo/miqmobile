@@ -1,13 +1,9 @@
 #include "include.h"
 #include "codeur.h"
 #include "brochage.h"
-#include "variablesGlobales.h"
-/*
 #define GRANDEUR_RAYON_ROUE =1000	//A INTEGRER DANS LE PP OU INCLUDE?!
 #define GRANDEUR_VITESSE_MAX =20
 #define ACCELERATION_COEF_FILTRE =10
-*/
-
 
 //déclaration des variables globales internes au fichier
 
@@ -56,7 +52,7 @@ if (sensG==1)			//selon le sens, on incrémente ou on décrémente
 
 else if (sensG==0){--nb_frontD;}
 ++abs_nb_frontG;
-   //clear flag
+INTCON3bits.INT1F=0;    //clear flag
 }
 
 
@@ -67,27 +63,34 @@ if (sensD==1)			//selon le sens, on incrémente ou on décrémente
 {++nb_frontG;}			//nb_front image de la distance parcourue
 
 else if (sensD==0){--nb_frontD;}
-    //clear flag
+INTCON3bits.INT2F=0;    //clear flag
 ++abs_nb_frontD;
 }
 
 void initCodeurs(void)  //initialisation des codeurs
 {
-nb_frontD=0;
-nb_frontG=0;
-
+nb_frontG=0; //compte le nombre de fronts de la voie 1 du codeur de gauche
+nb_frontD=0; //compte le nombre de fronts de la voie 1 du codeur de droite
+abs_nb_frontG=0; //pour le calcul de la distance moyenne parcourue
 abs_nb_frontD=0;
-abs_nb_frontG=0;
-
+sensG=0;      // pour la détermination du sens de rotation des codeurs DetG
 sensD=0;
-sensG=0;
+nb_front_precD=0;
+nb_front_precG=0;
+vitesseG=0;
+vitesseD=0;
+vitesse_precG=0;
+vitesse_precD=0;
+vitesseMoyenne=0;
+vitesseMoyPrec=0;
+acc_moyenne=0;
+acc_moyenne_prec=0;
 
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
 {
         struct Sroues roues;
-//		struct tableau tab;
 
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
@@ -114,12 +117,13 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		roues.vitesseMoyenne=vitesseMoyenne;
         //déterminer le pourcentage d'utilisation moteur
         //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
-        roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
+        //roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
 
         //déterminer l'accération moyenne
+        
 		acc_moyenne_prec=acc_moyenne;
-		acc_moyenne=determine_acceleration(acc_moyenne_prec, vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
-		roues.accMoyenne=acc_moyenne;
+		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+		acc_moyenne=roues.accMoyenne;
 
         return roues;
 }
