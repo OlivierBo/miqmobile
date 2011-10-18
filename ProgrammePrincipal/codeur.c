@@ -140,14 +140,13 @@ char determine_sens (char voie1, char voie2)
 //determine la position
 float determine_position(float nb_front)
 {
-long nb_front_prime;
-nb_front_prime=nb_front;
-while (1000<nb_front_prime<-1000)
-    {long nb_frontprime;
+
+while (1000<nb_front<-1000)
+    {
     float position;
-    if (nb_front_prime>1000) nb_front_prime=nb_front-1000;
-    else if (nb_front_prime<-1000) nb_front_prime=nb_front+1000;
-    position=nb_front_prime*0,36;
+    if (nb_front>1000) nb_front=nb_front-1000;
+    else if (nb_front<-1000) nb_front=nb_front+1000;
+    position=nb_front*0,36;
     return position; //position est ainsi entre +- 180°
     }
 }
