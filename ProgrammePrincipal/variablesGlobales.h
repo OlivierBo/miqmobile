@@ -18,6 +18,8 @@
 #define GRANDEUR_VITESSE_MAX 2000. //en tr/min 
 #define PI_ 3.14159265
 
+
+
 //calibrage tangage
 void enregistrerValeurDeCalibration(void);
 void chargerValeurDeCalibration(void);
