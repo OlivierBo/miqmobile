@@ -24,6 +24,7 @@
 
 //liste des phrases des différents printf
 const far rom char printf_main_angle[]="\r\n%ddD";
+const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
 
@@ -44,7 +45,9 @@ void main_test(void)
 	unsigned char tab=1;
 	while(1)
 	{
-
+printf( printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO));
+pauseMs(100);
+}{
 
 		for(tab=1;tab<34;tab*=2)
 		{
@@ -91,7 +94,7 @@ void main (void)
 	chargerGuidon();
 	pauseMs(1000);
 
-	//main_test();
+	main_test();
 
 	while(1)
 	{
