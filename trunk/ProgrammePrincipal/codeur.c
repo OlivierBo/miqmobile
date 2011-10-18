@@ -1,9 +1,13 @@
 #include "include.h"
 #include "codeur.h"
 #include "brochage.h"
+#include "variablesGlobales.h"
+/*
 #define GRANDEUR_RAYON_ROUE =1000	//A INTEGRER DANS LE PP OU INCLUDE?!
 #define GRANDEUR_VITESSE_MAX =20
 #define ACCELERATION_COEF_FILTRE =10
+*/
+
 
 //déclaration des variables globales internes au fichier
 
@@ -52,7 +56,7 @@ if (sensG==1)			//selon le sens, on incrémente ou on décrémente
 
 else if (sensG==0){--nb_frontD;}
 ++abs_nb_frontG;
-INTCON3bits.INT1F=0;    //clear flag
+   //clear flag
 }
 
 
@@ -63,7 +67,7 @@ if (sensD==1)			//selon le sens, on incrémente ou on décrémente
 {++nb_frontG;}			//nb_front image de la distance parcourue
 
 else if (sensD==0){--nb_frontD;}
-INTCON3bits.INT2F=0;    //clear flag
+    //clear flag
 ++abs_nb_frontD;
 }
 
@@ -110,12 +114,11 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		roues.vitesseMoyenne=vitesseMoyenne;
         //déterminer le pourcentage d'utilisation moteur
         //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
-        //roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
+        roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
 
         //déterminer l'accération moyenne
-        
 		acc_moyenne_prec=acc_moyenne;
-//		acc_moyenne=determine_acceleration(acc_moyenne_prec, vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+		acc_moyenne=determine_acceleration(acc_moyenne_prec, vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
 		roues.accMoyenne=acc_moyenne;
 
         return roues;
