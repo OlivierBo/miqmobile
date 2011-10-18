@@ -23,7 +23,7 @@
 #include "autresES.h"
 
 //liste des phrases des différents printf
-const far rom char printf_main_angle[]="\r\n%ddD";
+const far rom char printf_main_angle[]="\r\n%d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
@@ -41,11 +41,15 @@ void main_test(void);
 
 void main_test(void)
 {
-
+struct Sroues roues;
 	unsigned char tab=1;
+long temp;
 	while(1)
 	{
 printf( printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO));
+roues = lancerCalculsCodeur(100);
+temp=roues.positionDroit+roues.positionGauche;
+printf( printf_main_angle, temp);
 pauseMs(100);
 }{
 

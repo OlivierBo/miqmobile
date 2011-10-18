@@ -68,6 +68,7 @@ void InterruptHandlerlow()
 	if(INTCON3bits.INT2IF) //codeur A DROITE
 	{
 		interruptionCodeurD();
+		LED_ERREUR=!LED_ERREUR;
 		INTCON3bits.INT2IF=0;
 	}
 	
