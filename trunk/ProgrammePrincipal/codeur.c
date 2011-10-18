@@ -146,7 +146,7 @@ while (1000<nb_front<-1000)
     float position;
     if (nb_front>1000) nb_front=nb_front-1000;
     else if (nb_front<-1000) nb_front=nb_front+1000;
-    position=nb_front*0,36;
+    position=nb_front*0.36;
     return position; //position est ainsi entre +- 180°
     }
 }
@@ -156,7 +156,7 @@ float distance_Moy(long frontsG, long frontsD)
 float moyenne;
 moyenne=frontsD+frontsG;
 moyenne=moyenne/2;
-moyenne=moyenne*6,14;
+moyenne=moyenne*6.14;
 moyenne=moyenne*GRANDEUR_RAYON_ROUE; //(résolution de 1000 fronts/tour -> nbfronts*2Pi.R*10e-3/1000), résultat en mm
 moyenne=moyenne/100000; //en m
 return moyenne;
@@ -168,8 +168,8 @@ float determine_vitesse (float nb_front, float nb_front_prec, float deltaT)
 // vitesse = (angle/deltaT) * 0,001 car deltaT en ms
 float vitesse;
 vitesse=nb_front-nb_front_prec;
-vitesse=vitesse*0,36;
-vitesse=vitesse*0,001;
+vitesse=vitesse*0.36;
+vitesse=vitesse*0.001;
 return vitesse;
 }
 
@@ -179,8 +179,8 @@ float determine_vmoyen(float vgauche, float vdroite)
 	vmoy=vgauche+vdroite;
 	vmoy=vmoy/2;
 	vmoy=vmoy*GRANDEUR_RAYON_ROUE;
-	vmoy=vmoy*3600;	//conversion mm/s en km/h
-	vmoy=vmoy*1000000;
+	vmoy=vmoy/3600;	//conversion mm/s en km/h
+	vmoy=vmoy/1000000;
 	return vmoy;
 }
 
@@ -188,7 +188,8 @@ float D_utilisation_moteur(float vmax, float vmoyenne)
 {
 //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
 float umoteur;
-vmoyenne=vmoyenne;		//vmoyenne/(2PI.R.60)
+vmoyenne=vmoyenne;		//vmoyenne*10^6/(2PI.R.60)
+vmoyenne=vmoyenne*377.;	//conversion en tour par minute pour comparer
 umoteur=vmoyenne/vmax;	//vitesse max en tour par minutes!!
 return umoteur;
 }
