@@ -10,7 +10,7 @@
 //memoire -> usart  : CONSULTER
 
 #define DEMARRAGE_TOL_ANGLE 2 //en °
-#define DEMARRAGE_TOL_GUIDON 10 //en tr/min sur soi meme
+#define DEMARRAGE_TOL_GUIDON 5 //en tr/min sur soi meme
 #define DEMARRAGE_DELAI_EQUILIBRE 2000 //en ms
 
 #define GRANDEUR_RAYON_ROUE 30. //en mm

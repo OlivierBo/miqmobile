@@ -7,7 +7,7 @@
 
 short tGuidon0 , tGuidonMax, guidonMax; 
 
-float guidonTrMin(char tGuidon)
+float guidonTrMin(short tGuidon)
 {
 	float guidonTraite = (float) guidonMax *(tGuidon - tGuidon0)/(float)tGuidonMax ;
 	//positif = guidon a droite, sinon changer le signe

@@ -25,7 +25,7 @@ void pauseMs(unsigned short duree)
 unsigned short globalTimeUs(void)
 {
 	//peut aller jusqu'à un maximum de 1ms
-	return ReadTimer3()-64535 ;
+	return (ReadTimer3()-63535)/2 ;
 }
 
 void pauseUs(unsigned short duree)
@@ -76,6 +76,7 @@ void pauseTcyMs(unsigned short ms)
 
 short acquisition(char channel)
 {
+	pauseUs(50);
 	OpenADC(ADC_FOSC_64 | ADC_RIGHT_JUST | ADC_16_TAD, ADC_INT_OFF, ADC_REF_VDD_VDD);
 	SelChanConvADC(channel); 
 	while(BusyADC());
