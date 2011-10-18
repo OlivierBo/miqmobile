@@ -1,10 +1,7 @@
 #include "include.h"
 #include "codeur.h"
 #include "brochage.h"
-#define GRANDEUR_RAYON_ROUE =1000	//A INTEGRER DANS LE PP OU INCLUDE?!
-#define GRANDEUR_VITESSE_MAX =20
-#define ACCELERATION_COEF_FILTRE =10
-
+#include "variablesGlobales.h"
 //déclaration des variables globales internes au fichier
 
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
@@ -143,12 +140,14 @@ char determine_sens (char voie1, char voie2)
 //determine la position
 float determine_position(float nb_front)
 {
-while (1000<nb_front<-1000)
+long nb_front_prime;
+nb_front_prime=nb_front;
+while (1000<nb_front_prime<-1000)
     {long nb_frontprime;
     float position;
-    if (nb_front>1000) nb_frontprime=nb_front-1000;
-    else if (nb_front<-1000) nb_frontprime=nb_front+1000;
-    position=nb_frontprime*0,36;
+    if (nb_front_prime>1000) nb_front_prime=nb_front-1000;
+    else if (nb_front_prime<-1000) nb_front_prime=nb_front+1000;
+    position=nb_front_prime*0,36;
     return position; //position est ainsi entre +- 180°
     }
 }
