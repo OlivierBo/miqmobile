@@ -15,7 +15,7 @@
 
 #define GRANDEUR_RAYON_ROUE 30. //en mm
 #define GRANDEUR_EMPATEMENT 50. //en mm
-#define GRANDEUR_VITESSE_MAX 2000. //en tr/min 
+#define GRANDEUR_VITESSE_MAX 324.86 //en tr/min 
 #define PI_ 3.14159265
 
 
