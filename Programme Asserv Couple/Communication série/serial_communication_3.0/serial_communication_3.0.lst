@@ -1,0 +1,1804 @@
+
+
+HI-TECH Software PIC LITE Macro Assembler V9.81 build 7503 
+                                                                                               Tue Oct 25 18:40:14 2011
+
+HI-TECH Software Omniscient Code Generator (Lite mode) build 7503
+     1  0000                     opt subtitle "HI-TECH Software Omniscient Code Generator (Lite mode) build 7503"
+     2                           
+     3                           opt pagewidth 120
+     4                           
+     5                           	opt lm
+     6                           
+     7                           	processor	16F877
+     8                           clrc	macro
+     9                           	bcf	3,0
+    10  0000                     	endm
+    11                           clrz	macro
+    12                           	bcf	3,2
+    13  0000                     	endm
+    14                           setc	macro
+    15                           	bsf	3,0
+    16  0000                     	endm
+    17                           setz	macro
+    18                           	bsf	3,2
+    19  0000                     	endm
+    20                           skipc	macro
+    21                           	btfss	3,0
+    22  0000                     	endm
+    23                           skipz	macro
+    24                           	btfss	3,2
+    25  0000                     	endm
+    26                           skipnc	macro
+    27                           	btfsc	3,0
+    28  0000                     	endm
+    29                           skipnz	macro
+    30                           	btfsc	3,2
+    31  0000                     	endm
+    32  0000                     indf	equ	0
+    33  0000                     indf0	equ	0
+    34  0002                     pc	equ	2
+    35  0002                     pcl	equ	2
+    36  0003                     status	equ	3
+    37  0004                     fsr	equ	4
+    38  0004                     fsr0	equ	4
+    39  0001                     c	equ	1
+    40  0000                     z	equ	0
+    41  000A                     pclath	equ	10
+    42                           	FNCALL	_main,_send_usart
+    43                           	FNCALL	_main,_longueur_trame
+    44                           	FNCALL	_main,_decalage_buffer
+    45                           	FNROOT	_main
+    46                           	FNCALL	intlevel1,_reception
+    47                           	global	intlevel1
+    48                           	FNROOT	intlevel1
+    49                           	global	_buffer
+    50                           	global	_top_buffer
+    51                           	global	_INTCON
+    52                           psect	text144,local,class=CODE,delta=2
+    53                           global __ptext144
+    54  0000                     __ptext144:
+    55  000B                     _INTCON	set	11
+    56                           	global	_PORTA
+    57  0005                     _PORTA	set	5
+    58                           	global	_PORTB
+    59  0006                     _PORTB	set	6
+    60                           	global	_PORTD
+    61  0008                     _PORTD	set	8
+    62                           	global	_RCREG
+    63  001A                     _RCREG	set	26
+    64                           	global	_RCSTA
+    65  0018                     _RCSTA	set	24
+    66                           	global	_TXREG
+    67  0019                     _TXREG	set	25
+    68                           	global	_CREN
+    69  00C4                     _CREN	set	196
+    70                           	global	_GIE
+    71  005F                     _GIE	set	95
+    72                           	global	_PEIE
+    73  005E                     _PEIE	set	94
+    74                           	global	_RB0
+    75  0030                     _RB0	set	48
+    76                           	global	_RCIF
+    77  0065                     _RCIF	set	101
+    78                           	global	_SPEN
+    79  00C7                     _SPEN	set	199
+    80                           	global	_TXIF
+    81  0064                     _TXIF	set	100
+    82                           	global	_PIE1
+    83  008C                     _PIE1	set	140
+    84                           	global	_SPBRG
+    85  0099                     _SPBRG	set	153
+    86                           	global	_TRISA
+    87  0085                     _TRISA	set	133
+    88                           	global	_TRISB
+    89  0086                     _TRISB	set	134
+    90                           	global	_TRISD
+    91  0088                     _TRISD	set	136
+    92                           	global	_TXSTA
+    93  0098                     _TXSTA	set	152
+    94                           	global	_RCIE
+    95  0465                     _RCIE	set	1125
+    96                           	global	_TXEN
+    97  04C5                     _TXEN	set	1221
+    98                           	file	"serial_communication_3.0.as"
+    99                           	line	#
+   100                           psect cinit,class=CODE,delta=2
+   101                           global start_initialization
+   102  024D                     start_initialization:
+   103                           
+   104                           psect	bssBANK0,class=BANK0,space=1
+   105                           global __pbssBANK0
+   106  0020                     __pbssBANK0:
+   107  0020                     _buffer:
+   108  0020                            ds      50
+   109                           
+   110  0052                     _top_buffer:
+   111  0052                            ds      1
+   112                           
+   113                           psect clrtext,class=CODE,delta=2
+   114                           global clear_ram
+   115                           ;	Called with FSR containing the base address, and
+   116                           ;	W with the last address+1
+   117  0266                     clear_ram:
+   118  0266  0064               	clrwdt			;clear the watchdog before getting into this loop
+   119  0267                     clrloop:
+   120  0267  0180               	clrf	indf		;clear RAM location pointed to by FSR
+   121  0268  0A84               	incf	fsr,f		;increment pointer
+   122  0269  0604               	xorwf	fsr,w		;XOR with final address
+   123  026A  1903               	btfsc	status,2	;have we reached the end yet?
+   124  026B  3400               	retlw	0		;all done for this memory range, return
+   125  026C  0604               	xorwf	fsr,w		;XOR again to restore value
+   126  026D  2A67               	goto	clrloop		;do the next byte
+   127                           
+   128                           ; Clear objects allocated to BANK0
+   129                           psect cinit,class=CODE,delta=2
+   130  024D  1383               	bcf	status, 7	;select IRP bank0
+   131  024E  3020               	movlw	low(__pbssBANK0)
+   132  024F  0084               	movwf	fsr
+   133  0250  3053               	movlw	low((__pbssBANK0)+033h)
+   134  0251  120A  118A  2266   	fcall	clear_ram
+              120A  118A         
+   135                           psect cinit,class=CODE,delta=2
+   136                           global end_of_initialization
+   137                           
+   138                           ;End of C runtime variable initialization code
+   139                           
+   140  0256                     end_of_initialization:
+   141  0256  0183               clrf status
+   142  0257  120A  118A  2815   ljmp _main	;jump to C main() function
+   143                           psect	cstackCOMMON,class=COMMON,space=1
+   144                           global __pcstackCOMMON
+   145  0070                     __pcstackCOMMON:
+   146                           	global	?_reception
+   147  0070                     ?_reception:	; 0 bytes @ 0x0
+   148                           	global	??_reception
+   149  0070                     ??_reception:	; 0 bytes @ 0x0
+   150                           	global	?_decalage_buffer
+   151  0070                     ?_decalage_buffer:	; 0 bytes @ 0x0
+   152                           	global	?_send_usart
+   153  0070                     ?_send_usart:	; 0 bytes @ 0x0
+   154                           	global	?_main
+   155  0070                     ?_main:	; 0 bytes @ 0x0
+   156                           	global	?_longueur_trame
+   157  0070                     ?_longueur_trame:	; 1 bytes @ 0x0
+   158  0070                     	ds	5
+   159                           	global	??_decalage_buffer
+   160  0075                     ??_decalage_buffer:	; 0 bytes @ 0x5
+   161                           	global	??_send_usart
+   162  0075                     ??_send_usart:	; 0 bytes @ 0x5
+   163                           	global	??_longueur_trame
+   164  0075                     ??_longueur_trame:	; 0 bytes @ 0x5
+   165                           	global	send_usart@octet
+   166  0075                     send_usart@octet:	; 1 bytes @ 0x5
+   167  0075                     	ds	1
+   168                           	global	longueur_trame@titre
+   169  0076                     longueur_trame@titre:	; 1 bytes @ 0x6
+   170  0076                     	ds	1
+   171                           	global	longueur_trame@curTrameLength
+   172  0077                     longueur_trame@curTrameLength:	; 1 bytes @ 0x7
+   173  0077                     	ds	2
+   174                           psect	cstackBANK0,class=BANK0,space=1
+   175                           global __pcstackBANK0
+   176  0053                     __pcstackBANK0:
+   177                           	global	decalage_buffer@ind
+   178  0053                     decalage_buffer@ind:	; 1 bytes @ 0x0
+   179  0053                     	ds	1
+   180                           	global	decalage_buffer@i
+   181  0054                     decalage_buffer@i:	; 1 bytes @ 0x1
+   182  0054                     	ds	1
+   183                           	global	??_main
+   184  0055                     ??_main:	; 0 bytes @ 0x2
+   185  0055                     	ds	5
+   186                           	global	main@consigne_couple
+   187  005A                     main@consigne_couple:	; 1 bytes @ 0x7
+   188  005A                     	ds	1
+   189                           	global	main@check_sum
+   190  005B                     main@check_sum:	; 1 bytes @ 0x8
+   191  005B                     	ds	1
+   192                           	global	main@data_type
+   193  005C                     main@data_type:	; 1 bytes @ 0x9
+   194  005C                     	ds	1
+   195                           	global	main@i
+   196  005D                     main@i:	; 1 bytes @ 0xA
+   197  005D                     	ds	1
+   198                           	global	main@frame_length
+   199  005E                     main@frame_length:	; 1 bytes @ 0xB
+   200  005E                     	ds	1
+   201                           	global	main@indice
+   202  005F                     main@indice:	; 1 bytes @ 0xC
+   203  005F                     	ds	1
+   204 ;;Data sizes: Strings 0, constant 0, data 0, bss 51, persistent 0 stack 0
+   205 ;;Auto spaces:   Size  Autos    Used
+   206 ;; COMMON          14      9       9
+   207 ;; BANK0           80     13      64
+   208 ;; BANK1           80      0       0
+   209 ;; BANK3           96      0       0
+   210 ;; BANK2           96      0       0
+   211                           
+   212 ;;
+   213 ;; Pointer list with targets:
+   214                           
+   215                           
+   216                           
+   217 ;;
+   218 ;; Critical Paths under _main in COMMON
+   219 ;;
+   220 ;;   _main->_decalage_buffer
+   221 ;;
+   222 ;; Critical Paths under _reception in COMMON
+   223 ;;
+   224 ;;   None.
+   225 ;;
+   226 ;; Critical Paths under _main in BANK0
+   227 ;;
+   228 ;;   _main->_decalage_buffer
+   229 ;;
+   230 ;; Critical Paths under _reception in BANK0
+   231 ;;
+   232 ;;   None.
+   233 ;;
+   234 ;; Critical Paths under _main in BANK1
+   235 ;;
+   236 ;;   None.
+   237 ;;
+   238 ;; Critical Paths under _reception in BANK1
+   239 ;;
+   240 ;;   None.
+   241 ;;
+   242 ;; Critical Paths under _main in BANK3
+   243 ;;
+   244 ;;   None.
+   245 ;;
+   246 ;; Critical Paths under _reception in BANK3
+   247 ;;
+   248 ;;   None.
+   249 ;;
+   250 ;; Critical Paths under _main in BANK2
+   251 ;;
+   252 ;;   None.
+   253 ;;
+   254 ;; Critical Paths under _reception in BANK2
+   255 ;;
+   256 ;;   None.
+   257                           
+   258 ;;
+   259 ;;Main: autosize = 0, tempsize = 5, incstack = 0, save=0
+   260 ;;
+   261                           
+   262 ;;
+   263 ;;Call Graph Tables:
+   264 ;;
+   265 ;; ---------------------------------------------------------------------------------
+   266 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   267 ;; ---------------------------------------------------------------------------------
+   268 ;; (0) _main                                                13    13      0    1151
+   269 ;;                                              2 BANK0     11    11      0
+   270 ;;                         _send_usart
+   271 ;;                     _longueur_trame
+   272 ;;                    _decalage_buffer
+   273 ;; ---------------------------------------------------------------------------------
+   274 ;; (1) _longueur_trame                                       3     3      0      50
+   275 ;;                                              5 COMMON     3     3      0
+   276 ;; ---------------------------------------------------------------------------------
+   277 ;; (1) _send_usart                                           1     1      0      22
+   278 ;;                                              5 COMMON     1     1      0
+   279 ;; ---------------------------------------------------------------------------------
+   280 ;; (1) _decalage_buffer                                      6     6      0     134
+   281 ;;                                              5 COMMON     4     4      0
+   282 ;;                                              0 BANK0      2     2      0
+   283 ;; ---------------------------------------------------------------------------------
+   284 ;; Estimated maximum stack depth 1
+   285 ;; ---------------------------------------------------------------------------------
+   286 ;; (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+   287 ;; ---------------------------------------------------------------------------------
+   288 ;; (2) _reception                                            5     5      0       0
+   289 ;;                                              0 COMMON     5     5      0
+   290 ;; ---------------------------------------------------------------------------------
+   291 ;; Estimated maximum stack depth 2
+   292 ;; ---------------------------------------------------------------------------------
+   293                           
+   294 ;; Call Graph Graphs:
+   295                           
+   296 ;; _main (ROOT)
+   297 ;;   _send_usart
+   298 ;;   _longueur_trame
+   299 ;;   _decalage_buffer
+   300 ;;
+   301 ;; _reception (ROOT)
+   302 ;;
+   303                           
+   304 ;; Address spaces:
+   305                           
+   306 ;;Name               Size   Autos  Total    Cost      Usage
+   307 ;;BITCOMMON            E      0       0       0        0.0%
+   308 ;;EEDATA             100      0       0       0        0.0%
+   309 ;;NULL                 0      0       0       0        0.0%
+   310 ;;CODE                 0      0       0       0        0.0%
+   311 ;;COMMON               E      9       9       1       64.3%
+   312 ;;BITSFR0              0      0       0       1        0.0%
+   313 ;;SFR0                 0      0       0       1        0.0%
+   314 ;;BITSFR1              0      0       0       2        0.0%
+   315 ;;SFR1                 0      0       0       2        0.0%
+   316 ;;STACK                0      0       1       2        0.0%
+   317 ;;ABS                  0      0      49       3        0.0%
+   318 ;;BITBANK0            50      0       0       4        0.0%
+   319 ;;BITSFR3              0      0       0       4        0.0%
+   320 ;;SFR3                 0      0       0       4        0.0%
+   321 ;;BANK0               50      D      40       5       80.0%
+   322 ;;BITSFR2              0      0       0       5        0.0%
+   323 ;;SFR2                 0      0       0       5        0.0%
+   324 ;;BITBANK1            50      0       0       6        0.0%
+   325 ;;BANK1               50      0       0       7        0.0%
+   326 ;;BITBANK3            60      0       0       8        0.0%
+   327 ;;BANK3               60      0       0       9        0.0%
+   328 ;;BITBANK2            60      0       0      10        0.0%
+   329 ;;BANK2               60      0       0      11        0.0%
+   330 ;;DATA                 0      0      4A      12        0.0%
+   331                           
+   332                           	global	_main
+   333                           psect	maintext,global,class=CODE,delta=2
+   334                           global __pmaintext
+   335  0015                     __pmaintext:
+   336                           
+   337 ;; *************** function _main *****************
+   338 ;; Defined at:
+   339 ;;		line 102 in file "C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_communication_3.0.c
+       "
+   340 ;; Parameters:    Size  Location     Type
+   341 ;;		None
+   342 ;; Auto vars:     Size  Location     Type
+   343 ;;  indice          1   12[BANK0 ] unsigned char 
+   344 ;;  frame_length    1   11[BANK0 ] unsigned char 
+   345 ;;  i               1   10[BANK0 ] unsigned char 
+   346 ;;  data_type       1    9[BANK0 ] unsigned char 
+   347 ;;  check_sum       1    8[BANK0 ] unsigned char 
+   348 ;;  consigne_cou    1    7[BANK0 ] unsigned char 
+   349 ;;  data_nb         1    0        unsigned char 
+   350 ;;  j               1    0        unsigned char 
+   351 ;; Return value:  Size  Location     Type
+   352 ;;		None               void
+   353 ;; Registers used:
+   354 ;;		wreg, fsr0l, fsr0h, status,2, status,0, pclath, cstack
+   355 ;; Tracked objects:
+   356 ;;		On entry : 17F/0
+   357 ;;		On exit  : 0/0
+   358 ;;		Unchanged: 0/0
+   359 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   360 ;;      Params:         0       0       0       0       0
+   361 ;;      Locals:         0       6       0       0       0
+   362 ;;      Temps:          0       5       0       0       0
+   363 ;;      Totals:         0      11       0       0       0
+   364 ;;Total ram usage:       11 bytes
+   365 ;; Hardware stack levels required when called:    2
+   366 ;; This function calls:
+   367 ;;		_send_usart
+   368 ;;		_longueur_trame
+   369 ;;		_decalage_buffer
+   370 ;; This function is called by:
+   371 ;;		Startup code after reset
+   372 ;; This function uses a non-reentrant model
+   373 ;;
+   374                           psect	maintext
+   375                           	file	"C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_co
+                                 mmunication_3.0.c"
+   376                           	line	102
+   377                           	global	__size_of_main
+   378  01A3                     	__size_of_main	equ	__end_of_main-_main
+   379                           	
+   380  0015                     _main:	
+   381                           	opt	stack 6
+   382                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+pclath+cstack]
+   383                           	line	106
+   384                           	
+   385  0015                     l2040:	
+   386                           ;serial_communication_3.0.c: 104: char i;
+   387                           ;serial_communication_3.0.c: 105: char j;
+   388                           ;serial_communication_3.0.c: 106: char check_sum=0;
+   389  0015  1283               	bcf	status, 5	;RP0=0, select bank0
+   390  0016  1303               	bcf	status, 6	;RP1=0, select bank0
+   391  0017  01DB               	clrf	(main@check_sum)
+   392                           	line	115
+   393                           	
+   394  0018                     l2042:	
+   395                           ;serial_communication_3.0.c: 107: char consigne_couple;
+   396                           ;serial_communication_3.0.c: 108: char indice;
+   397                           ;serial_communication_3.0.c: 109: char frame_length;
+   398                           ;serial_communication_3.0.c: 110: char data_nb;
+   399                           ;serial_communication_3.0.c: 111: char data_type;
+   400                           ;serial_communication_3.0.c: 115: TXSTA=0b00000110;
+   401  0018  3006               	movlw	(06h)
+   402  0019  1683               	bsf	status, 5	;RP0=1, select bank1
+   403  001A  1303               	bcf	status, 6	;RP1=0, select bank1
+   404  001B  0098               	movwf	(152)^080h	;volatile
+   405                           	line	116
+   406                           ;serial_communication_3.0.c: 116: RCSTA=0b10001110;
+   407  001C  308E               	movlw	(08Eh)
+   408  001D  1283               	bcf	status, 5	;RP0=0, select bank0
+   409  001E  1303               	bcf	status, 6	;RP1=0, select bank0
+   410  001F  0098               	movwf	(24)	;volatile
+   411                           	line	117
+   412                           ;serial_communication_3.0.c: 117: SPBRG=20;
+   413  0020  3014               	movlw	(014h)
+   414  0021  1683               	bsf	status, 5	;RP0=1, select bank1
+   415  0022  1303               	bcf	status, 6	;RP1=0, select bank1
+   416  0023  0099               	movwf	(153)^080h	;volatile
+   417                           	line	119
+   418                           	
+   419  0024                     l2044:	
+   420                           ;serial_communication_3.0.c: 119: INTCON=0;
+   421  0024  018B               	clrf	(11)	;volatile
+   422                           	line	120
+   423                           	
+   424  0025                     l2046:	
+   425                           ;serial_communication_3.0.c: 120: PIE1=0;
+   426  0025  018C               	clrf	(140)^080h	;volatile
+   427                           	line	121
+   428                           	
+   429  0026                     l2048:	
+   430                           ;serial_communication_3.0.c: 121: TXEN=1;
+   431  0026  1698               	bsf	(1221/8)^080h,(1221)&7
+   432                           	line	122
+   433                           	
+   434  0027                     l2050:	
+   435                           ;serial_communication_3.0.c: 122: SPEN=1;
+   436  0027  1283               	bcf	status, 5	;RP0=0, select bank0
+   437  0028  1303               	bcf	status, 6	;RP1=0, select bank0
+   438  0029  1798               	bsf	(199/8),(199)&7
+   439                           	line	123
+   440                           	
+   441  002A                     l2052:	
+   442                           ;serial_communication_3.0.c: 123: CREN=1;
+   443  002A  1618               	bsf	(196/8),(196)&7
+   444                           	line	124
+   445                           	
+   446  002B                     l2054:	
+   447                           ;serial_communication_3.0.c: 124: GIE=1;
+   448  002B  178B               	bsf	(95/8),(95)&7
+   449                           	line	125
+   450                           	
+   451  002C                     l2056:	
+   452                           ;serial_communication_3.0.c: 125: PEIE=1;
+   453  002C  170B               	bsf	(94/8),(94)&7
+   454                           	line	126
+   455                           	
+   456  002D                     l2058:	
+   457                           ;serial_communication_3.0.c: 126: RCIE=1;
+   458  002D  1683               	bsf	status, 5	;RP0=1, select bank1
+   459  002E  1303               	bcf	status, 6	;RP1=0, select bank1
+   460  002F  168C               	bsf	(1125/8)^080h,(1125)&7
+   461                           	line	128
+   462                           	
+   463  0030                     l2060:	
+   464                           ;serial_communication_3.0.c: 128: TRISA=0b00000000;
+   465  0030  0185               	clrf	(133)^080h	;volatile
+   466                           	line	129
+   467                           	
+   468  0031                     l2062:	
+   469                           ;serial_communication_3.0.c: 129: TRISB=0b00000000;
+   470  0031  0186               	clrf	(134)^080h	;volatile
+   471                           	line	130
+   472                           	
+   473  0032                     l2064:	
+   474                           ;serial_communication_3.0.c: 130: TRISD=0b00000000;
+   475  0032  0188               	clrf	(136)^080h	;volatile
+   476                           	line	131
+   477                           	
+   478  0033                     l2066:	
+   479                           ;serial_communication_3.0.c: 131: PORTA=0;
+   480  0033  1283               	bcf	status, 5	;RP0=0, select bank0
+   481  0034  1303               	bcf	status, 6	;RP1=0, select bank0
+   482  0035  0185               	clrf	(5)	;volatile
+   483                           	line	132
+   484                           	
+   485  0036                     l2068:	
+   486                           ;serial_communication_3.0.c: 132: PORTB=0;
+   487  0036  0186               	clrf	(6)	;volatile
+   488                           	line	133
+   489                           	
+   490  0037                     l2070:	
+   491                           ;serial_communication_3.0.c: 133: PORTD=0;
+   492  0037  0188               	clrf	(8)	;volatile
+   493                           	line	139
+   494                           	
+   495  0038                     l2072:	
+   496                           ;serial_communication_3.0.c: 139: send_usart(153);
+   497  0038  3099               	movlw	(099h)
+   498  0039  120A  118A  225A   	fcall	_send_usart
+              120A  118A         
+   499                           	line	140
+   500                           	
+   501  003E                     l2074:	
+   502                           ;serial_communication_3.0.c: 140: send_usart(25);
+   503  003E  3019               	movlw	(019h)
+   504  003F  120A  118A  225A   	fcall	_send_usart
+              120A  118A         
+   505                           	line	141
+   506                           	
+   507  0044                     l2076:	
+   508                           ;serial_communication_3.0.c: 141: send_usart(25+153);
+   509  0044  30B2               	movlw	(0B2h)
+   510  0045  120A  118A  225A   	fcall	_send_usart
+              120A  118A         
+   511  004A  284B               	goto	l2078
+   512                           	line	145
+   513                           ;serial_communication_3.0.c: 145: while (1){
+   514                           	
+   515  004B                     l674:	
+   516                           	line	150
+   517                           	
+   518  004B                     l2078:	
+   519                           ;serial_communication_3.0.c: 150: RB0=!RB0;
+   520  004B  3001               	movlw	1<<((48)&7)
+   521  004C  1283               	bcf	status, 5	;RP0=0, select bank0
+   522  004D  1303               	bcf	status, 6	;RP1=0, select bank0
+   523  004E  0686               	xorwf	((48)/8),f
+   524                           	line	154
+   525                           	
+   526  004F                     l2080:	
+   527                           ;serial_communication_3.0.c: 154: indice=0;
+   528  004F  01DF               	clrf	(main@indice)
+   529                           	line	156
+   530                           ;serial_communication_3.0.c: 156: while(indice+4 < top_buffer){
+   531  0050  2994               	goto	l2146
+   532                           	
+   533  0051                     l676:	
+   534                           	line	159
+   535                           ;serial_communication_3.0.c: 159: while((buffer[indice])!=153 && indice < top_buffer){
+   536  0051  2857               	goto	l2084
+   537                           	
+   538  0052                     l678:	
+   539                           	line	160
+   540                           	
+   541  0052                     l2082:	
+   542                           ;serial_communication_3.0.c: 160: indice++;
+   543  0052  3001               	movlw	(01h)
+   544  0053  00D5               	movwf	(??_main+0)+0
+   545  0054  0855               	movf	(??_main+0)+0,w
+   546  0055  07DF               	addwf	(main@indice),f
+   547  0056  2857               	goto	l2084
+   548                           	line	161
+   549                           	
+   550  0057                     l677:	
+   551                           	line	159
+   552                           	
+   553  0057                     l2084:	
+   554  0057  1283               	bcf	status, 5	;RP0=0, select bank0
+   555  0058  1303               	bcf	status, 6	;RP1=0, select bank0
+   556  0059  085F               	movf	(main@indice),w
+   557  005A  3E20               	addlw	_buffer&0ffh
+   558  005B  0084               	movwf	fsr0
+   559  005C  1383               	bcf	status, 7	;select IRP bank0
+   560  005D  0800               	movf	indf,w
+   561  005E  3A99               	xorlw	099h
+   562  005F  1903               	skipnz
+   563  0060  2862               	goto	u2321
+   564  0061  2863               	goto	u2320
+   565  0062                     u2321:
+   566  0062  286B               	goto	l2088
+   567  0063                     u2320:
+   568                           	
+   569  0063                     l2086:	
+   570  0063  0852               	movf	(_top_buffer),w
+   571  0064  025F               	subwf	(main@indice),w
+   572  0065  1C03               	skipc
+   573  0066  2868               	goto	u2331
+   574  0067  2869               	goto	u2330
+   575  0068                     u2331:
+   576  0068  2852               	goto	l2082
+   577  0069                     u2330:
+   578  0069  286B               	goto	l2088
+   579                           	
+   580  006A                     l680:	
+   581  006A  286B               	goto	l2088
+   582                           	
+   583  006B                     l681:	
+   584                           	line	164
+   585                           	
+   586  006B                     l2088:	
+   587                           ;serial_communication_3.0.c: 161: }
+   588                           ;serial_communication_3.0.c: 164: if(indice+1 < top_buffer){
+   589  006B  085F               	movf	(main@indice),w
+   590  006C  3E01               	addlw	low(01h)
+   591  006D  00D5               	movwf	(??_main+0)+0
+   592  006E  3000               	movlw	high(01h)
+   593  006F  1803               	skipnc
+   594  0070  3001               	movlw	(high(01h)+1)&0ffh
+   595  0071  00D6               	movwf	((??_main+0)+0)+1
+   596  0072  0856               	movf	1+(??_main+0)+0,w
+   597  0073  3A80               	xorlw	80h
+   598  0074  00D7               	movwf	(??_main+2)+0
+   599  0075  3080               	movlw	80h
+   600  0076  0257               	subwf	(??_main+2)+0,w
+   601  0077  1D03               	skipz
+   602  0078  287B               	goto	u2345
+   603  0079  0852               	movf	(_top_buffer),w
+   604  007A  0255               	subwf	0+(??_main+0)+0,w
+   605  007B                     u2345:
+   606                           
+   607  007B  1803               	skipnc
+   608  007C  287E               	goto	u2341
+   609  007D  287F               	goto	u2340
+   610  007E                     u2341:
+   611  007E  2994               	goto	l2146
+   612  007F                     u2340:
+   613                           	line	166
+   614                           	
+   615  007F                     l2090:	
+   616                           ;serial_communication_3.0.c: 166: data_type = buffer[indice+1];
+   617  007F  1283               	bcf	status, 5	;RP0=0, select bank0
+   618  0080  1303               	bcf	status, 6	;RP1=0, select bank0
+   619  0081  085F               	movf	(main@indice),w
+   620  0082  3E01               	addlw	01h
+   621  0083  3E20               	addlw	_buffer&0ffh
+   622  0084  0084               	movwf	fsr0
+   623  0085  1383               	bcf	status, 7	;select IRP bank0
+   624  0086  0800               	movf	indf,w
+   625  0087  00D5               	movwf	(??_main+0)+0
+   626  0088  0855               	movf	(??_main+0)+0,w
+   627  0089  00DC               	movwf	(main@data_type)
+   628                           	line	168
+   629                           ;serial_communication_3.0.c: 168: switch(data_type){
+   630  008A  298A               	goto	l2144
+   631                           	line	170
+   632                           ;serial_communication_3.0.c: 170: case 139:
+   633                           	
+   634  008B                     l684:	
+   635                           	line	171
+   636                           	
+   637  008B                     l2092:	
+   638                           ;serial_communication_3.0.c: 171: frame_length = longueur_trame(data_type);
+   639  008B  085C               	movf	(main@data_type),w
+   640  008C  120A  118A  21F0   	fcall	_longueur_trame
+              120A  118A         
+   641  0091  1283               	bcf	status, 5	;RP0=0, select bank0
+   642  0092  1303               	bcf	status, 6	;RP1=0, select bank0
+   643  0093  00D5               	movwf	(??_main+0)+0
+   644  0094  0855               	movf	(??_main+0)+0,w
+   645  0095  00DE               	movwf	(main@frame_length)
+   646                           	line	172
+   647                           	
+   648  0096                     l2094:	
+   649                           ;serial_communication_3.0.c: 172: check_sum=0;
+   650  0096  01DB               	clrf	(main@check_sum)
+   651                           	line	174
+   652                           	
+   653  0097                     l2096:	
+   654                           ;serial_communication_3.0.c: 174: if(indice + frame_length -1 < top_buffer){
+   655  0097  085F               	movf	(main@indice),w
+   656  0098  075E               	addwf	(main@frame_length),w
+   657  0099  00D5               	movwf	(??_main+0)+0
+   658  009A  01D6               	clrf	(??_main+0)+0+1
+   659  009B  0DD6               	rlf	1+(??_main+0)+0,f
+   660                           	
+   661  009C  0855               	movf	0+(??_main+0)+0,w
+   662  009D  3EFF               	addlw	low(-1)
+   663  009E  00D7               	movwf	(??_main+2)+0
+   664  009F  0856               	movf	1+(??_main+0)+0,w
+   665  00A0  1803               	skipnc
+   666  00A1  3E01               	addlw	1
+   667  00A2  3EFF               	addlw	high(-1)
+   668  00A3  00D8               	movwf	1+(??_main+2)+0
+   669  00A4  0858               	movf	1+(??_main+2)+0,w
+   670  00A5  3A80               	xorlw	80h
+   671  00A6  00D9               	movwf	(??_main+4)+0
+   672  00A7  3080               	movlw	80h
+   673  00A8  0259               	subwf	(??_main+4)+0,w
+   674  00A9  1D03               	skipz
+   675  00AA  28AD               	goto	u2355
+   676  00AB  0852               	movf	(_top_buffer),w
+   677  00AC  0257               	subwf	0+(??_main+2)+0,w
+   678  00AD                     u2355:
+   679                           
+   680  00AD  1803               	skipnc
+   681  00AE  28B0               	goto	u2351
+   682  00AF  28B1               	goto	u2350
+   683  00B0                     u2351:
+   684  00B0  2994               	goto	l2146
+   685  00B1                     u2350:
+   686                           	line	175
+   687                           	
+   688  00B1                     l2098:	
+   689                           ;serial_communication_3.0.c: 175: for(i=indice+1;i<indice + frame_length -1;i++){
+   690  00B1  1283               	bcf	status, 5	;RP0=0, select bank0
+   691  00B2  1303               	bcf	status, 6	;RP1=0, select bank0
+   692  00B3  085F               	movf	(main@indice),w
+   693  00B4  3E01               	addlw	01h
+   694  00B5  00D5               	movwf	(??_main+0)+0
+   695  00B6  0855               	movf	(??_main+0)+0,w
+   696  00B7  00DD               	movwf	(main@i)
+   697  00B8  28C8               	goto	l2104
+   698                           	
+   699  00B9                     l687:	
+   700                           	line	176
+   701                           	
+   702  00B9                     l2100:	
+   703                           ;serial_communication_3.0.c: 176: check_sum+=buffer[i];
+   704  00B9  1283               	bcf	status, 5	;RP0=0, select bank0
+   705  00BA  1303               	bcf	status, 6	;RP1=0, select bank0
+   706  00BB  085D               	movf	(main@i),w
+   707  00BC  3E20               	addlw	_buffer&0ffh
+   708  00BD  0084               	movwf	fsr0
+   709  00BE  1383               	bcf	status, 7	;select IRP bank0
+   710  00BF  0800               	movf	indf,w
+   711  00C0  00D5               	movwf	(??_main+0)+0
+   712  00C1  0855               	movf	(??_main+0)+0,w
+   713  00C2  07DB               	addwf	(main@check_sum),f
+   714                           	line	175
+   715                           	
+   716  00C3                     l2102:	
+   717  00C3  3001               	movlw	(01h)
+   718  00C4  00D5               	movwf	(??_main+0)+0
+   719  00C5  0855               	movf	(??_main+0)+0,w
+   720  00C6  07DD               	addwf	(main@i),f
+   721  00C7  28C8               	goto	l2104
+   722                           	
+   723  00C8                     l686:	
+   724                           	
+   725  00C8                     l2104:	
+   726  00C8  085F               	movf	(main@indice),w
+   727  00C9  075E               	addwf	(main@frame_length),w
+   728  00CA  00D5               	movwf	(??_main+0)+0
+   729  00CB  01D6               	clrf	(??_main+0)+0+1
+   730  00CC  0DD6               	rlf	1+(??_main+0)+0,f
+   731                           	
+   732  00CD  0855               	movf	0+(??_main+0)+0,w
+   733  00CE  3EFF               	addlw	low(-1)
+   734  00CF  00D7               	movwf	(??_main+2)+0
+   735  00D0  0856               	movf	1+(??_main+0)+0,w
+   736  00D1  1803               	skipnc
+   737  00D2  3E01               	addlw	1
+   738  00D3  3EFF               	addlw	high(-1)
+   739  00D4  00D8               	movwf	1+(??_main+2)+0
+   740  00D5  0858               	movf	1+(??_main+2)+0,w
+   741  00D6  3A80               	xorlw	80h
+   742  00D7  3C80               	sublw	080h
+   743  00D8  1D03               	skipz
+   744  00D9  28DC               	goto	u2365
+   745  00DA  0857               	movf	0+(??_main+2)+0,w
+   746  00DB  025D               	subwf	(main@i),w
+   747  00DC                     u2365:
+   748                           
+   749  00DC  1C03               	skipc
+   750  00DD  28DF               	goto	u2361
+   751  00DE  28E0               	goto	u2360
+   752  00DF                     u2361:
+   753  00DF  28B9               	goto	l2100
+   754  00E0                     u2360:
+   755  00E0  28E1               	goto	l2106
+   756                           	
+   757  00E1                     l688:	
+   758                           	line	179
+   759                           	
+   760  00E1                     l2106:	
+   761                           ;serial_communication_3.0.c: 177: }
+   762                           ;serial_communication_3.0.c: 179: if(buffer[indice + frame_length - 1 ] == check_sum){
+   763  00E1  1283               	bcf	status, 5	;RP0=0, select bank0
+   764  00E2  1303               	bcf	status, 6	;RP1=0, select bank0
+   765  00E3  085E               	movf	(main@frame_length),w
+   766  00E4  075F               	addwf	(main@indice),w
+   767  00E5  3EFF               	addlw	0FFh
+   768  00E6  3E20               	addlw	_buffer&0ffh
+   769  00E7  0084               	movwf	fsr0
+   770  00E8  1383               	bcf	status, 7	;select IRP bank0
+   771  00E9  0800               	movf	indf,w
+   772  00EA  065B               	xorwf	(main@check_sum),w
+   773  00EB  1D03               	skipz
+   774  00EC  28EE               	goto	u2371
+   775  00ED  28EF               	goto	u2370
+   776  00EE                     u2371:
+   777  00EE  28FF               	goto	l2114
+   778  00EF                     u2370:
+   779                           	line	180
+   780                           	
+   781  00EF                     l2108:	
+   782                           ;serial_communication_3.0.c: 180: consigne_couple = buffer[indice+2];
+   783  00EF  085F               	movf	(main@indice),w
+   784  00F0  3E02               	addlw	02h
+   785  00F1  3E20               	addlw	_buffer&0ffh
+   786  00F2  0084               	movwf	fsr0
+   787  00F3  0800               	movf	indf,w
+   788  00F4  00D5               	movwf	(??_main+0)+0
+   789  00F5  0855               	movf	(??_main+0)+0,w
+   790  00F6  00DA               	movwf	(main@consigne_couple)
+   791                           	line	181
+   792                           	
+   793  00F7                     l2110:	
+   794                           ;serial_communication_3.0.c: 181: PORTD = consigne_couple;
+   795  00F7  085A               	movf	(main@consigne_couple),w
+   796  00F8  0088               	movwf	(8)	;volatile
+   797                           	line	182
+   798                           	
+   799  00F9                     l2112:	
+   800                           ;serial_communication_3.0.c: 182: indice = indice+frame_length;
+   801  00F9  085E               	movf	(main@frame_length),w
+   802  00FA  075F               	addwf	(main@indice),w
+   803  00FB  00D5               	movwf	(??_main+0)+0
+   804  00FC  0855               	movf	(??_main+0)+0,w
+   805  00FD  00DF               	movwf	(main@indice)
+   806                           	line	183
+   807                           ;serial_communication_3.0.c: 183: }
+   808  00FE  2994               	goto	l2146
+   809                           	line	184
+   810                           	
+   811  00FF                     l689:	
+   812                           	
+   813  00FF                     l2114:	
+   814                           ;serial_communication_3.0.c: 184: else{indice = indice+frame_length;}
+   815  00FF  085E               	movf	(main@frame_length),w
+   816  0100  075F               	addwf	(main@indice),w
+   817  0101  00D5               	movwf	(??_main+0)+0
+   818  0102  0855               	movf	(??_main+0)+0,w
+   819  0103  00DF               	movwf	(main@indice)
+   820  0104  2994               	goto	l2146
+   821                           	
+   822  0105                     l690:	
+   823  0105  2994               	goto	l2146
+   824                           	line	185
+   825                           	
+   826  0106                     l685:	
+   827                           	line	186
+   828                           ;serial_communication_3.0.c: 185: }
+   829                           ;serial_communication_3.0.c: 186: break;
+   830  0106  2994               	goto	l2146
+   831                           	line	188
+   832                           ;serial_communication_3.0.c: 188: case 138:
+   833                           	
+   834  0107                     l692:	
+   835                           	line	189
+   836                           	
+   837  0107                     l2116:	
+   838                           ;serial_communication_3.0.c: 189: frame_length = longueur_trame(data_type);
+   839  0107  085C               	movf	(main@data_type),w
+   840  0108  120A  118A  21F0   	fcall	_longueur_trame
+              120A  118A         
+   841  010D  1283               	bcf	status, 5	;RP0=0, select bank0
+   842  010E  1303               	bcf	status, 6	;RP1=0, select bank0
+   843  010F  00D5               	movwf	(??_main+0)+0
+   844  0110  0855               	movf	(??_main+0)+0,w
+   845  0111  00DE               	movwf	(main@frame_length)
+   846                           	line	190
+   847                           	
+   848  0112                     l2118:	
+   849                           ;serial_communication_3.0.c: 190: check_sum=0;
+   850  0112  01DB               	clrf	(main@check_sum)
+   851                           	line	192
+   852                           	
+   853  0113                     l2120:	
+   854                           ;serial_communication_3.0.c: 192: if(indice + frame_length -1 < top_buffer){
+   855  0113  085F               	movf	(main@indice),w
+   856  0114  075E               	addwf	(main@frame_length),w
+   857  0115  00D5               	movwf	(??_main+0)+0
+   858  0116  01D6               	clrf	(??_main+0)+0+1
+   859  0117  0DD6               	rlf	1+(??_main+0)+0,f
+   860                           	
+   861  0118  0855               	movf	0+(??_main+0)+0,w
+   862  0119  3EFF               	addlw	low(-1)
+   863  011A  00D7               	movwf	(??_main+2)+0
+   864  011B  0856               	movf	1+(??_main+0)+0,w
+   865  011C  1803               	skipnc
+   866  011D  3E01               	addlw	1
+   867  011E  3EFF               	addlw	high(-1)
+   868  011F  00D8               	movwf	1+(??_main+2)+0
+   869  0120  0858               	movf	1+(??_main+2)+0,w
+   870  0121  3A80               	xorlw	80h
+   871  0122  00D9               	movwf	(??_main+4)+0
+   872  0123  3080               	movlw	80h
+   873  0124  0259               	subwf	(??_main+4)+0,w
+   874  0125  1D03               	skipz
+   875  0126  2929               	goto	u2385
+   876  0127  0852               	movf	(_top_buffer),w
+   877  0128  0257               	subwf	0+(??_main+2)+0,w
+   878  0129                     u2385:
+   879                           
+   880  0129  1803               	skipnc
+   881  012A  292C               	goto	u2381
+   882  012B  292D               	goto	u2380
+   883  012C                     u2381:
+   884  012C  2994               	goto	l2146
+   885  012D                     u2380:
+   886                           	line	193
+   887                           	
+   888  012D                     l2122:	
+   889                           ;serial_communication_3.0.c: 193: for(i=indice+1;i<indice + frame_length -1;i++){
+   890  012D  1283               	bcf	status, 5	;RP0=0, select bank0
+   891  012E  1303               	bcf	status, 6	;RP1=0, select bank0
+   892  012F  085F               	movf	(main@indice),w
+   893  0130  3E01               	addlw	01h
+   894  0131  00D5               	movwf	(??_main+0)+0
+   895  0132  0855               	movf	(??_main+0)+0,w
+   896  0133  00DD               	movwf	(main@i)
+   897  0134  2944               	goto	l2128
+   898                           	
+   899  0135                     l695:	
+   900                           	line	194
+   901                           	
+   902  0135                     l2124:	
+   903                           ;serial_communication_3.0.c: 194: check_sum+=buffer[i];
+   904  0135  1283               	bcf	status, 5	;RP0=0, select bank0
+   905  0136  1303               	bcf	status, 6	;RP1=0, select bank0
+   906  0137  085D               	movf	(main@i),w
+   907  0138  3E20               	addlw	_buffer&0ffh
+   908  0139  0084               	movwf	fsr0
+   909  013A  1383               	bcf	status, 7	;select IRP bank0
+   910  013B  0800               	movf	indf,w
+   911  013C  00D5               	movwf	(??_main+0)+0
+   912  013D  0855               	movf	(??_main+0)+0,w
+   913  013E  07DB               	addwf	(main@check_sum),f
+   914                           	line	193
+   915                           	
+   916  013F                     l2126:	
+   917  013F  3001               	movlw	(01h)
+   918  0140  00D5               	movwf	(??_main+0)+0
+   919  0141  0855               	movf	(??_main+0)+0,w
+   920  0142  07DD               	addwf	(main@i),f
+   921  0143  2944               	goto	l2128
+   922                           	
+   923  0144                     l694:	
+   924                           	
+   925  0144                     l2128:	
+   926  0144  085F               	movf	(main@indice),w
+   927  0145  075E               	addwf	(main@frame_length),w
+   928  0146  00D5               	movwf	(??_main+0)+0
+   929  0147  01D6               	clrf	(??_main+0)+0+1
+   930  0148  0DD6               	rlf	1+(??_main+0)+0,f
+   931                           	
+   932  0149  0855               	movf	0+(??_main+0)+0,w
+   933  014A  3EFF               	addlw	low(-1)
+   934  014B  00D7               	movwf	(??_main+2)+0
+   935  014C  0856               	movf	1+(??_main+0)+0,w
+   936  014D  1803               	skipnc
+   937  014E  3E01               	addlw	1
+   938  014F  3EFF               	addlw	high(-1)
+   939  0150  00D8               	movwf	1+(??_main+2)+0
+   940  0151  0858               	movf	1+(??_main+2)+0,w
+   941  0152  3A80               	xorlw	80h
+   942  0153  3C80               	sublw	080h
+   943  0154  1D03               	skipz
+   944  0155  2958               	goto	u2395
+   945  0156  0857               	movf	0+(??_main+2)+0,w
+   946  0157  025D               	subwf	(main@i),w
+   947  0158                     u2395:
+   948                           
+   949  0158  1C03               	skipc
+   950  0159  295B               	goto	u2391
+   951  015A  295C               	goto	u2390
+   952  015B                     u2391:
+   953  015B  2935               	goto	l2124
+   954  015C                     u2390:
+   955  015C  295D               	goto	l2130
+   956                           	
+   957  015D                     l696:	
+   958                           	line	197
+   959                           	
+   960  015D                     l2130:	
+   961                           ;serial_communication_3.0.c: 195: }
+   962                           ;serial_communication_3.0.c: 197: if(buffer[indice + frame_length - 1 ] == check_sum){
+   963  015D  1283               	bcf	status, 5	;RP0=0, select bank0
+   964  015E  1303               	bcf	status, 6	;RP1=0, select bank0
+   965  015F  085E               	movf	(main@frame_length),w
+   966  0160  075F               	addwf	(main@indice),w
+   967  0161  3EFF               	addlw	0FFh
+   968  0162  3E20               	addlw	_buffer&0ffh
+   969  0163  0084               	movwf	fsr0
+   970  0164  1383               	bcf	status, 7	;select IRP bank0
+   971  0165  0800               	movf	indf,w
+   972  0166  065B               	xorwf	(main@check_sum),w
+   973  0167  1D03               	skipz
+   974  0168  296A               	goto	u2401
+   975  0169  296B               	goto	u2400
+   976  016A                     u2401:
+   977  016A  297B               	goto	l2138
+   978  016B                     u2400:
+   979                           	line	198
+   980                           	
+   981  016B                     l2132:	
+   982                           ;serial_communication_3.0.c: 198: consigne_couple = buffer[indice+2];
+   983  016B  085F               	movf	(main@indice),w
+   984  016C  3E02               	addlw	02h
+   985  016D  3E20               	addlw	_buffer&0ffh
+   986  016E  0084               	movwf	fsr0
+   987  016F  0800               	movf	indf,w
+   988  0170  00D5               	movwf	(??_main+0)+0
+   989  0171  0855               	movf	(??_main+0)+0,w
+   990  0172  00DA               	movwf	(main@consigne_couple)
+   991                           	line	199
+   992                           	
+   993  0173                     l2134:	
+   994                           ;serial_communication_3.0.c: 199: PORTD = consigne_couple;
+   995  0173  085A               	movf	(main@consigne_couple),w
+   996  0174  0088               	movwf	(8)	;volatile
+   997                           	line	200
+   998                           	
+   999  0175                     l2136:	
+  1000                           ;serial_communication_3.0.c: 200: indice = indice+frame_length;
+  1001  0175  085E               	movf	(main@frame_length),w
+  1002  0176  075F               	addwf	(main@indice),w
+  1003  0177  00D5               	movwf	(??_main+0)+0
+  1004  0178  0855               	movf	(??_main+0)+0,w
+  1005  0179  00DF               	movwf	(main@indice)
+  1006                           	line	201
+  1007                           ;serial_communication_3.0.c: 201: }
+  1008  017A  2994               	goto	l2146
+  1009                           	line	202
+  1010                           	
+  1011  017B                     l697:	
+  1012                           	
+  1013  017B                     l2138:	
+  1014                           ;serial_communication_3.0.c: 202: else{indice = indice+frame_length;}
+  1015  017B  085E               	movf	(main@frame_length),w
+  1016  017C  075F               	addwf	(main@indice),w
+  1017  017D  00D5               	movwf	(??_main+0)+0
+  1018  017E  0855               	movf	(??_main+0)+0,w
+  1019  017F  00DF               	movwf	(main@indice)
+  1020  0180  2994               	goto	l2146
+  1021                           	
+  1022  0181                     l698:	
+  1023  0181  2994               	goto	l2146
+  1024                           	line	203
+  1025                           	
+  1026  0182                     l693:	
+  1027                           	line	204
+  1028                           ;serial_communication_3.0.c: 203: }
+  1029                           ;serial_communication_3.0.c: 204: break;
+  1030  0182  2994               	goto	l2146
+  1031                           	line	206
+  1032                           ;serial_communication_3.0.c: 206: default:indice = indice+4;break;
+  1033                           	
+  1034  0183                     l699:	
+  1035                           	
+  1036  0183                     l2140:	
+  1037  0183  085F               	movf	(main@indice),w
+  1038  0184  3E04               	addlw	04h
+  1039  0185  00D5               	movwf	(??_main+0)+0
+  1040  0186  0855               	movf	(??_main+0)+0,w
+  1041  0187  00DF               	movwf	(main@indice)
+  1042  0188  2994               	goto	l2146
+  1043                           	line	207
+  1044                           	
+  1045  0189                     l2142:	
+  1046                           ;serial_communication_3.0.c: 207: }
+  1047  0189  2994               	goto	l2146
+  1048                           	line	168
+  1049                           	
+  1050  018A                     l683:	
+  1051                           	
+  1052  018A                     l2144:	
+  1053  018A  085C               	movf	(main@data_type),w
+  1054                           	; Switch size 1, requested type "space"
+  1055                           ; Number of cases is 2, Range of values is 138 to 139
+  1056                           ; switch strategies available:
+  1057                           ; Name         Instructions Cycles
+  1058                           ; simple_byte            7     4 (average)
+  1059                           ; direct_byte           17    11 (fixed)
+  1060                           ; jumptable            263     9 (fixed)
+  1061                           ;	Chosen strategy is simple_byte
+  1062                           
+  1063                           	opt asmopt_off
+  1064  018B  3A8A               	xorlw	138^0	; case 138
+  1065  018C  1903               	skipnz
+  1066  018D  2907               	goto	l2116
+  1067  018E  3A01               	xorlw	139^138	; case 139
+  1068  018F  1903               	skipnz
+  1069  0190  288B               	goto	l2092
+  1070  0191  2983               	goto	l2140
+  1071                           	opt asmopt_on
+  1072                           
+  1073                           	line	207
+  1074                           	
+  1075  0192                     l691:	
+  1076  0192  2994               	goto	l2146
+  1077                           	line	212
+  1078                           	
+  1079  0193                     l682:	
+  1080  0193  2994               	goto	l2146
+  1081                           	line	214
+  1082                           	
+  1083  0194                     l675:	
+  1084                           	line	156
+  1085                           	
+  1086  0194                     l2146:	
+  1087  0194  1283               	bcf	status, 5	;RP0=0, select bank0
+  1088  0195  1303               	bcf	status, 6	;RP1=0, select bank0
+  1089  0196  085F               	movf	(main@indice),w
+  1090  0197  3E04               	addlw	low(04h)
+  1091  0198  00D5               	movwf	(??_main+0)+0
+  1092  0199  3000               	movlw	high(04h)
+  1093  019A  1803               	skipnc
+  1094  019B  3001               	movlw	(high(04h)+1)&0ffh
+  1095  019C  00D6               	movwf	((??_main+0)+0)+1
+  1096  019D  0856               	movf	1+(??_main+0)+0,w
+  1097  019E  3A80               	xorlw	80h
+  1098  019F  00D7               	movwf	(??_main+2)+0
+  1099  01A0  3080               	movlw	80h
+  1100  01A1  0257               	subwf	(??_main+2)+0,w
+  1101  01A2  1D03               	skipz
+  1102  01A3  29A6               	goto	u2415
+  1103  01A4  0852               	movf	(_top_buffer),w
+  1104  01A5  0255               	subwf	0+(??_main+0)+0,w
+  1105  01A6                     u2415:
+  1106                           
+  1107  01A6  1C03               	skipc
+  1108  01A7  29A9               	goto	u2411
+  1109  01A8  29AA               	goto	u2410
+  1110  01A9                     u2411:
+  1111  01A9  2857               	goto	l2084
+  1112  01AA                     u2410:
+  1113  01AA  29AB               	goto	l2148
+  1114                           	
+  1115  01AB                     l700:	
+  1116                           	line	218
+  1117                           	
+  1118  01AB                     l2148:	
+  1119                           ;serial_communication_3.0.c: 212: }
+  1120                           ;serial_communication_3.0.c: 214: }
+  1121                           ;serial_communication_3.0.c: 218: decalage_buffer(indice);
+  1122  01AB  1283               	bcf	status, 5	;RP0=0, select bank0
+  1123  01AC  1303               	bcf	status, 6	;RP1=0, select bank0
+  1124  01AD  085F               	movf	(main@indice),w
+  1125  01AE  120A  118A  21B8   	fcall	_decalage_buffer
+              120A  118A         
+  1126  01B3  284B               	goto	l2078
+  1127                           	line	222
+  1128                           	
+  1129  01B4                     l701:	
+  1130                           	line	145
+  1131  01B4  284B               	goto	l2078
+  1132                           	
+  1133  01B5                     l702:	
+  1134                           	line	226
+  1135                           	
+  1136  01B5                     l703:	
+  1137                           	global	start
+  1138  01B5  120A  118A  2812   	ljmp	start
+  1139                           	opt stack 0
+  1140                           GLOBAL	__end_of_main
+  1141  01B8                     	__end_of_main:
+  1142 ;; =============== function _main ends ============
+  1143                           
+  1144                           	signat	_main,88
+  1145                           	global	_longueur_trame
+  1146                           psect	text145,local,class=CODE,delta=2
+  1147                           global __ptext145
+  1148  01F0                     __ptext145:
+  1149                           
+  1150 ;; *************** function _longueur_trame *****************
+  1151 ;; Defined at:
+  1152 ;;		line 85 in file "C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_communication_3.0.c"
+  1153 ;; Parameters:    Size  Location     Type
+  1154 ;;  titre           1    wreg     unsigned char 
+  1155 ;; Auto vars:     Size  Location     Type
+  1156 ;;  titre           1    6[COMMON] unsigned char 
+  1157 ;;  curTrameLeng    1    7[COMMON] unsigned char 
+  1158 ;; Return value:  Size  Location     Type
+  1159 ;;                  1    wreg      unsigned char 
+  1160 ;; Registers used:
+  1161 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+  1162 ;; Tracked objects:
+  1163 ;;		On entry : 0/0
+  1164 ;;		On exit  : 0/0
+  1165 ;;		Unchanged: 0/0
+  1166 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1167 ;;      Params:         0       0       0       0       0
+  1168 ;;      Locals:         2       0       0       0       0
+  1169 ;;      Temps:          1       0       0       0       0
+  1170 ;;      Totals:         3       0       0       0       0
+  1171 ;;Total ram usage:        3 bytes
+  1172 ;; Hardware stack levels used:    1
+  1173 ;; Hardware stack levels required when called:    1
+  1174 ;; This function calls:
+  1175 ;;		Nothing
+  1176 ;; This function is called by:
+  1177 ;;		_main
+  1178 ;; This function uses a non-reentrant model
+  1179 ;;
+  1180                           psect	text145
+  1181                           	file	"C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_co
+                                 mmunication_3.0.c"
+  1182                           	line	85
+  1183                           	global	__size_of_longueur_trame
+  1184  0035                     	__size_of_longueur_trame	equ	__end_of_longueur_trame-_longueur_trame
+  1185                           	
+  1186  01F0                     _longueur_trame:	
+  1187                           	opt	stack 6
+  1188                           ; Regs used in _longueur_trame: [wreg-fsr0h+status,2+status,0]
+  1189                           ;longueur_trame@titre stored from wreg
+  1190  01F0  00F6               	movwf	(longueur_trame@titre)
+  1191                           	line	87
+  1192                           	
+  1193  01F1                     l2018:	
+  1194                           ;serial_communication_3.0.c: 86: char curTrameLength;
+  1195                           ;serial_communication_3.0.c: 87: switch (titre){
+  1196  01F1  2A11               	goto	l2034
+  1197                           	line	88
+  1198                           ;serial_communication_3.0.c: 88: case 138: curTrameLength= 1 + 3; break;
+  1199                           	
+  1200  01F2                     l664:	
+  1201                           	
+  1202  01F2                     l2020:	
+  1203  01F2  3004               	movlw	(04h)
+  1204  01F3  00F5               	movwf	(??_longueur_trame+0)+0
+  1205  01F4  0875               	movf	(??_longueur_trame+0)+0,w
+  1206  01F5  00F7               	movwf	(longueur_trame@curTrameLength)
+  1207  01F6  2A22               	goto	l2036
+  1208                           	line	89
+  1209                           ;serial_communication_3.0.c: 89: case 139: curTrameLength= 1 + 3 ; break;
+  1210                           	
+  1211  01F7                     l666:	
+  1212                           	
+  1213  01F7                     l2022:	
+  1214  01F7  3004               	movlw	(04h)
+  1215  01F8  00F5               	movwf	(??_longueur_trame+0)+0
+  1216  01F9  0875               	movf	(??_longueur_trame+0)+0,w
+  1217  01FA  00F7               	movwf	(longueur_trame@curTrameLength)
+  1218  01FB  2A22               	goto	l2036
+  1219                           	line	90
+  1220                           ;serial_communication_3.0.c: 90: case 10: curTrameLength= 1 + 3 ; break;
+  1221                           	
+  1222  01FC                     l667:	
+  1223                           	
+  1224  01FC                     l2024:	
+  1225  01FC  3004               	movlw	(04h)
+  1226  01FD  00F5               	movwf	(??_longueur_trame+0)+0
+  1227  01FE  0875               	movf	(??_longueur_trame+0)+0,w
+  1228  01FF  00F7               	movwf	(longueur_trame@curTrameLength)
+  1229  0200  2A22               	goto	l2036
+  1230                           	line	91
+  1231                           ;serial_communication_3.0.c: 91: case 11: curTrameLength= 1 + 3 ; break;
+  1232                           	
+  1233  0201                     l668:	
+  1234                           	
+  1235  0201                     l2026:	
+  1236  0201  3004               	movlw	(04h)
+  1237  0202  00F5               	movwf	(??_longueur_trame+0)+0
+  1238  0203  0875               	movf	(??_longueur_trame+0)+0,w
+  1239  0204  00F7               	movwf	(longueur_trame@curTrameLength)
+  1240  0205  2A22               	goto	l2036
+  1241                           	line	92
+  1242                           ;serial_communication_3.0.c: 92: case 12: curTrameLength= 1 + 3 ; break;
+  1243                           	
+  1244  0206                     l669:	
+  1245                           	
+  1246  0206                     l2028:	
+  1247  0206  3004               	movlw	(04h)
+  1248  0207  00F5               	movwf	(??_longueur_trame+0)+0
+  1249  0208  0875               	movf	(??_longueur_trame+0)+0,w
+  1250  0209  00F7               	movwf	(longueur_trame@curTrameLength)
+  1251  020A  2A22               	goto	l2036
+  1252                           	line	95
+  1253                           ;serial_communication_3.0.c: 95: default : curTrameLength = 4;break;
+  1254                           	
+  1255  020B                     l670:	
+  1256                           	
+  1257  020B                     l2030:	
+  1258  020B  3004               	movlw	(04h)
+  1259  020C  00F5               	movwf	(??_longueur_trame+0)+0
+  1260  020D  0875               	movf	(??_longueur_trame+0)+0,w
+  1261  020E  00F7               	movwf	(longueur_trame@curTrameLength)
+  1262  020F  2A22               	goto	l2036
+  1263                           	line	96
+  1264                           	
+  1265  0210                     l2032:	
+  1266                           ;serial_communication_3.0.c: 96: }
+  1267  0210  2A22               	goto	l2036
+  1268                           	line	87
+  1269                           	
+  1270  0211                     l663:	
+  1271                           	
+  1272  0211                     l2034:	
+  1273  0211  0876               	movf	(longueur_trame@titre),w
+  1274                           	; Switch size 1, requested type "space"
+  1275                           ; Number of cases is 5, Range of values is 10 to 139
+  1276                           ; switch strategies available:
+  1277                           ; Name         Instructions Cycles
+  1278                           ; simple_byte           16     9 (average)
+  1279                           ; jumptable            263     9 (fixed)
+  1280                           ;	Chosen strategy is simple_byte
+  1281                           
+  1282                           	opt asmopt_off
+  1283  0212  3A0A               	xorlw	10^0	; case 10
+  1284  0213  1903               	skipnz
+  1285  0214  29FC               	goto	l2024
+  1286  0215  3A01               	xorlw	11^10	; case 11
+  1287  0216  1903               	skipnz
+  1288  0217  2A01               	goto	l2026
+  1289  0218  3A07               	xorlw	12^11	; case 12
+  1290  0219  1903               	skipnz
+  1291  021A  2A06               	goto	l2028
+  1292  021B  3A86               	xorlw	138^12	; case 138
+  1293  021C  1903               	skipnz
+  1294  021D  29F2               	goto	l2020
+  1295  021E  3A01               	xorlw	139^138	; case 139
+  1296  021F  1903               	skipnz
+  1297  0220  29F7               	goto	l2022
+  1298  0221  2A0B               	goto	l2030
+  1299                           	opt asmopt_on
+  1300                           
+  1301                           	line	96
+  1302                           	
+  1303  0222                     l665:	
+  1304                           	line	97
+  1305                           	
+  1306  0222                     l2036:	
+  1307                           ;serial_communication_3.0.c: 97: return curTrameLength;
+  1308  0222  0877               	movf	(longueur_trame@curTrameLength),w
+  1309  0223  2A24               	goto	l671
+  1310                           	
+  1311  0224                     l2038:	
+  1312                           	line	98
+  1313                           	
+  1314  0224                     l671:	
+  1315  0224  0008               	return
+  1316                           	opt stack 0
+  1317                           GLOBAL	__end_of_longueur_trame
+  1318  0225                     	__end_of_longueur_trame:
+  1319 ;; =============== function _longueur_trame ends ============
+  1320                           
+  1321                           	signat	_longueur_trame,4217
+  1322                           	global	_send_usart
+  1323                           psect	text146,local,class=CODE,delta=2
+  1324                           global __ptext146
+  1325  025A                     __ptext146:
+  1326                           
+  1327 ;; *************** function _send_usart *****************
+  1328 ;; Defined at:
+  1329 ;;		line 78 in file "C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_communication_3.0.c"
+  1330 ;; Parameters:    Size  Location     Type
+  1331 ;;  octet           1    wreg     unsigned char 
+  1332 ;; Auto vars:     Size  Location     Type
+  1333 ;;  octet           1    5[COMMON] unsigned char 
+  1334 ;; Return value:  Size  Location     Type
+  1335 ;;		None               void
+  1336 ;; Registers used:
+  1337 ;;		wreg
+  1338 ;; Tracked objects:
+  1339 ;;		On entry : 0/0
+  1340 ;;		On exit  : 0/0
+  1341 ;;		Unchanged: 0/0
+  1342 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1343 ;;      Params:         0       0       0       0       0
+  1344 ;;      Locals:         1       0       0       0       0
+  1345 ;;      Temps:          0       0       0       0       0
+  1346 ;;      Totals:         1       0       0       0       0
+  1347 ;;Total ram usage:        1 bytes
+  1348 ;; Hardware stack levels used:    1
+  1349 ;; Hardware stack levels required when called:    1
+  1350 ;; This function calls:
+  1351 ;;		Nothing
+  1352 ;; This function is called by:
+  1353 ;;		_main
+  1354 ;; This function uses a non-reentrant model
+  1355 ;;
+  1356                           psect	text146
+  1357                           	file	"C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_co
+                                 mmunication_3.0.c"
+  1358                           	line	78
+  1359                           	global	__size_of_send_usart
+  1360  000C                     	__size_of_send_usart	equ	__end_of_send_usart-_send_usart
+  1361                           	
+  1362  025A                     _send_usart:	
+  1363                           	opt	stack 6
+  1364                           ; Regs used in _send_usart: [wreg]
+  1365                           ;send_usart@octet stored from wreg
+  1366  025A  00F5               	movwf	(send_usart@octet)
+  1367                           	line	79
+  1368                           	
+  1369  025B                     l2016:	
+  1370                           ;serial_communication_3.0.c: 79: TXREG=octet;
+  1371  025B  0875               	movf	(send_usart@octet),w
+  1372  025C  1283               	bcf	status, 5	;RP0=0, select bank0
+  1373  025D  1303               	bcf	status, 6	;RP1=0, select bank0
+  1374  025E  0099               	movwf	(25)	;volatile
+  1375                           	line	80
+  1376                           ;serial_communication_3.0.c: 80: while(!TXIF);
+  1377  025F  2A60               	goto	l657
+  1378                           	
+  1379  0260                     l658:	
+  1380                           	
+  1381  0260                     l657:	
+  1382  0260  1E0C               	btfss	(100/8),(100)&7
+  1383  0261  2A63               	goto	u2311
+  1384  0262  2A64               	goto	u2310
+  1385  0263                     u2311:
+  1386  0263  2A60               	goto	l657
+  1387  0264                     u2310:
+  1388                           	
+  1389  0264                     l659:	
+  1390                           	line	81
+  1391                           ;serial_communication_3.0.c: 81: TXIF=0;
+  1392  0264  120C               	bcf	(100/8),(100)&7
+  1393                           	line	82
+  1394                           	
+  1395  0265                     l660:	
+  1396  0265  0008               	return
+  1397                           	opt stack 0
+  1398                           GLOBAL	__end_of_send_usart
+  1399  0266                     	__end_of_send_usart:
+  1400 ;; =============== function _send_usart ends ============
+  1401                           
+  1402                           	signat	_send_usart,4216
+  1403                           	global	_decalage_buffer
+  1404                           psect	text147,local,class=CODE,delta=2
+  1405                           global __ptext147
+  1406  01B8                     __ptext147:
+  1407                           
+  1408 ;; *************** function _decalage_buffer *****************
+  1409 ;; Defined at:
+  1410 ;;		line 70 in file "C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_communication_3.0.c"
+  1411 ;; Parameters:    Size  Location     Type
+  1412 ;;  ind             1    wreg     unsigned char 
+  1413 ;; Auto vars:     Size  Location     Type
+  1414 ;;  ind             1    0[BANK0 ] unsigned char 
+  1415 ;;  i               1    1[BANK0 ] unsigned char 
+  1416 ;; Return value:  Size  Location     Type
+  1417 ;;		None               void
+  1418 ;; Registers used:
+  1419 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+  1420 ;; Tracked objects:
+  1421 ;;		On entry : 0/0
+  1422 ;;		On exit  : 0/0
+  1423 ;;		Unchanged: 0/0
+  1424 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1425 ;;      Params:         0       0       0       0       0
+  1426 ;;      Locals:         0       2       0       0       0
+  1427 ;;      Temps:          4       0       0       0       0
+  1428 ;;      Totals:         4       2       0       0       0
+  1429 ;;Total ram usage:        6 bytes
+  1430 ;; Hardware stack levels used:    1
+  1431 ;; Hardware stack levels required when called:    1
+  1432 ;; This function calls:
+  1433 ;;		Nothing
+  1434 ;; This function is called by:
+  1435 ;;		_main
+  1436 ;; This function uses a non-reentrant model
+  1437 ;;
+  1438                           psect	text147
+  1439                           	file	"C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_co
+                                 mmunication_3.0.c"
+  1440                           	line	70
+  1441                           	global	__size_of_decalage_buffer
+  1442  0038                     	__size_of_decalage_buffer	equ	__end_of_decalage_buffer-_decalage_buffer
+  1443                           	
+  1444  01B8                     _decalage_buffer:	
+  1445                           	opt	stack 6
+  1446                           ; Regs used in _decalage_buffer: [wreg-fsr0h+status,2+status,0]
+  1447                           ;decalage_buffer@ind stored from wreg
+  1448                           	line	72
+  1449  01B8  1283               	bcf	status, 5	;RP0=0, select bank0
+  1450  01B9  1303               	bcf	status, 6	;RP1=0, select bank0
+  1451  01BA  00D3               	movwf	(decalage_buffer@ind)
+  1452                           	
+  1453  01BB                     l2006:	
+  1454                           ;serial_communication_3.0.c: 71: char i;
+  1455                           ;serial_communication_3.0.c: 72: for(i=0;i<(top_buffer - ind);i++){
+  1456  01BB  01D4               	clrf	(decalage_buffer@i)
+  1457  01BC  29D0               	goto	l2012
+  1458                           	
+  1459  01BD                     l652:	
+  1460                           	line	73
+  1461                           	
+  1462  01BD                     l2008:	
+  1463                           ;serial_communication_3.0.c: 73: buffer[i]=buffer[i+ind];
+  1464  01BD  1283               	bcf	status, 5	;RP0=0, select bank0
+  1465  01BE  1303               	bcf	status, 6	;RP1=0, select bank0
+  1466  01BF  0853               	movf	(decalage_buffer@ind),w
+  1467  01C0  0754               	addwf	(decalage_buffer@i),w
+  1468  01C1  3E20               	addlw	_buffer&0ffh
+  1469  01C2  0084               	movwf	fsr0
+  1470  01C3  1383               	bcf	status, 7	;select IRP bank0
+  1471  01C4  0800               	movf	indf,w
+  1472  01C5  00F5               	movwf	(??_decalage_buffer+0)+0
+  1473  01C6  0854               	movf	(decalage_buffer@i),w
+  1474  01C7  3E20               	addlw	_buffer&0ffh
+  1475  01C8  0084               	movwf	fsr0
+  1476  01C9  0875               	movf	(??_decalage_buffer+0)+0,w
+  1477  01CA  0080               	movwf	indf
+  1478                           	line	72
+  1479                           	
+  1480  01CB                     l2010:	
+  1481  01CB  3001               	movlw	(01h)
+  1482  01CC  00F5               	movwf	(??_decalage_buffer+0)+0
+  1483  01CD  0875               	movf	(??_decalage_buffer+0)+0,w
+  1484  01CE  07D4               	addwf	(decalage_buffer@i),f
+  1485  01CF  29D0               	goto	l2012
+  1486                           	
+  1487  01D0                     l651:	
+  1488                           	
+  1489  01D0                     l2012:	
+  1490  01D0  0853               	movf	(decalage_buffer@ind),w
+  1491  01D1  00F5               	movwf	(??_decalage_buffer+0)+0
+  1492  01D2  01F6               	clrf	(??_decalage_buffer+0)+0+1
+  1493  01D3  09F5               	comf	(??_decalage_buffer+0)+0,f
+  1494  01D4  09F6               	comf	(??_decalage_buffer+0)+1,f
+  1495  01D5  0AF5               	incf	(??_decalage_buffer+0)+0,f
+  1496  01D6  1903               	skipnz
+  1497  01D7  0AF6               	incf	(??_decalage_buffer+0)+1,f
+  1498  01D8  0852               	movf	(_top_buffer),w
+  1499  01D9  0775               	addwf	0+(??_decalage_buffer+0)+0,w
+  1500  01DA  00F7               	movwf	(??_decalage_buffer+2)+0
+  1501  01DB  0876               	movf	1+(??_decalage_buffer+0)+0,w
+  1502  01DC  1803               	skipnc
+  1503  01DD  0A76               	incf	1+(??_decalage_buffer+0)+0,w
+  1504  01DE  00F8               	movwf	((??_decalage_buffer+2)+0)+1
+  1505  01DF  0878               	movf	1+(??_decalage_buffer+2)+0,w
+  1506  01E0  3A80               	xorlw	80h
+  1507  01E1  3C80               	sublw	080h
+  1508  01E2  1D03               	skipz
+  1509  01E3  29E6               	goto	u2305
+  1510  01E4  0877               	movf	0+(??_decalage_buffer+2)+0,w
+  1511  01E5  0254               	subwf	(decalage_buffer@i),w
+  1512  01E6                     u2305:
+  1513                           
+  1514  01E6  1C03               	skipc
+  1515  01E7  29E9               	goto	u2301
+  1516  01E8  29EA               	goto	u2300
+  1517  01E9                     u2301:
+  1518  01E9  29BD               	goto	l2008
+  1519  01EA                     u2300:
+  1520  01EA  29EB               	goto	l2014
+  1521                           	
+  1522  01EB                     l653:	
+  1523                           	line	75
+  1524                           	
+  1525  01EB                     l2014:	
+  1526                           ;serial_communication_3.0.c: 74: }
+  1527                           ;serial_communication_3.0.c: 75: top_buffer -= ind;
+  1528  01EB  1283               	bcf	status, 5	;RP0=0, select bank0
+  1529  01EC  1303               	bcf	status, 6	;RP1=0, select bank0
+  1530  01ED  0853               	movf	(decalage_buffer@ind),w
+  1531  01EE  02D2               	subwf	(_top_buffer),f
+  1532                           	line	76
+  1533                           	
+  1534  01EF                     l654:	
+  1535  01EF  0008               	return
+  1536                           	opt stack 0
+  1537                           GLOBAL	__end_of_decalage_buffer
+  1538  01F0                     	__end_of_decalage_buffer:
+  1539 ;; =============== function _decalage_buffer ends ============
+  1540                           
+  1541                           	signat	_decalage_buffer,4216
+  1542                           	global	_reception
+  1543                           psect	text148,local,class=CODE,delta=2
+  1544                           global __ptext148
+  1545  0225                     __ptext148:
+  1546                           
+  1547 ;; *************** function _reception *****************
+  1548 ;; Defined at:
+  1549 ;;		line 57 in file "C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_communication_3.0.c"
+  1550 ;; Parameters:    Size  Location     Type
+  1551 ;;		None
+  1552 ;; Auto vars:     Size  Location     Type
+  1553 ;;		None
+  1554 ;; Return value:  Size  Location     Type
+  1555 ;;		None               void
+  1556 ;; Registers used:
+  1557 ;;		wreg, fsr0l, fsr0h, status,2, status,0
+  1558 ;; Tracked objects:
+  1559 ;;		On entry : 0/0
+  1560 ;;		On exit  : 0/0
+  1561 ;;		Unchanged: 0/0
+  1562 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+  1563 ;;      Params:         0       0       0       0       0
+  1564 ;;      Locals:         0       0       0       0       0
+  1565 ;;      Temps:          5       0       0       0       0
+  1566 ;;      Totals:         5       0       0       0       0
+  1567 ;;Total ram usage:        5 bytes
+  1568 ;; Hardware stack levels used:    1
+  1569 ;; This function calls:
+  1570 ;;		Nothing
+  1571 ;; This function is called by:
+  1572 ;;		Interrupt level 1
+  1573 ;; This function uses a non-reentrant model
+  1574 ;;
+  1575                           psect	text148
+  1576                           	file	"C:\Users\Yoann\Documents\MIQ5\S1\Miqmobile\Pic\serial_communication_3.0\serial_co
+                                 mmunication_3.0.c"
+  1577                           	line	57
+  1578                           	global	__size_of_reception
+  1579  0028                     	__size_of_reception	equ	__end_of_reception-_reception
+  1580                           	
+  1581  0225                     _reception:	
+  1582                           	opt	stack 6
+  1583                           ; Regs used in _reception: [wreg-fsr0h+status,2+status,0]
+  1584                           psect	intentry,class=CODE,delta=2
+  1585                           global __pintentry
+  1586  0004                     __pintentry:
+  1587                           global interrupt_function
+  1588  0004                     interrupt_function:
+  1589                           	global saved_w
+  1590  007E                     	saved_w	set	btemp+0
+  1591  0004  00FE               	movwf	saved_w
+  1592  0005  0E03               	swapf	status,w
+  1593  0006  00F1               	movwf	(??_reception+1)
+  1594  0007  0804               	movf	fsr0,w
+  1595  0008  00F2               	movwf	(??_reception+2)
+  1596  0009  080A               	movf	pclath,w
+  1597  000A  00F3               	movwf	(??_reception+3)
+  1598  000B  1283               	bcf	status, 5	;RP0=0, select bank0
+  1599  000C  1303               	bcf	status, 6	;RP1=0, select bank0
+  1600  000D  087F               	movf	btemp+1,w
+  1601  000E  00F4               	movwf	(??_reception+4)
+  1602  000F  120A  118A  2A25   	ljmp	_reception
+  1603                           psect	text148
+  1604                           	
+  1605  0225                     i1l1994:	
+  1606  0225  1E8C               	btfss	(101/8),(101)&7
+  1607  0226  2A28               	goto	u228_21
+  1608  0227  2A29               	goto	u228_20
+  1609  0228                     u228_21:
+  1610  0228  2A42               	goto	i1l648
+  1611  0229                     u228_20:
+  1612                           	line	58
+  1613                           	
+  1614  0229                     i1l1996:	
+  1615                           ;serial_communication_3.0.c: 58: if (top_buffer < 50 -1)
+  1616  0229  3031               	movlw	(031h)
+  1617  022A  0252               	subwf	(_top_buffer),w
+  1618  022B  1803               	skipnc
+  1619  022C  2A2E               	goto	u229_21
+  1620  022D  2A2F               	goto	u229_20
+  1621  022E                     u229_21:
+  1622  022E  2A3D               	goto	i1l2004
+  1623  022F                     u229_20:
+  1624                           	line	59
+  1625                           	
+  1626  022F                     i1l1998:	
+  1627                           ;serial_communication_3.0.c: 59: {buffer[top_buffer]=RCREG;
+  1628  022F  081A               	movf	(26),w	;volatile
+  1629  0230  00F0               	movwf	(??_reception+0)+0
+  1630  0231  0852               	movf	(_top_buffer),w
+  1631  0232  3E20               	addlw	_buffer&0ffh
+  1632  0233  0084               	movwf	fsr0
+  1633  0234  0870               	movf	(??_reception+0)+0,w
+  1634  0235  1383               	bcf	status, 7	;select IRP bank0
+  1635  0236  0080               	movwf	indf
+  1636                           	line	60
+  1637                           	
+  1638  0237                     i1l2000:	
+  1639                           ;serial_communication_3.0.c: 60: RCREG=0;
+  1640  0237  019A               	clrf	(26)	;volatile
+  1641                           	line	61
+  1642                           	
+  1643  0238                     i1l2002:	
+  1644                           ;serial_communication_3.0.c: 61: top_buffer++;
+  1645  0238  3001               	movlw	(01h)
+  1646  0239  00F0               	movwf	(??_reception+0)+0
+  1647  023A  0870               	movf	(??_reception+0)+0,w
+  1648  023B  07D2               	addwf	(_top_buffer),f
+  1649                           	line	62
+  1650                           ;serial_communication_3.0.c: 62: }
+  1651  023C  2A42               	goto	i1l648
+  1652                           	line	63
+  1653                           	
+  1654  023D                     i1l646:	
+  1655                           	
+  1656  023D                     i1l2004:	
+  1657                           ;serial_communication_3.0.c: 63: else {top_buffer = 1;
+  1658  023D  01D2               	clrf	(_top_buffer)
+  1659  023E  1403               	bsf	status,0
+  1660  023F  0DD2               	rlf	(_top_buffer),f
+  1661  0240  2A42               	goto	i1l648
+  1662                           	line	64
+  1663                           	
+  1664  0241                     i1l647:	
+  1665  0241  2A42               	goto	i1l648
+  1666                           	line	65
+  1667                           	
+  1668  0242                     i1l645:	
+  1669                           	line	67
+  1670                           	
+  1671  0242                     i1l648:	
+  1672  0242  0874               	movf	(??_reception+4),w
+  1673  0243  00FF               	movwf	btemp+1
+  1674  0244  0873               	movf	(??_reception+3),w
+  1675  0245  008A               	movwf	pclath
+  1676  0246  0872               	movf	(??_reception+2),w
+  1677  0247  0084               	movwf	fsr0
+  1678  0248  0E71               	swapf	(??_reception+1)^0FFFFFF80h,w
+  1679  0249  0083               	movwf	status
+  1680  024A  0EFE               	swapf	saved_w,f
+  1681  024B  0E7E               	swapf	saved_w,w
+  1682  024C  0009               	retfie
+  1683                           	opt stack 0
+  1684                           GLOBAL	__end_of_reception
+  1685  024D                     	__end_of_reception:
+  1686 ;; =============== function _reception ends ============
+  1687                           
+  1688                           	signat	_reception,88
+  1689                           psect	text149,local,class=CODE,delta=2
+  1690                           global __ptext149
+  1691  0000                     __ptext149:
+  1692                           	global	btemp
+  1693  007E                     	btemp set 07Eh
+  1694                           
+  1695                           	DABS	1,126,2	;btemp
+  1696                           	global	wtemp0
+  1697  007E                     	wtemp0 set btemp
+
+
+HI-TECH Software PICC Macro Assembler V9.81 build 7503 
+Symbol Table                                                                                   Tue Oct 25 18:40:14 2011
+
+                          fsr 0004                           l700 01AB                           l701 01B4  
+                         l702 01B5                           l703 01B5                           l651 01D0  
+                         l652 01BD                           l660 0265                           l653 01EB  
+                         l654 01EF                           l670 020B                           l671 0224  
+                         l663 0211                           l664 01F2                           l680 006A  
+                         l657 0260                           l665 0222                           l681 006B  
+                         l658 0260                           l666 01F7                           l682 0193  
+                         l690 0105                           l674 004B                           l659 0264  
+                         l667 01FC                           l675 0194                           l691 0192  
+                         l683 018A                           l668 0201                           l692 0107  
+                         l684 008B                           l676 0051                           l669 0206  
+                         l693 0182                           l685 0106                           l677 0057  
+                         l694 0144                           l686 00C8                           l678 0052  
+                         l695 0135                           l687 00B9                           l696 015D  
+                         l688 00E1                           l697 017B                           l689 00FF  
+                         l698 0181                           l699 0183                           _GIE 005F  
+                         _RB0 0030                           fsr0 0004                           indf 0000  
+            decalage_buffer@i 0054       __size_of_longueur_trame 0035                          l2010 01CB  
+                        l2012 01D0                          l2020 01F2                          l2100 00B9  
+                        l2014 01EB                          l2006 01BB                          l2030 020B  
+                        l2022 01F7                          l2110 00F7                          l2102 00C3  
+                        l2008 01BD                          l2016 025B                          l2032 0210  
+                        l2024 01FC                          l2120 0113                          l2112 00F9  
+                        l2104 00C8                          l2040 0015                          l2026 0201  
+                        l2034 0211                          l2018 01F1                          l2130 015D  
+                        l2122 012D                          l2114 00FF                          l2106 00E1  
+                        l2050 0027                          l2042 0018                          l2028 0206  
+                        l2036 0222                          l2140 0183                          l2132 016B  
+                        l2124 0135                          l2116 0107                          l2108 00EF  
+                        l2060 0030                          l2052 002A                          l2044 0024  
+                        l2038 0224                          l2142 0189                          l2134 0173  
+                        l2126 013F                          l2118 0112                          l2070 0037  
+                        l2062 0031                          l2054 002B                          l2046 0025  
+                        l2136 0175                          l2128 0144                          l2144 018A  
+                        l2080 004F                          l2072 0038                          l2064 0032  
+                        l2056 002C                          l2048 0026                          l2138 017B  
+                        l2090 007F                          l2082 0052                          l2146 0194  
+                        l2074 003E                          l2066 0033                          l2058 002D  
+                        l2148 01AB                          l2092 008B                          l2084 0057  
+                        l2076 0044                          l2068 0036                          l2094 0096  
+                        l2086 0063                          l2078 004B                          l2096 0097  
+                        l2088 006B                          l2098 00B1                          _CREN 00C4  
+                        u2300 01EA                          u2301 01E9                          u2310 0264  
+                        u2311 0263                          u2400 016B                          u2320 0063  
+                        u2305 01E6                          u2401 016A                          u2321 0062  
+                        u2410 01AA                          u2330 0069                          u2411 01A9  
+                        u2331 0068                          u2340 007F                          u2341 007E  
+                        u2350 00B1                          u2415 01A6                          u2351 00B0  
+                        u2360 00E0                          u2361 00DF                          u2345 007B  
+                        u2370 00EF                          u2371 00EE                          u2355 00AD  
+                        u2380 012D                          u2381 012C                          u2365 00DC  
+                        u2390 015C                          u2391 015B                          _PIE1 008C  
+                        u2385 0129                          u2395 0158                          _PEIE 005E  
+                        _RCIE 0465                          _RCIF 0065                          _SPEN 00C7  
+                        _TXEN 04C5                          _TXIF 0064                          _main 0015  
+                        btemp 007E                          start 0012                         ?_main 0070  
+                       i1l645 0242                         i1l646 023D                         i1l647 0241  
+                       i1l648 0242                         _RCREG 001A                         _RCSTA 0018  
+                       _SPBRG 0099                         _PORTA 0005                         _PORTB 0006  
+                       _PORTD 0008                         _TRISA 0085                         _TRISB 0086  
+                       _TRISD 0088                         _TXREG 0019                         _TXSTA 0098  
+                       main@i 005D           main@consigne_couple 005A                         pclath 000A  
+                       status 0003                         wtemp0 007E            decalage_buffer@ind 0053  
+                __end_of_main 01B8                 main@check_sum 005B                 main@data_type 005C  
+                      ??_main 0055                        i1l2000 0237                        i1l2002 0238  
+                      i1l2004 023D                        i1l1994 0225                        i1l1996 0229  
+                      i1l1998 022F                        _INTCON 000B                        u228_20 0229  
+                      u228_21 0228                        u229_20 022F                        u229_21 022E  
+                      _buffer 0020                        clrloop 0267                        saved_w 007E  
+              _longueur_trame 01F0           longueur_trame@titre 0076                __pcstackCOMMON 0070  
+      __end_of_longueur_trame 0225                    __pbssBANK0 0020      __size_of_decalage_buffer 0038  
+longueur_trame@curTrameLength 0077                    __pmaintext 0015            __size_of_reception 0028  
+                  __pintentry 0004               send_usart@octet 0075               ?_longueur_trame 0070  
+            main@frame_length 005E             __end_of_reception 024D          end_of_initialization 0256  
+                  _send_usart 025A             ??_decalage_buffer 0075                    _top_buffer 0052  
+                  main@indice 005F           start_initialization 024D                   ?_send_usart 0070  
+            ??_longueur_trame 0075                 __pcstackBANK0 0053                     __ptext144 0000  
+                   __ptext145 01F0                     __ptext146 025A                     __ptext147 01B8  
+                   __ptext148 0225                     __ptext149 0000           __size_of_send_usart 000C  
+                   _reception 0225               _decalage_buffer 01B8             interrupt_function 0004  
+                  ?_reception 0070       __end_of_decalage_buffer 01F0                 __size_of_main 01A3  
+                ??_send_usart 0075                      clear_ram 0266            __end_of_send_usart 0266  
+                    intlevel1 0000                   ??_reception 0070              ?_decalage_buffer 0070  
