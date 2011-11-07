@@ -179,7 +179,7 @@ float determine_vmoyen(float vgauche, float vdroite)
 	vmoy=vgauche+vdroite;
 	vmoy=vmoy/2.;
 	vmoy=vmoy*GRANDEUR_RAYON_ROUE;
-	vmoy=vmoy/3600.;	//conversion mm/s en km/h
+	vmoy=vmoy*3600.;	//conversion mm/s en km/h
 	vmoy=vmoy/1000000.;
 	return vmoy;
 }
@@ -202,7 +202,8 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	acceleration=(1-COEF_FILTRE)*acceleration_prec;
     
     deltaV=(vitessemoy-vitessemoy_prec);
-    deltaV=deltaV/deltaT;
+	deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
+    deltaV=deltaV/(deltaT*0.001); //car deltaT en ms
 	
 	acceleration=acceleration+COEF_FILTRE*deltaV;
 	
