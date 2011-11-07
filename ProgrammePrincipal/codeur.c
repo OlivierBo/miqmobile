@@ -82,7 +82,6 @@ vitesseMoyenne=0;
 vitesseMoyPrec=0;
 acc_moyenne=0;
 acc_moyenne_prec=0;
-
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
