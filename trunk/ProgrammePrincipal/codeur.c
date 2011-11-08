@@ -66,22 +66,22 @@ INTCON3bits.INT2F=0;    //clear flag
 
 void initCodeurs(void)  //initialisation des codeurs
 {
-nb_frontG=0; //compte le nombre de fronts de la voie 1 du codeur de gauche
-nb_frontD=0; //compte le nombre de fronts de la voie 1 du codeur de droite
-abs_nb_frontG=0; //pour le calcul de la distance moyenne parcourue
-abs_nb_frontD=0;
+nb_frontG=0.; //compte le nombre de fronts de la voie 1 du codeur de gauche
+nb_frontD=0.; //compte le nombre de fronts de la voie 1 du codeur de droite
+abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
+abs_nb_frontD=0.;
 sensG=0;      // pour la détermination du sens de rotation des codeurs DetG
 sensD=0;
-nb_front_precD=0;
-nb_front_precG=0;
-vitesseG=0;
-vitesseD=0;
-vitesse_precG=0;
-vitesse_precD=0;
-vitesseMoyenne=0;
-vitesseMoyPrec=0;
-acc_moyenne=0;
-acc_moyenne_prec=0;
+nb_front_precD=0.;
+nb_front_precG=0.;
+vitesseG=0.;
+vitesseD=0.;
+vitesse_precG=0.;
+vitesse_precD=0.;
+vitesseMoyenne=0.;
+vitesseMoyPrec=0.;
+acc_moyenne=0.;
+acc_moyenne_prec=0.;
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
