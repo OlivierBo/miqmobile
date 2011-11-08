@@ -16,10 +16,12 @@
 		<Item Name="IDByteToLongData.vi" Type="VI" URL="../IDByteToLongData.vi"/>
 		<Item Name="IDByteToNotes.vi" Type="VI" URL="../IDByteToNotes.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
+		<Item Name="MainPicMot.vi" Type="VI" URL="../TestComPicMoteur/MainPicMot.vi"/>
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
 		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
 		<Item Name="testgraphe.vi" Type="VI" URL="../testgraphe.vi"/>
+		<Item Name="Variable globale 1.vi" Type="VI" URL="../TestComPicMoteur/Variable globale 1.vi"/>
 		<Item Name="Dépendances" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="BuildHelpPath.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/BuildHelpPath.vi"/>
@@ -62,8 +64,10 @@
 				<Item Name="Waveform Array To Dynamic.vi" Type="VI" URL="/&lt;vilib&gt;/express/express shared/transition.llb/Waveform Array To Dynamic.vi"/>
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
+			<Item Name="ChecksumMot.vi" Type="VI" URL="../TestComPicMoteur/ChecksumMot.vi"/>
 			<Item Name="GlobalVar.vi" Type="VI" URL="../GlobalVar.vi"/>
 			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
+			<Item Name="StartByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/StartByteDecoderMot.vi"/>
 		</Item>
 		<Item Name="Spécifications de construction" Type="Build"/>
 	</Item>
