@@ -59,7 +59,8 @@ void loop() {
     Serial.print(start);
     Serial.print(coupleg);
     Serial.print(donnee0);
-    Serial.print(checksum(start, checksum(coupleg,donnee0)));
+    Serial.print(donnee0);
+    Serial.print(checksum(start, checksum(coupleg,checksum(donnee0,donnee0))));
     break;
     
     case 1:
@@ -67,22 +68,14 @@ void loop() {
     Serial.print(start);
     Serial.print(coupled);
     Serial.print(donnee0);
-    Serial.print(checksum(start, checksum(coupled,donnee0)));
+    Serial.print(donnee0);
+    Serial.print(checksum(start, checksum(coupled,checksum(donnee0,donnee0))));
     break;
     
-    case 2:
-    donnee0=random(0,128);
-    donnee1=random(0,128);
-    Serial.print(start);
-    Serial.print(vitesseg);
-    Serial.print(donnee0);
-    Serial.print(donnee1);
-    Serial.print(checksum(checksum(start,vitesseg), checksum(donnee0,donnee1)));
-    break;
     }
   ti++;
-  if(ti>=21){ti=0;}
-  delay(10);
+  if(ti>=2){ti=0;}
+  delay(300);
   
   if (Serial.available() > 0)
 { 
@@ -90,14 +83,14 @@ void loop() {
   {
     if(rs=start)
       {
-      typeRecu=Serial.read();
-      switch(typeRecu)
+     // typeRecu=Serial.read();
+    /*  switch(typeRecu)
         case coupleg :
         break;
         
         case coupled :
         break;
-        
+        */
       }
     lcd.setCursor(0,1);
     lcd.print(rs,HEX);
