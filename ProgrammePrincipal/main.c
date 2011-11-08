@@ -43,7 +43,7 @@ void main_test(void)
 {
 struct Sroues roues;
 	unsigned char tab=1;
-long temp;
+float temp;
 	while(1)
 	{
 printf( printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO));
