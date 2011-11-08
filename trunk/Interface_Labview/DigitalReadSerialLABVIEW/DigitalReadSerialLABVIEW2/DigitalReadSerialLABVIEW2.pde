@@ -112,7 +112,7 @@ LiquidCrystal lcd(RS, E, D4, D5, D6, D7);// initialisation LCD en mode 4 bits
 int coupleg;
 int coupled;
 char erreurcourant;
-float vitesseg=0.0;
+float vitesseg;
 float vitessed=0.0;
 float pidK=0.0;
 float pidI=0.0;
@@ -152,48 +152,35 @@ void setup() {
 
 void loop() {
   
-  // Envoie BIN de start
-  Serial.println(DEBUT_TRAME, BIN);
+  // Envoie BYTE de start
+  Serial.print(DEBUT_TRAME,BYTE);
   checksum=DEBUT_TRAME;
   
-  // Envoie BIN de type et données successivement
+  // Envoie BYTE de type et données successivement
   switch(ti)
     {
     case 0:
-    Serial.println(TYPE_TRAME_INF_COUPLEG, BIN);
+    Serial.print(TYPE_TRAME_INF_COUPLEG,BYTE);
     checksum=fchecksum(checksum,TYPE_TRAME_INF_COUPLEG);
-    coupleg=50;
+    coupleg=random(40,50);
     checksum=sendData(2, (char*) &coupleg ,checksum);
     break;
     
     case 1:
-    Serial.println(TYPE_TRAME_INF_COUPLED, BIN);
+    Serial.print(TYPE_TRAME_INF_COUPLED,BYTE);
     checksum=fchecksum(checksum,TYPE_TRAME_INF_COUPLED);
-    coupled=850;
+    coupled=random(800,900);
     checksum=sendData(2, (char*) &coupled ,checksum);
     break;
-    
-    case 2:
-    Serial.println(TYPE_TRAME_INF_VITESSEG, BIN);
-    checksum=fchecksum(checksum,TYPE_TRAME_INF_VITESSEG);
-    vitesseg=25.63;
-    char* po = (char*) &vitesseg;
-    for (int i = 0; i < 4; i++) {
-    Serial.println(po[i], BIN);
-    }
-    checksum=sendData(4, (char*) &vitesseg ,checksum);
-    break;
-    
-    
     }
     
   // Envoie checksum
-  Serial.println(checksum,BIN);  
+  Serial.print(checksum,BYTE);  
   
   
   ti++;
-  if(ti>=3){ti=0;}
-  delay(1000);
+  if(ti>=2){ti=0;}
+  delay(300);
   
 }
 
@@ -206,7 +193,7 @@ char sendData(int longueur, char * pointeur, char checksum)
 {
 
   for (int i = 0; i < longueur; i++) {
-  Serial.println((char) pointeur[i], BIN);
+  Serial.print((char) pointeur[i],BYTE);
   checksum=fchecksum(checksum,pointeur[i]);
   }
 
