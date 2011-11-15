@@ -41,7 +41,8 @@ float determine_acceleration(float , float , float , float , float );
 
 
 // Fonction publiques
-void interruptionCodeurG(void)
+
+void interruptionCodeurG(char signe)
 {
 /*
 sensG=determine_sens(INTCON3bits.INT1F, CODEUR_B_GAUCHE);
@@ -55,7 +56,7 @@ INTCON3bits.INT1F=0;    //clear flag
 }
 
 
-void interruptionCodeurD(void)
+void interruptionCodeurD(char signe)
 {
 /*
 //sensD=determine_sens(INTCON3bits.INT2F, CODEUR_B_DROITE);
@@ -67,6 +68,7 @@ else if (sensD==0){--nb_frontD;}
 ++abs_nb_frontD;
 */
 }
+
 
 void initCodeurs(void)  //initialisation des codeurs
 {

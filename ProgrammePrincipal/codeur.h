@@ -16,10 +16,10 @@ struct Sroues{
 };
 
 //fonctions publiques
-void interruptionCodeurG(void);
-void interruptionCodeurD(void);
-void initCodeurs(void);
-struct Sroues lancerCalculsCodeur(float deltaT); //deltaT en ms
+void interruptionCodeurG(char signe); //detection changement de signe et à chaque tour de boucle d'asserv (juste avant demande de calcul)
+void interruptionCodeurD(char signe); //signe vaut la valeur lu sur l'entrée
+void initCodeurs(void); //au début
+struct Sroues lancerCalculsCodeur(float deltaT); //deltaT en ms 
 
 // le coefficient du filtre se nomme : ACCELERATION_COEF_FILTRE (en float)
 //sont aussi disponible (dans le fichier variables globales.h) : GRANDEUR_RAYON_ROUE (en mm) et GRANDEUR_VITESSE_MAX (en tr/min )
