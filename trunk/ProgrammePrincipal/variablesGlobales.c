@@ -12,6 +12,8 @@ float ACCELERATION_COEF_FILTRE;
 //calibrage (0 pour la valeur signifiant 0, 1 pour la valeur unité 9.81m/s pour les accéléro et °/cs  pour le gyro)
 short tAccX0 , tAccX1, tAccZ0, tAccZ1, tGyro0, tGyro1;
 
+short LIMITE_DISTANCE_UTILISATEUR=1000;
+
 void genererCoefParDefaut()
 {
 	PRINC_PID_K=20;

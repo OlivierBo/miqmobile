@@ -4,6 +4,7 @@
 #include "tools.h"
 #include "autresES.h"
 #include "variablesGlobales.h"
+#include "ultrason.h"
 
 short tGuidon0 , tGuidonMax, guidonMax; 
 
@@ -17,7 +18,10 @@ float guidonTrMin(short tGuidon)
 char presenceUtilisateur(void)
 {
 	//bouton, us? a choisir...
+	if(distanceUS()<LIMITE_DISTANCE_UTILISATEUR)
 	return OUI;
+	else
+	return NON;
 }
 
 void envoyerConsigneDeCouple(float coupleG, float coupleD)

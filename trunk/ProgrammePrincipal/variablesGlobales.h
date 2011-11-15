@@ -45,6 +45,8 @@ extern short tGuidon0 , tGuidonMax, guidonMax;
 // tguidonmax : de combien, en valeur can, le guidon peut il bouger?
 //guidonMax : lorsque le guidon est au max, ca correspond a combien de tour/min
 
+extern short LIMITE_DISTANCE_UTILISATEUR; //mm : pas encore enregistré ds l'eeprom
+
 #endif
 
 

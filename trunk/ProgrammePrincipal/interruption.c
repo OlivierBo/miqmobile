@@ -5,6 +5,7 @@
 #include "codeur.h"
 #include "communication.h"
 #include "brochage.h"
+#include "ultrason.h"
 
 
 //=============================================================================
@@ -34,7 +35,7 @@ void InterruptHandlerHigh()
 
 	if(	INTCONbits.INT0IF) //INT0 = ultrason
 	{
-		
+		receptionUS();
 		INTCONbits.INT0IF=0;
 	}
 }
