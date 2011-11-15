@@ -94,6 +94,9 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 {
         struct Sroues roues;
 
+		nb_frontG=LireCodeurGauche();
+		nb_frontD=LireCodeurDroite();
+		
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
         roues.positionDroit=determine_position(nb_frontD);         //°  (entre -180 et +180)
