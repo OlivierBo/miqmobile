@@ -108,10 +108,10 @@ void initppal(void)
 
 
 	// activer les interruptions INT
-	//OpenRB0INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_HIGH & PORTB_PULLUPS_OFF );//(priorité HAUTE) ultrason
-	//OpenRB1INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF);//(priorité BASSE) signe codeur
-	//OpenRB2INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF );//(priorité BASSE) signe codeur
-		//INTCON2bits.INTEDG0: External Interrupt 0 Edge Select bit  = 0 : falling
+	OpenRB0INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_HIGH & PORTB_PULLUPS_OFF );//(priorité HAUTE) ultrason
+	OpenRB1INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF);//(priorité BASSE) signe codeur
+	OpenRB2INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF );//(priorité BASSE) signe codeur
+	//INTCON2bits.INTEDG0: External Interrupt 0 Edge Select bit  = 0 : falling
 
 	//Initialisation USART (priorité BASSE)
 	Open1USART(USART_TX_INT_OFF &   USART_RX_INT_ON & USART_ASYNCH_MODE & USART_EIGHT_BIT & USART_BRGH_LOW & USART_CONT_RX , 25); 
