@@ -59,17 +59,15 @@ void InterruptHandlerlow()
 {
 	char caractere;
 
-	if(INTCON3bits.INT1IF) //codeur A GAUCHE
+	if(INTCON3bits.INT1IF) //codeur GAUCHE
 	{
-		interruptionCodeurG();
-		LED_ERREUR=!LED_ERREUR;
+		interruptionCodeurG(INTER_1);
 		INTCON3bits.INT1IF=0;
 	}
 
-	if(INTCON3bits.INT2IF) //codeur A DROITE
+	if(INTCON3bits.INT2IF) //codeur DROITE
 	{
-		interruptionCodeurD();
-		LED_ERREUR=!LED_ERREUR;
+		interruptionCodeurD(INTER_2);
 		INTCON3bits.INT2IF=0;
 	}
 	
@@ -89,10 +87,6 @@ void InterruptHandlerlow()
 		PIR3bits.RC2IF;
 	}
 
-	if(PIR5bits.TMR5IF) //timer5 : fonction appelable 1x/ms
-	{
-		PIR5bits.TMR5IF=0;
-	}
 
 	if(INTCONbits.TMR0IF) //timer0 : clignotement de led
 	{

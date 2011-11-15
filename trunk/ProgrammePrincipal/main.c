@@ -36,7 +36,7 @@ void main_test(void);
 void main_test(void)
 {
 struct Sroues roues;
-	unsigned char tab=1;
+unsigned char tab=1;
 float temp;
 
 initCodeurs();

@@ -92,7 +92,7 @@ void initppal(void)
 
 
 	// activer les timers
-		//glabal time : incrément toutes les 1/2µs (priorité HAUTE)
+		//global time : incrément toutes les 1/2µs (priorité HAUTE)
 		OpenTimer3(TIMER_INT_ON & T3_16BIT_RW & T3_SOURCE_FOSC_4 & T3_OSC1EN_OFF & T3_SYNC_EXT_OFF &  T3_PS_1_8 , 0) ;
 		WriteTimer3(63535); //une interruption chaque ms
 		IPR2bits.TMR3IP=1;
@@ -102,15 +102,15 @@ void initppal(void)
 		OpenTimer0(TIMER_INT_ON & T0_16BIT & T0_SOURCE_INT & T0_PS_1_128); 
 		INTCON2bits.TMR0IP=0;
 
-		//timer pour lancer une fonction dans une interruption (priorité BASSE)
-		//OpenTimer5(TIMER_INT_ON & T5_16BIT_RW &  T5_SOURCE_FOSC_4 & T5_OSC1EN_OFF & T5_PS_1_8 & T5_SYNC_EXT_OFF, 0) ;
-		//IPR5bits.TMR5IP=0;
-		//ici 15Hz*255
+		//timers compteurs de fronts
+		OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW &  T3_SOURCE_PINOSC & T3_OSC1EN_OFF & T3_PS_1_1 & T3_SYNC_EXT_OFF, 0) ;
+		OpenTimer5(TIMER_INT_OFF & T5_16BIT_RW &  T5_SOURCE_PINOSC & T5_OSC1EN_OFF & T5_PS_1_1 & T5_SYNC_EXT_OFF, 0) ;
+
 
 	// activer les interruptions INT
-	//OpenRB0INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_HIGH & PORTB_PULLUPS_OFF );//(priorité HAUTE)
-	//OpenRB1INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW );//(priorité BASSE)
-	//OpenRB2INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF );//(priorité BASSE)
+	//OpenRB0INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_HIGH & PORTB_PULLUPS_OFF );//(priorité HAUTE) ultrason
+	//OpenRB1INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF);//(priorité BASSE) signe codeur
+	//OpenRB2INT( PORTB_CHANGE_INT_ON & FALLING_EDGE_INT & PORTB_INT_PRIO_LOW & PORTB_PULLUPS_OFF );//(priorité BASSE) signe codeur
 		//INTCON2bits.INTEDG0: External Interrupt 0 Edge Select bit  = 0 : falling
 
 	//Initialisation USART (priorité BASSE)
@@ -137,9 +137,8 @@ void initppal(void)
 	PIR1bits.RC1IF=0; // EUSART1 Receive Interrupt Flag bit (cleared when RCREG1 is read) 
 	PIR2bits.TMR3IF=0;
 	PIR3bits.RC2IF=0; // EUSART2 Receive Interrupt Flag bit (cleared by reading RCREG2)
-	PIR5bits.TMR5IF=0;
 
-INTCON2bits.RBPU=0;
+	//INTCON2bits.RBPU=0; //pullup port B (si INT détectent n'importe quoi...)
 
 	RCONbits.IPEN=1;
 	INTCONbits.GIEL=1;
