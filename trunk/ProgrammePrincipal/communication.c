@@ -107,7 +107,10 @@ void interruptionRx1(unsigned char rxByte) {
 				
 				case TYPE_TRAME_CON_DEPART:
 					CON_DEPART = trameBuf[3];
-					break;				
+					//demarrer();
+					break;			
+
+				
 			} 
 			resetTrame = TRUE;
 		} 
