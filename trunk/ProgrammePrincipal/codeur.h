@@ -13,6 +13,9 @@ struct Sroues{
 	float utilisationMoteur; //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
 	
 	float accMoyenne; //m/s²	-> utiliser le rayon
+
+	char signeGauche;
+	char signeDroite;
 };
 
 //fonctions publiques
