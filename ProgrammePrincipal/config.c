@@ -103,8 +103,8 @@ void initppal(void)
 		INTCON2bits.TMR0IP=0;
 
 		//timers compteurs de fronts
-		OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW &  T3_SOURCE_PINOSC & T3_OSC1EN_OFF & T3_PS_1_1 & T3_SYNC_EXT_OFF, 0) ;
-		OpenTimer5(TIMER_INT_OFF & T5_16BIT_RW &  T5_SOURCE_PINOSC & T5_OSC1EN_OFF & T5_PS_1_1 & T5_SYNC_EXT_OFF, 0) ;
+		OpenTimer3(TIMER_INT_OFF & T3_16BIT_RW &  T3_SOURCE_PINOSC & T3_OSC1EN_OFF & T3_PS_1_1 & T3_SYNC_EXT_OFF, 0) ; //gauche
+		OpenTimer5(TIMER_INT_OFF & T5_16BIT_RW &  T5_SOURCE_PINOSC & T5_OSC1EN_OFF & T5_PS_1_1 & T5_SYNC_EXT_OFF, 0) ; //droite
 
 
 	// activer les interruptions INT

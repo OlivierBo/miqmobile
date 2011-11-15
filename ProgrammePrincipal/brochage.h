@@ -46,7 +46,10 @@
 #define CH_BATTERIE ADC_CH6
 #define CH_ACC_X ADC_CH7
 
-
+#define EcrireCodeurGauche(s) WriteTimer1(s)
+#define LireCodeurGauche() ReadTimer1()
+#define EcrireCodeurDroite(s) WriteTimer5(s)
+#define LireCodeurDroite() ReadTimer5()
 
 //paramètres de l'eeprom
 #define EEPROM_START	0
