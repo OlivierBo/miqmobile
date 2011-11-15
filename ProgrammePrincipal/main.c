@@ -33,25 +33,29 @@ void main (void);
 void main_test(void);
 
 
-
-
-
-
-
-
 void main_test(void)
 {
 struct Sroues roues;
 	unsigned char tab=1;
 float temp;
+
+initCodeurs();
+
+
 	while(1)
+
+/*
 	{
 printf( printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO));
 roues = lancerCalculsCodeur(100);
 temp=roues.positionDroit+roues.positionGauche;
 printf( printf_main_angle, temp);
 pauseMs(100);
-}{
+}
+*/
+
+
+{
 
 		for(tab=1;tab<34;tab*=2)
 		{
@@ -72,12 +76,7 @@ pauseMs(100);
 		}
 
 }
-while(1)
-{
-	LED_ERREUR=!LED_ERREUR;
-	pauseMs(500);
-}
-	
+
 
 while(1);
 }
@@ -90,12 +89,15 @@ while(1);
 //=============================================================================
 void main (void)
 {
+
+
 	char continuer = 1;
 
 	initppal();		//Initialisation générale
 	genererCoefParDefaut(); //chargerTousLesCoef(); serait mieux
 	chargerValeurDeCalibration(); //accéléromètre
 	chargerGuidon();
+
 	pauseMs(1000);
 
 	main_test();

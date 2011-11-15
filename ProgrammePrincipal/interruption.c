@@ -62,6 +62,7 @@ void InterruptHandlerlow()
 	if(INTCON3bits.INT1IF) //codeur A GAUCHE
 	{
 		interruptionCodeurG();
+		LED_ERREUR=!LED_ERREUR;
 		INTCON3bits.INT1IF=0;
 	}
 
@@ -88,7 +89,7 @@ void InterruptHandlerlow()
 		PIR3bits.RC2IF;
 	}
 
-	if(PIR5bits.TMR5IF) //timer4 : fonction appelable 1x/ms
+	if(PIR5bits.TMR5IF) //timer5 : fonction appelable 1x/ms
 	{
 		PIR5bits.TMR5IF=0;
 	}
