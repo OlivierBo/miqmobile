@@ -62,12 +62,14 @@ void InterruptHandlerlow()
 	if(INTCON3bits.INT1IF) //codeur GAUCHE
 	{
 		interruptionCodeurG(INTER_1);
+		INTCON2.INTEDG1=!INTCON2.INTEDG1;
 		INTCON3bits.INT1IF=0;
 	}
 
 	if(INTCON3bits.INT2IF) //codeur DROITE
 	{
 		interruptionCodeurD(INTER_2);
+		INTCON2.INTEDG2=!INTCON2.INTEDG2;
 		INTCON3bits.INT2IF=0;
 	}
 	
