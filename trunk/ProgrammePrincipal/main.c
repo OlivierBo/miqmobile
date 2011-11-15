@@ -109,7 +109,7 @@ void main (void)
 				lancerUS();
 				if(boucleAsservissement(0)==ERREUR) continuer=0;
 				//envoi de données... peut etre en deplacer une partie ds la fonction d'asserv pour accéder aux variables
-				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime)+1, 1);
+				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, globalTime, 2);
 				//si commande STOP, continuer=0;
 				//...
 			}
