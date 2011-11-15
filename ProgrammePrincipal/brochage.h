@@ -51,6 +51,8 @@
 #define EcrireCodeurDroite(s) WriteTimer5(s)
 #define LireCodeurDroite() ReadTimer5()
 
+#define EDGE_INT0 INTCON2bits.INTEDG0
+
 //paramètres de l'eeprom
 #define EEPROM_START	0
 #define EEPROM_END		1023

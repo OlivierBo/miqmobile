@@ -41,7 +41,6 @@ float temp;
 
 initCodeurs();
 
-
 	while(1)
 
 /*
@@ -57,7 +56,6 @@ pauseMs(100);
 */
 
 {
-
 		for(tab=1;tab<34;tab*=2)
 		{
 			LED_HAUT = getbit(tab,0);
@@ -66,10 +64,8 @@ pauseMs(100);
 			LED_DROITE = getbit(tab,3);
 			LED_CENTRE_VERTE = getbit(tab,4);
 			LED_CENTRE_ORANGE = getbit(tab,5);
-			printf( printf_main_angle, acquisition(CH_POTENTIOMETRE_GUIDON));
 			pauseMs(500);
 		}
-
 }
 
 
@@ -95,7 +91,7 @@ void main (void)
 
 	pauseMs(1000);
 
-	main_test();
+	//main_test();
 
 	while(1)
 	{
