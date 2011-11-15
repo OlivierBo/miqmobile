@@ -7,7 +7,7 @@ unsigned long debut;
 unsigned long duree;
 
 
-short distanceUS(void) //en "presque" mm
+short distanceUS(void) //en mm
 {
 	//µs*10/58 = mm
 	unsigned long dist = duree*10/58;
@@ -25,7 +25,7 @@ void receptionUS(void)
 	{
 		duree=(unsigned long)(globalTimeMsUs()-debut);
 		EDGE_INT0=1;
-		if(duree>30) duree=0;
+		if(duree>30000) duree=0;
 	}
 }
 

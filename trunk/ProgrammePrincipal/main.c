@@ -21,6 +21,7 @@
 #include "asserv.h"
 #include "tangage.h"
 #include "autresES.h"
+#include "ultrason.h"
 
 //liste des phrases des différents printf
 const far rom char printf_main_angle[]="\r\n%d";
@@ -88,13 +89,14 @@ void main (void)
 	genererCoefParDefaut(); //chargerTousLesCoef(); serait mieux
 	chargerValeurDeCalibration(); //accéléromètre
 	chargerGuidon();
-
+	lancerUS();
 	pauseMs(1000);
 
 	//main_test();
 
 	while(1)
 	{
+		lancerUS();
 		//si le démarrage est autorisé (verifier aussi la batterie un jour..)
 		if((testDemarrage()==OK)&&(0))
 		{
@@ -104,6 +106,7 @@ void main (void)
 			//la boucle qui s'execute lorsque le segway est en marche normale
 			while(continuer)
 			{
+				lancerUS();
 				if(boucleAsservissement(0)==ERREUR) continuer=0;
 				//envoi de données... peut etre en deplacer une partie ds la fonction d'asserv pour accéder aux variables
 				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime)+1, 1);
