@@ -43,6 +43,7 @@ float determine_acceleration(float , float , float , float , float );
 // Fonction publiques
 void interruptionCodeurG(void)
 {
+/*
 sensG=determine_sens(INTCON3bits.INT1F, CODEUR_B_GAUCHE);
 if (sensG==1)			//selon le sens, on incrémente ou on décrémente
 {++nb_frontG;}			//nb_front image de la distance parcourue
@@ -50,18 +51,21 @@ if (sensG==1)			//selon le sens, on incrémente ou on décrémente
 else if (sensG==0){--nb_frontD;}
 ++abs_nb_frontG;
 INTCON3bits.INT1F=0;    //clear flag
+*/
 }
 
 
 void interruptionCodeurD(void)
 {
-sensD=determine_sens(INTCON3bits.INT2F, CODEUR_B_DROITE);
+/*
+//sensD=determine_sens(INTCON3bits.INT2F, CODEUR_B_DROITE);
 if (sensD==1)			//selon le sens, on incrémente ou on décrémente
 {++nb_frontG;}			//nb_front image de la distance parcourue
 
 else if (sensD==0){--nb_frontD;}
-INTCON3bits.INT2F=0;    //clear flag
+//INTCON3bits.INT2F=0;    //clear flag
 ++abs_nb_frontD;
+*/
 }
 
 void initCodeurs(void)  //initialisation des codeurs

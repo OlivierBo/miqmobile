@@ -6,6 +6,7 @@ char siDelaiEcouleMs(unsigned short time, unsigned short duree);
 void pauseMs(unsigned short duree);
 unsigned short globalTimeUs(void);
 void pauseUs(unsigned short duree);
+void pauseTcyMs(unsigned short ms);
 unsigned long globalTimeMsUs(void);
 unsigned long tempsEcouleDepuisMsUs(unsigned long time);
 extern volatile unsigned short globalTime; //en lecture seule!
