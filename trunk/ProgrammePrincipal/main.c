@@ -52,25 +52,20 @@ temp=roues.positionDroit+roues.positionGauche;
 printf( printf_main_angle, temp);
 pauseMs(100);
 }
-*/
 
+		printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
+*/
 
 {
 
 		for(tab=1;tab<34;tab*=2)
 		{
 			LED_HAUT = getbit(tab,0);
-			//pauseMs(1);
 			LED_BAS = getbit(tab,1);
-		//	pauseMs(1);
 			LED_GAUCHE = getbit(tab,2);
-		//	pauseMs(1);
 			LED_DROITE = getbit(tab,3);
-		//	pauseMs(1);
 			LED_CENTRE_VERTE = getbit(tab,4);
-		//	pauseMs(1);
 			LED_CENTRE_ORANGE = getbit(tab,5);
-		//	pauseMs(1);
 			printf( printf_main_angle, acquisition(CH_POTENTIOMETRE_GUIDON));
 			pauseMs(500);
 		}
@@ -115,7 +110,7 @@ void main (void)
 			{
 				if(boucleAsservissement(0)==ERREUR) continuer=0;
 				//envoi de données... peut etre en deplacer une partie ds la fonction d'asserv pour accéder aux variables
-				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime), 1);
+				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime)+1, 1);
 				//si commande STOP, continuer=0;
 				//...
 			}
@@ -131,7 +126,7 @@ void main (void)
 		}
 		//envoi de données...
 		//envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime), 1);
-		printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
+
 
 	}
 
