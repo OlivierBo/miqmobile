@@ -17,6 +17,7 @@
 		<Item Name="IDByteToNotes.vi" Type="VI" URL="../IDByteToNotes.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
 		<Item Name="MainPicMot.vi" Type="VI" URL="../TestComPicMoteur/MainPicMot.vi"/>
+		<Item Name="MainV1.vi" Type="VI" URL="../MainV1.vi"/>
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
 		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
@@ -65,7 +66,9 @@
 				<Item Name="whitespace.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/whitespace.ctl"/>
 			</Item>
 			<Item Name="ChecksumMot.vi" Type="VI" URL="../TestComPicMoteur/ChecksumMot.vi"/>
+			<Item Name="DataDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/DataDecoderMot.vi"/>
 			<Item Name="GlobalVar.vi" Type="VI" URL="../GlobalVar.vi"/>
+			<Item Name="IDByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/IDByteDecoderMot.vi"/>
 			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
 			<Item Name="StartByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/StartByteDecoderMot.vi"/>
 		</Item>
