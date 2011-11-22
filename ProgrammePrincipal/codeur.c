@@ -13,9 +13,6 @@ long abs_nb_frontD;
 char sensG;      // pour la détermination du sens de rotation des codeurs DetG
 char sensD;
 
-float nb_front_precD;
-float nb_front_precG;
-
 float vitesseG;
 float vitesseD;
 
@@ -43,47 +40,24 @@ float D_utilisation_moteur (float , float  );
 float determine_acceleration(float , float , float , float , float );
 float determine_nb_front(float , float , char );
 
-
-
-
 // Fonction publiques
 
 void interruptionCodeurG(char signe)
 {
-
-roues.vitesseGauche=0.;		//raz des vitesses
-
-EcrireCodeurGauche(0);		//raz timer
-sensG=!sensG;
-
-/*
-sensG=determine_sens(INTCON3bits.INT1F, CODEUR_B_GAUCHE);
-if (sensG==1)			//selon le sens, on incrémente ou on décrémente
-{++nb_frontG;}			//nb_front image de la distance parcourue
-
-else if (sensG==0){--nb_frontD;}
-++abs_nb_frontG;
-INTCON3bits.INT1F=0;    //clear flag
-*/
+deltafrontG=LireCodeurGauche();
+nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb de front
+roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
+EcrireCodeurGauche(0);										//raz timer
+sensG=signe;
 }
-
 
 void interruptionCodeurD(char signe)
 {
-
+deltafrontG=LireCodeurDroite();
+nb_frontD=determine_nb_front(nb_frontG, deltafrontD, sensD);
 roues.vitesseDroite=0.;		//raz des vitesses
 EcrireCodeurDroite(0);		//raz timer
-sensD=!sensD;
-
-/*
-//sensD=determine_sens(INTCON3bits.INT2F, CODEUR_B_DROITE);
-if (sensD==1)			//selon le sens, on incrémente ou on décrémente
-{++nb_frontG;}			//nb_front image de la distance parcourue
-
-else if (sensD==0){--nb_frontD;}
-//INTCON3bits.INT2F=0;    //clear flag
-++abs_nb_frontD;
-*/
+sensD=signe;
 }
 
 
@@ -93,8 +67,6 @@ nb_frontG=0.; //compte le nombre de fronts de la voie 1 du codeur de gauche
 nb_frontD=0.; //compte le nombre de fronts de la voie 1 du codeur de droite
 abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
 abs_nb_frontD=0.;
-nb_front_precD=0.;
-nb_front_precG=0.;
 vitesseG=0.;
 vitesseD=0.;
 vitesse_precG=0.;
@@ -103,15 +75,15 @@ vitesseMoyenne=0.;
 vitesseMoyPrec=0.;
 acc_moyenne=0.;
 acc_moyenne_prec=0.;
-sensG=0;
-sensD=0;
+sensG=1;
+sensD=1;
+deltafrontD=0.;
+deltafrontG=0.;
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
 {
-        
-
-		deltafrontG=LireCodeurGauche();
+        deltafrontG=LireCodeurGauche();
 		deltafrontD=LireCodeurDroite();
 		
 		EcrireCodeurGauche(0);
@@ -138,11 +110,6 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
 		roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT, vitesse_precG);  //°/s
         roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT, vitesse_precD);
-		
-/*
-		nb_front_precG=nb_frontG;
-		nb_front_precD=nb_frontD;
-*/
 
 		vitesseG=roues.vitesseGauche;
 		vitesseD=roues.vitesseDroite;
@@ -176,6 +143,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
     return sens;
 }
 */
+
 float determine_nb_front(float nb_front, float deltafront, char sens)
 {
 if (sens=1) nb_front=nb_front+deltafront;
@@ -188,16 +156,16 @@ return nb_front;
 
 float determine_position(float nb_front)
 {
-
-while (1000.<nb_front<-1000.)
+float position;
+while (1000.<nb_front||nb_front<-1000.)
     {
-    float position;
+    
 	
     if (nb_front>1000.) nb_front=nb_front-1000.;
     else if (nb_front<-1000.) nb_front=nb_front+1000.;
+	}
     position=nb_front*0.36;	//nb_front*360/resolution (résolution=1000)
-    return position; //position est ainsi entre +- 180°
-    }
+    return position; //position est ainsi entre +- 180°    
 }
 
 float distance_Moy(long frontsG, long frontsD)
