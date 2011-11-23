@@ -184,7 +184,6 @@ void loop() {
             switch (bytereception1){
               case TYPE_TRAME_CON_COUPLEG:
               lcd.print("CTORQUE G");
-              
               break;
               
               case TYPE_TRAME_CON_COUPLED:
@@ -251,19 +250,18 @@ void loop() {
               lcd.print("CCOEFKALMAN");
               break;
             }
-            lcd.setCursor(0, 1);
+            
             
            
             // Reception checksum
             bytereception2=Serial.read();
             
             delay(10);
-            lcd.print("D=");
-            lcd.setCursor(2, 1);
-            lcd.print(u.fval, DEC);
+            
             
           }
           else{
+            lcd.setCursor(4, 0);
             lcd.print("S0");
           }
           
@@ -275,48 +273,48 @@ void loop() {
    switch(ti)
     {
     case 0:
-    coupleg=coupleg + (float)(random(1,9))/(float)10;
+    coupleg=coupleg + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData(TYPE_TRAME_INF_COUPLEG, coupleg);
     break;
     
     case 1:
-    coupled=coupled + (float)(random(1,9))/(float)10;
+    coupled=coupled + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData(TYPE_TRAME_INF_COUPLED ,coupled);
     break;
     
     
     case 2:
-    vitesseg=vitesseg + (float)(random(1,9))/(float)10;
+    vitesseg=vitesseg + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData( TYPE_TRAME_INF_VITESSEG,vitesseg);
     break;
     
     
     case 3:
-    vitessed=vitessed + (float)(random(1,9))/(float)10;
+    vitessed=vitessed + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData( TYPE_TRAME_INF_VITESSED,vitessed);
     break;
     
     
     case 4:
-    angle=angle + (float)(random(1,9))/(float)10;
+    angle=angle + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData( TYPE_TRAME_INF_ANGLE, angle);
     break;
     
     
     case 5:
-    distance=distance + (float)(random(1,9))/(float)10;
+    distance=distance + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData( TYPE_TRAME_INF_DISTANCE_PARCOURUE,distance);
     break;
     
     
     case 6:
-    batterie=batterie + (float)(random(1,9))/(float)10;
+    batterie=batterie + 2*((float)(random(1,9))-(float)(random(1,9)))/5.0;
     sendData(TYPE_TRAME_INF_ETAT_BATTERIE ,batterie);
     break;
     
     
     }
-    if(ti>5){ti++;}else{ti=0;}
+    if(ti<6){ti++;}else{ti=0;}
     
   
 }
@@ -348,6 +346,11 @@ void loop() {
             u.b[1]=(byte)Serial.read();
             u.b[2]=(byte)Serial.read();
             u.b[3]=(byte)Serial.read();
+            lcd.setCursor(0, 1);
+            lcd.print("D=");
+            lcd.setCursor(2, 1);
+            lcd.print(u.fval, DEC);
+            lcd.setCursor(4, 0);
             return u.fval;
     
   }
