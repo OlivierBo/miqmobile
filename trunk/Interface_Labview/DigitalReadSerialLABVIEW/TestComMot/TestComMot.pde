@@ -163,7 +163,7 @@ void loop() {
   } u;
   
   // Temps boucle
-  delay(200);
+  delay(50);
   
   //Ecoute Décode et renvoie
   if (Serial.available() > 0) { // si des données entrantes sont présentes
