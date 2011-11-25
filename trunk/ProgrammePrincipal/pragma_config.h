@@ -18,6 +18,10 @@
 #pragma config DEBUG  = ON			// Debug ON
 #pragma config MCLRE  = EXTMCLR		// Enable MCLRE for reset function								
 
+#pragma config T3CMX = PORTB5
+#pragma config P2BMX = PORTC0
+
+
 #pragma config LVP=OFF
 
 #pragma code

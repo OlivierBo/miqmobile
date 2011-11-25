@@ -38,6 +38,11 @@
 #define FALSE 0
 #define OUI 1
 #define NON 0
+
+//réponse carte couple
+#define PRET 1
+#define PROBLEME 2
+#define INDEF 0
 //=============================================================================
 //Definition de constantes
 //=============================================================================

@@ -26,11 +26,11 @@ void InterruptVectorHigh (void)
 
 void InterruptHandlerHigh()
 {
-	if(PIR2bits.TMR3IF) //timer 3 = globalTime
+	if(PIR5bits.TMR5IF) //timer 5 = globalTime
 	{
-		WriteTimer3(63535); 
+		WriteTimer5(63535); 
 		globalTime++;
-		PIR2bits.TMR3IF=0;
+		PIR5bits.TMR5IF=0;
 	}
 
 	if(	INTCONbits.INT0IF) //INT0 = ultrason
@@ -62,22 +62,24 @@ void InterruptHandlerlow()
 
 	if(INTCON3bits.INT1IF) //codeur GAUCHE
 	{
-		interruptionCodeurG(INTER_1);
+		interruptionCodeurG(SENS_G);
 		INTCON2bits.INTEDG1=!INTCON2bits.INTEDG1;
+		LED_ERREUR=!LED_ERREUR;
 		INTCON3bits.INT1IF=0;
 	}
 
 	if(INTCON3bits.INT2IF) //codeur DROITE
 	{
-		interruptionCodeurD(INTER_2);
+		interruptionCodeurD(SENS_D);
 		INTCON2bits.INTEDG2=!INTCON2bits.INTEDG2;
+LED_ERREUR=!LED_ERREUR;
 		INTCON3bits.INT2IF=0;
 	}
 	
 	if(PIR1bits.RC1IF) //usart1
 	{
 		caractere = RCREG1;
-		interruptionRx1(caractere);
+		interruptionRxOctet(caractere);
 		LED_USART1=!LED_USART1;
 		PIR1bits.RC1IF;
 	}
@@ -85,7 +87,7 @@ void InterruptHandlerlow()
 	if(PIR3bits.RC2IF) //usart2
 	{
 		caractere = RCREG2;
-		//interruptionRx2(caractere);
+		interruptionRxTrame(caractere);
 		LED_USART2=!LED_USART2;
 		PIR3bits.RC2IF;
 	}
