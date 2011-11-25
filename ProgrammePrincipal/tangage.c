@@ -107,14 +107,14 @@ short calibrageTangage(void)
 			LED_CENTRE_VERTE = LED_ON;
 			pauseMs(500);
 			LED_CENTRE_VERTE = LED_OFF;
-			chargerValeurDeCalibration();
+			chargerTangage();
 			return ERREUR;
 		}
 	}
 
 
 	//etape 9 : si on veut conserver les paramètres, on les enregistre
-	enregistrerValeurDeCalibration();
+	enregistrerTangage();
 
 	LED_CENTRE_VERTE = LED_ON;
 	pauseMs(500);

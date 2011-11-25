@@ -10,8 +10,8 @@
 #define LED_CENTRE_VERTE LATAbits.LATA6
 #define LED_CENTRE_ORANGE LATAbits.LATA7
 #define ULTRASON_INT PORTBbits.RB0
-#define INTER_1 PORTBbits.RB1
-#define INTER_2 PORTBbits.RB2
+#define SENS_G PORTBbits.RB1
+#define SENS_D PORTBbits.RB2
 #define LED_GAUCHE LATBbits.LATB3
 #define LED_DROITE LATBbits.LATB4
 #define CODEUR_GAUCHE PORTBbits.RB5
@@ -39,6 +39,7 @@
 #define MCLR_VPP PORTEbits.RE3
 
 
+
 #define CH_GYRO ADC_CH0
 #define CH_ACC_CENTRIFUGE ADC_CH1
 #define CH_ACC_Z ADC_CH4
@@ -46,10 +47,11 @@
 #define CH_BATTERIE ADC_CH6
 #define CH_ACC_X ADC_CH7
 
-#define EcrireCodeurGauche(s) WriteTimer1(s)
-#define LireCodeurGauche() ReadTimer1()
-#define EcrireCodeurDroite(s) WriteTimer5(s)
-#define LireCodeurDroite() ReadTimer5()
+
+#define EcrireCodeurGauche(s) WriteTimer3(s)
+#define LireCodeurGauche() ReadTimer3()
+#define EcrireCodeurDroite(s) WriteTimer1(s)
+#define LireCodeurDroite() ReadTimer1()
 
 #define EDGE_INT0 INTCON2bits.INTEDG0
 
@@ -57,12 +59,11 @@
 #define EEPROM_START	0
 #define EEPROM_END		1023
 
-#define EEPROM_CALIBRATION	100
-#define EEPROM_COEF	140
-#define EEPROM_GUIDON	180
-
-
-
+#define EEPROM_TANGAGE			50
+#define EEPROM_ASSERVISSEMENT	80
+#define EEPROM_GUIDON			110
+#define EEPROM_VITESSE			140
+#define EEPROM_DEMARRAGE		170
 
 #endif
 

@@ -3,8 +3,8 @@
 #include "ultrason.h"
 #include "brochage.h"
 
-unsigned long debut;
-unsigned long duree;
+unsigned long debut=0;
+unsigned long duree=0;
 
 
 short distanceUS(void) //en mm

@@ -6,11 +6,11 @@
 #include "variablesGlobales.h"
 #include "ultrason.h"
 
-short tGuidon0 , tGuidonMax, guidonMax; 
+
 
 float guidonTrMin(short tGuidon)
 {
-	float guidonTraite = (float) guidonMax *(tGuidon - tGuidon0)/(float)tGuidonMax ;
+	float guidonTraite = GUIDONMAX *(tGuidon - tGuidon0)/(float)tGuidonMax ;
 	//positif = guidon a droite, sinon changer le signe
 	return  guidonTraite; //possibilité de changer le signe...
 }
@@ -18,7 +18,8 @@ float guidonTrMin(short tGuidon)
 char presenceUtilisateur(void)
 {
 	//bouton, us? a choisir...
-	if(distanceUS()<LIMITE_DISTANCE_UTILISATEUR)
+	if(distanceUS()==0) return NON;
+	if(distanceUS()<(short)LIMITE_DISTANCE_UTILISATEUR)
 	return OUI;
 	else
 	return NON;
@@ -33,7 +34,7 @@ void envoyerConsigneDeCouple(float coupleG, float coupleD)
 short calibrerGuidon(void)
 {
 	long i;
-	tGuidon0 =0;  tGuidonMax =0; guidonMax=20; 
+	tGuidon0 =0;  tGuidonMax =0;  
 
 	//etape 1 : signaler qu'on est en mode calibrage
 	LED_BAS = LED_ON;
