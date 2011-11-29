@@ -79,6 +79,17 @@ sensG=1;
 sensD=1;
 deltafrontD=0.;
 deltafrontG=0.;
+//initialisation de la structure
+roues.positionGauche=0.;
+roues.positionDroite=0.;
+roues.distanceMoyenneParcourue=0.;
+roues.vitesseGauche=0.;
+roues.vitesseDroite=0.;
+roues.vitesseMoyenne=0.;
+roues.utilisationMoteur=0.;
+roues.accMoyenne=0.;
+roues.signeGauche=1;
+roues.signeDroite=1;
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
@@ -157,15 +168,17 @@ return nb_front;
 float determine_position(float nb_front)
 {
 float position;
-while (1000.<nb_front||nb_front<-1000.)
+position=nb_front*0.36;	//nb_front*360/resolution (résolution=1000)
+
+while (360.<position||position<-360.)
     {
-    
-	
-    if (nb_front>1000.) nb_front=nb_front-1000.;
-    else if (nb_front<-1000.) nb_front=nb_front+1000.;
+    if (position>360.) position=position-360.;
+    else if (position<-360.) position=position+360.;
 	}
-    position=nb_front*0.18;	//nb_front*360/resolution (résolution=1000)
-    return position; //position est ainsi entre +- 180°    
+    if (position>180.) position=position-360.;
+	else if (position<-180.) position=position+360.;
+
+	return position; //position est ainsi entre +- 180°    
 }
 
 float distance_Moy(long frontsG, long frontsD)
