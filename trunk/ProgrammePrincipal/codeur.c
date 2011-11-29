@@ -200,7 +200,7 @@ float vitesse;
 vitesse=deltafront;
 vitesse=vitesse*360.;
 vitesse=vitesse/deltaT;
-vitesseprec=vitesseprec+vitesse;
+vitesse=vitesseprec+vitesse;
 return vitesse;
 }
 
