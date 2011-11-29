@@ -4,7 +4,7 @@
 
 struct Sroues{
 	float positionGauche; //°  (entre -180 et +180)
-	float positionDroit; //°  (entre -180 et +180)
+	float positionDroite; //°  (entre -180 et +180)
 	float distanceMoyenneParcourue; //m
 
 	float vitesseGauche; //°/s
