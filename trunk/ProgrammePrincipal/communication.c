@@ -145,7 +145,7 @@ void interruptionRxTrame(unsigned char rxByte) {
 	//Octets suivants : données de la trame
 	//Dernier octet : checksum
 	else if (rxCount == curTrameLength +2) {
-	//	trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
+		trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
 		if (trameErr == 0) {
 			switch (curTrameType) {
 				
