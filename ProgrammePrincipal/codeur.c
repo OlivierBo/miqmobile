@@ -17,8 +17,8 @@ char sensD;
 float vitesseG;
 float vitesseD;
 
-float vitesse_precG;
-float vitesse_precD;
+//float vitesse_precG;
+//float vitesse_precD;
 
 float vitesseMoyenne;
 float vitesseMoyPrec;
@@ -72,8 +72,8 @@ abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
 abs_nb_frontD=0.;
 vitesseG=0.;
 vitesseD=0.;
-vitesse_precG=0.;
-vitesse_precD=0.;
+//vitesse_precG=0.;
+//vitesse_precD=0.;
 vitesseMoyenne=0.;
 vitesseMoyPrec=0.;
 acc_moyenne=0.;
@@ -105,8 +105,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		
 		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
 		//économie de deux calculs!
-		abs_nb_frontG=abs_nb_frontG+deltafrontG;
-		abs_nb_frontD=abs_nb_frontD+deltafrontD;
+		//abs_nb_frontG=abs_nb_frontG+deltafrontG;
+		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
 		//
 
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
@@ -117,14 +117,15 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
 
         //déterminer la distance moyenne parcourue
-        roues.distanceMoyenneParcourue=distance_Moy(abs_nb_frontG,abs_nb_frontD); //m
+        roues.distanceMoyenneParcourue=distance_Moy(nb_frontG,nb_frontD);//(abs_nb_frontG,abs_nb_frontD); //m
 
  		//vitesse_precG=roues.vitesseGauche;
 		//vitesse_precD=roues.vitesseDroite;
-
-		roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-        roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-
+		if (roues.signeGauche=0) roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+		else if (roues.signeGauche=0) roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+        if (roues.signeDroite=0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
+		else if (roues.signeDroite=0) roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+	
 		vitesseG=roues.vitesseGauche;
 		vitesseD=roues.vitesseDroite;
 
