@@ -164,7 +164,7 @@ while (1000.<nb_front||nb_front<-1000.)
     if (nb_front>1000.) nb_front=nb_front-1000.;
     else if (nb_front<-1000.) nb_front=nb_front+1000.;
 	}
-    position=nb_front*0.36;	//nb_front*360/resolution (résolution=1000)
+    position=nb_front*0.18;	//nb_front*360/resolution (résolution=1000)
     return position; //position est ainsi entre +- 180°    
 }
 
