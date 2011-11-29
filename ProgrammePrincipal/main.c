@@ -28,8 +28,9 @@ const far rom char printf_main_angle[]="\r\n%d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n 100acc %d, pos %d, 100vit %d, sgn %d";
+const far rom char printf_main_codeur[]="\r\n 1000acc %d, pos %d, 100vit %d, sgn %d";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
+const far rom char printf_main_us[]="\r\n us %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
 
 //déclaration de la fonction main (il n'y a pas de main.h, donc on la déclare ici)
@@ -73,10 +74,19 @@ pauseMs(100);
 		}
 		//printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, (short)guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 
+
 interruptionCodeurG(SENS_D);
 roues = lancerCalculsCodeur(500);
-sprintf(bufprint,printf_main_codeur,(int)(roues.accMoyenne*100),(int)roues.positionDroite, (int)(roues.vitesseDroite*100), (char) roues.signeDroite); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(int)(roues.accMoyenne*1000),(int)roues.positionDroite, (int)(roues.vitesseDroite*100), (char) roues.signeDroite); puts2USART (bufprint); 
 
+
+/*
+sprintf(bufprint,printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO)); puts2USART (bufprint);
+*/
+/*
+sprintf(bufprint,printf_main_us,distanceUS()); puts2USART (bufprint);
+lancerUS();
+*/
 }
 
 

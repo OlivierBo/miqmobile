@@ -25,7 +25,7 @@ void pauseMs(unsigned short duree)
 unsigned short globalTimeUs(void)
 {
 	//peut aller jusqu'à un maximum de 1ms
-	return (ReadTimer3()-63535)/2 ;
+	return (ReadTimer5()-63535)/2 ;
 }
 
 void pauseUs(unsigned short duree)
