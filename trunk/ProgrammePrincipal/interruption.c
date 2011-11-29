@@ -64,7 +64,7 @@ void InterruptHandlerlow()
 	{
 		interruptionCodeurG(SENS_G);
 		INTCON2bits.INTEDG1=!INTCON2bits.INTEDG1;
-		LED_ERREUR=!LED_ERREUR;
+		//LED_ERREUR=!LED_ERREUR;
 		INTCON3bits.INT1IF=0;
 	}
 

@@ -37,7 +37,7 @@ void pauseUs(unsigned short duree)
 
 unsigned long globalTimeMsUs(void)
 {
-	unsigned long tus = (unsigned long)globalTimeUs() +  globalTime*1000;
+	unsigned long tus = (unsigned long)globalTimeUs() +  (unsigned long)globalTime*1000;
 	return tus;
 }
 

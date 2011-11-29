@@ -122,9 +122,9 @@ struct Sroues lancerCalculsCodeur(float deltaT)
  		//vitesse_precG=roues.vitesseGauche;
 		//vitesse_precD=roues.vitesseDroite;
 		if (roues.signeGauche=0) roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-		else if (roues.signeGauche=0) roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+		else if (roues.signeGauche=1) roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
         if (roues.signeDroite=0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-		else if (roues.signeDroite=0) roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+		else if (roues.signeDroite=1) roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
 	
 		vitesseG=roues.vitesseGauche;
 		vitesseD=roues.vitesseDroite;
