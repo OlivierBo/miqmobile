@@ -51,5 +51,8 @@
 
 #define USE_AND_MASKS
 
+#define TAILLE_BUFPRINT 50
+extern ram char bufprint[TAILLE_BUFPRINT]; 
+
 #endif
 

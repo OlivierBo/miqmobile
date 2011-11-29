@@ -144,19 +144,19 @@ void interruptionRxTrame(unsigned char rxByte) {
 	}
 	//Octets suivants : données de la trame
 	//Dernier octet : checksum
-	else if (rxCount == curTrameLength - 1) {
-		trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
+	else if (rxCount == curTrameLength +2) {
+	//	trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
 		if (trameErr == 0) {
 			switch (curTrameType) {
 				
-				case TYPE_TRAME_CON_TEST_COM: envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (void*)(trameBuf), LG_TRAME_CON_TEST_COM)  ; break;
+				case TYPE_TRAME_CON_TEST_COM: envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (void*)(trameBuf+2), LG_TRAME_CON_TEST_COM)  ; break;
 				case TYPE_TRAME_CON_DEPART: inf_demandeOnOff=2 ; break;
 				case TYPE_TRAME_CON_STOP:   inf_demandeOnOff=4; break;
-				case TYPE_TRAME_INF_COUPLED: memcpy((void*)&inf_coupleD, (void*)(trameBuf), 4)  ; break;
-				case TYPE_TRAME_INF_COUPLEG: memcpy((void*)&inf_coupleG, (void*)(trameBuf), 4) ; break;
-				case TYPE_TRAME_INF_ERREUR_CARTE_COURANT:  memcpy((void*)&inf_etatCouple, (void*)(trameBuf), LG_TRAME_INF_ERREUR_CARTE_COURANT)  ; break;
+				case TYPE_TRAME_INF_COUPLED: memcpy((void*)&inf_coupleD, (void*)(trameBuf+2), 4)  ; break;
+				case TYPE_TRAME_INF_COUPLEG: memcpy((void*)&inf_coupleG, (void*)(trameBuf+2), 4) ; break;
+				case TYPE_TRAME_INF_ERREUR_CARTE_COURANT:  memcpy((void*)&inf_etatCouple, (void*)(trameBuf+2), LG_TRAME_INF_ERREUR_CARTE_COURANT)  ; break;
 				case TYPE_TRAME_INF_PRET:  inf_etatCouple=1 ; break;
-				case TYPE_TRAME_CON_VERBOSE: memcpy((void*)&verboseMode, (void*)(trameBuf), LG_TRAME_CON_VERBOSE)  ; break;
+				case TYPE_TRAME_CON_VERBOSE: memcpy((void*)&verboseMode, (void*)(trameBuf+2), LG_TRAME_CON_VERBOSE)  ; break;
 				case TYPE_TRAME_CON_DEMANDE_COEFFICIENTS:  envoyerCoefficientsStatiques() ; break;
 				case TYPE_TRAME_CON_CHARGER_VITESSE: chargerVitesse()  ; break;
 				case TYPE_TRAME_CON_ENREGISTRER_VITESSE:  enregistrerVitesse() ; break;
@@ -166,19 +166,19 @@ void interruptionRxTrame(unsigned char rxByte) {
 				case TYPE_TRAME_CON_ENREGISTRER_DEMARRAGE: enregistrerDemarrage()  ; break;
 
 
-				case TYPE_TRAME_CON_PRINC_PID_K:  	 			memcpy((void*)&PRINC_PID_K, (void*)(trameBuf), 4) ; 			break;
-				case TYPE_TRAME_CON_PRINC_PID_D:   				memcpy((void*)&PRINC_PID_D, (void*)(trameBuf), 4) ; 			break;
-				case TYPE_TRAME_CON_PRINC_DIR:   				memcpy((void*)&PRINC_DIR, (void*)(trameBuf), 4) ; 				break;
-				case TYPE_TRAME_CON_COEF_KALMAN:   				memcpy((void*)&COEF_KALMAN, (void*)(trameBuf), 4) ; 			break;
-				case TYPE_TRAME_CON_ACCELERATION_COEF_FILTRE:   memcpy((void*)&ACCELERATION_COEF_FILTRE, (void*)(trameBuf), 4) ;break;
-				case TYPE_TRAME_CON_GUIDONMAX:   				memcpy((void*)&GUIDONMAX, (void*)(trameBuf), 4) ; 				break;
-				case TYPE_TRAME_CON_LIMITE_DISTANCE_UTILISATEUR:memcpy((void*)&LIMITE_DISTANCE_UTILISATEUR, (void*)(trameBuf), 4);break;
-				case TYPE_TRAME_CON_DEMARRAGE_TOL_ANGLE:		memcpy((void*)&DEMARRAGE_TOL_ANGLE, (void*)(trameBuf), 4) ; 	break;
-				case TYPE_TRAME_CON_DEMARRAGE_TOL_GUIDON:		memcpy((void*)&DEMARRAGE_TOL_GUIDON, (void*)(trameBuf), 4) ; 	break;
-				case TYPE_TRAME_CON_DEMARRAGE_DELAI_EQUILIBRE:  memcpy((void*)&DEMARRAGE_DELAI_EQUILIBRE, (void*)(trameBuf), 4);break;
-				case TYPE_TRAME_CON_VITESSE_TROITTOIR_MAX:   	memcpy((void*)&VITESSE_TROITTOIR_MAX, (void*)(trameBuf), 4) ; 	break;
-				case TYPE_TRAME_CON_POURCENT_SECURITE_MOTEUR:   memcpy((void*)&POURCENT_SECURITE_MOTEUR, (void*)(trameBuf), 4) ; break;
-				case TYPE_TRAME_CON_COEF_HYSTERISIS_SECURITE:   memcpy((void*)&COEF_HYSTERISIS_SECURITE, (void*)(trameBuf), 4) ; break;
+				case TYPE_TRAME_CON_PRINC_PID_K:  	 			memcpy((void*)&PRINC_PID_K, (void*)(trameBuf+2), 4) ; 			break;
+				case TYPE_TRAME_CON_PRINC_PID_D:   				memcpy((void*)&PRINC_PID_D, (void*)(trameBuf+2), 4) ; 			break;
+				case TYPE_TRAME_CON_PRINC_DIR:   				memcpy((void*)&PRINC_DIR, (void*)(trameBuf+2), 4) ; 				break;
+				case TYPE_TRAME_CON_COEF_KALMAN:   				memcpy((void*)&COEF_KALMAN, (void*)(trameBuf+2), 4) ; 			break;
+				case TYPE_TRAME_CON_ACCELERATION_COEF_FILTRE:   memcpy((void*)&ACCELERATION_COEF_FILTRE, (void*)(trameBuf+2), 4) ;break;
+				case TYPE_TRAME_CON_GUIDONMAX:   				memcpy((void*)&GUIDONMAX, (void*)(trameBuf+2), 4) ; 				break;
+				case TYPE_TRAME_CON_LIMITE_DISTANCE_UTILISATEUR:memcpy((void*)&LIMITE_DISTANCE_UTILISATEUR, (void*)(trameBuf+2), 4);break;
+				case TYPE_TRAME_CON_DEMARRAGE_TOL_ANGLE:		memcpy((void*)&DEMARRAGE_TOL_ANGLE, (void*)(trameBuf+2), 4) ; 	break;
+				case TYPE_TRAME_CON_DEMARRAGE_TOL_GUIDON:		memcpy((void*)&DEMARRAGE_TOL_GUIDON, (void*)(trameBuf+2), 4) ; 	break;
+				case TYPE_TRAME_CON_DEMARRAGE_DELAI_EQUILIBRE:  memcpy((void*)&DEMARRAGE_DELAI_EQUILIBRE, (void*)(trameBuf+2), 4);break;
+				case TYPE_TRAME_CON_VITESSE_TROITTOIR_MAX:   	memcpy((void*)&VITESSE_TROITTOIR_MAX, (void*)(trameBuf+2), 4) ; 	break;
+				case TYPE_TRAME_CON_POURCENT_SECURITE_MOTEUR:   memcpy((void*)&POURCENT_SECURITE_MOTEUR, (void*)(trameBuf+2), 4) ; break;
+				case TYPE_TRAME_CON_COEF_HYSTERISIS_SECURITE:   memcpy((void*)&COEF_HYSTERISIS_SECURITE, (void*)(trameBuf+2), 4) ; break;
 
 				default: break;
 				

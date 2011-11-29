@@ -28,9 +28,9 @@ const far rom char printf_main_angle[]="\r\n%d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\ntmr %d, pos %d, vit %d";
-
-const far rom char printf_main_tmr[]="\r\nt1 %d, t3 %d, t5 %d";
+const far rom char printf_main_codeur[]="\r\n acc %d, pos %d, 100vit %d, sgn %d";
+const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
+ram char bufprint[TAILLE_BUFPRINT]; 
 
 //déclaration de la fonction main (il n'y a pas de main.h, donc on la déclare ici)
 void main (void);
@@ -69,16 +69,13 @@ pauseMs(100);
 			LED_DROITE = getbit(tab,3);
 			LED_CENTRE_VERTE = getbit(tab,4);
 			LED_CENTRE_ORANGE = getbit(tab,5);
-			pauseMs(100);
+			pauseMs(83);
 		}
 		//printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, (short)guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 
-//interruptionCodeurG(SENS_G);
-//roues = lancerCalculsCodeur(600);
-//printf(printf_main_codeur,LireCodeurGauche(),(int)roues.positionGauche, (int)roues.vitesseGauche);
-
-
-printf(printf_main_tmr,ReadTimer1(),ReadTimer3(),ReadTimer5());
+interruptionCodeurG(SENS_D);
+roues = lancerCalculsCodeur(500);
+sprintf(bufprint,printf_main_codeur,(int)roues.accMoyenne,(int)roues.positionDroit, (int)(roues.vitesseDroite*100), (char) roues.signeDroite); puts2USART (bufprint); 
 
 }
 
@@ -148,7 +145,7 @@ void main (void)
 			calibrerGuidon();
 		}
 		//envoi de données...
-		envoyerCoefficientsStatiques();
+		//envoyerCoefficientsStatiques();
 
 	}
 

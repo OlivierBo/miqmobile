@@ -79,15 +79,16 @@ LED_ERREUR=!LED_ERREUR;
 	if(PIR1bits.RC1IF) //usart1
 	{
 		caractere = RCREG1;
-		interruptionRxOctet(caractere);
+		interruptionRxTrame(caractere);
 		LED_USART1=!LED_USART1;
+		Write2USART(caractere);
 		PIR1bits.RC1IF;
 	}
 
 	if(PIR3bits.RC2IF) //usart2
 	{
 		caractere = RCREG2;
-		interruptionRxTrame(caractere);
+		interruptionRxOctet(caractere);
 		LED_USART2=!LED_USART2;
 		PIR3bits.RC2IF;
 	}
