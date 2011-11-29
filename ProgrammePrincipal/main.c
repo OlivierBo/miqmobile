@@ -28,7 +28,7 @@ const far rom char printf_main_angle[]="\r\n%d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n 10acc %d, pos %d, 10vit %d, sgn %d";
+const far rom char printf_main_codeur[]="\r\n 10acc %ld, pos %ld, 10vit %ld, sgn %d, dist %ld";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
 const far rom char printf_main_us[]="\r\n us %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
@@ -43,6 +43,9 @@ void main_test(void)
 struct Sroues roues;
 unsigned char tab=1;
 float temp=42.12345;
+
+unsigned short ancien=globalTime;
+
 
 
 initCodeurs();
@@ -76,8 +79,9 @@ pauseMs(100);
 
 
 interruptionCodeurG(SENS_D);
-roues = lancerCalculsCodeur(500);
-sprintf(bufprint,printf_main_codeur,(int)(roues.accMoyenne*10),(int)roues.positionDroite, (int)(roues.vitesseDroite*10), (char) roues.signeDroite); puts2USART (bufprint); 
+roues = lancerCalculsCodeur(tempsEcouleDepuisMs(ancien));
+ancien=globalTime;
+sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10),(long)roues.positionDroite, (long)(roues.vitesseDroite*10), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
 
 
 /*
