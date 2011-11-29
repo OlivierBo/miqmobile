@@ -100,7 +100,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
-        roues.positionDroit=determine_position(nb_frontD);         //°  (entre -180 et +180)
+        roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
 
         //déterminer la distance moyenne parcourue
         roues.distanceMoyenneParcourue=distance_Moy(abs_nb_frontG,abs_nb_frontD); //m

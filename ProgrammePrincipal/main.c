@@ -28,7 +28,7 @@ const far rom char printf_main_angle[]="\r\n%d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n acc %d, pos %d, 100vit %d, sgn %d";
+const far rom char printf_main_codeur[]="\r\n 100acc %d, pos %d, 100vit %d, sgn %d";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
 
@@ -52,7 +52,7 @@ initCodeurs();
 	{
 printf( printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO));
 roues = lancerCalculsCodeur(100);
-temp=roues.positionDroit+roues.positionGauche;
+temp=roues.positionDroite+roues.positionGauche;
 printf( printf_main_angle, temp);
 pauseMs(100);
 }
@@ -75,7 +75,7 @@ pauseMs(100);
 
 interruptionCodeurG(SENS_D);
 roues = lancerCalculsCodeur(500);
-sprintf(bufprint,printf_main_codeur,(int)roues.accMoyenne,(int)roues.positionDroit, (int)(roues.vitesseDroite*100), (char) roues.signeDroite); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(int)(roues.accMoyenne*100),(int)roues.positionDroite, (int)(roues.vitesseDroite*100), (char) roues.signeDroite); puts2USART (bufprint); 
 
 }
 
