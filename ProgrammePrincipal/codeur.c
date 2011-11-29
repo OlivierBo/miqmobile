@@ -2,6 +2,7 @@
 #include "codeur.h"
 #include "brochage.h"
 #include "variablesGlobales.h"
+
 //déclaration des variables globales internes au fichier
 
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
@@ -49,6 +50,7 @@ nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb 
 roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
 EcrireCodeurGauche(0);										//raz timer
 sensG=signe;
+roues.signeDroite=signe;
 }
 
 void interruptionCodeurD(char signe)
@@ -58,6 +60,7 @@ nb_frontD=determine_nb_front(nb_frontG, deltafrontD, sensD);
 roues.vitesseDroite=0.;		//raz des vitesses
 EcrireCodeurDroite(0);		//raz timer
 sensD=signe;
+roues.signeDroite=signe;
 }
 
 
