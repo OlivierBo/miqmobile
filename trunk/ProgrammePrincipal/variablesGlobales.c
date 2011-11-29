@@ -33,6 +33,7 @@ float COEF_HYSTERISIS_SECURITE; //la variable de réglage de l'hystérisis
 //variables renseignées par l'uart
 float inf_coupleG=0, inf_coupleD=0;
 char inf_etatCouple=0, inf_demandeOnOff=0;
+short verboseMode;
 
 
 void chargerAsservissement(void)

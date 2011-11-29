@@ -25,11 +25,6 @@ char presenceUtilisateur(void)
 	return NON;
 }
 
-void envoyerConsigneDeCouple(float coupleG, float coupleD)
-{
-	//a ecrire
- ;
-}
 
 short calibrerGuidon(void)
 {

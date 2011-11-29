@@ -130,6 +130,9 @@ void interruptionRxTrame(unsigned char rxByte);
 void envoiTrameUart2 (char type, void * data, char data_length);
 void interruptionRxOctet(unsigned char rxByte);
 
+void envoyerCoefficientsStatiques(void);//envoyer tous les coef présent en eeprom + verbose
+
+
 #endif
 
 

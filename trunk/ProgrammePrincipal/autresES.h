@@ -3,7 +3,6 @@
 
 float guidonTrMin(short tGuidon);
 char presenceUtilisateur(void);
-void envoyerConsigneDeCouple(float coupleG, float coupleD);
 short calibrerGuidon(void);
 
 #endif
