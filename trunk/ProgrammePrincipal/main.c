@@ -24,7 +24,7 @@
 #include "ultrason.h"
 
 //liste des phrases des différents printf
-const far rom char printf_main_angle[]="\r\n%d";
+const far rom char printf_main_angle[]="\r\nang: %d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
@@ -43,14 +43,20 @@ void main_test(void)
 struct Sroues roues;
 unsigned char tab=1;
 float temp=42.12345;
+unsigned short ancien=globalTime,te;
+short tAccX,tAccZ, tGyro,tGuidon, tBatterie,tCentrifuge;
+float anglePrec=0;
+struct Stangage tangage;
 
-unsigned short ancien=globalTime;
-
-
-
+COEF_KALMAN=0.2;
 initCodeurs();
 
 	while(1)
+{
+
+te=tempsEcouleDepuisMs(ancien);
+ancien=globalTime;
+
 
 /*
 	{
@@ -64,7 +70,7 @@ pauseMs(100);
 		printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 */
 
-{
+
 		for(tab=1;tab<34;tab*=2)
 		{
 			LED_HAUT = getbit(tab,0);
@@ -73,24 +79,40 @@ pauseMs(100);
 			LED_DROITE = getbit(tab,3);
 			LED_CENTRE_VERTE = getbit(tab,4);
 			LED_CENTRE_ORANGE = getbit(tab,5);
-			pauseMs(83);
+			pauseMs(8);
 		}
 		//printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, (short)guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 
-
+/*
 interruptionCodeurG(SENS_D);
-roues = lancerCalculsCodeur(tempsEcouleDepuisMs(ancien));
-ancien=globalTime;
-sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10),(long)roues.positionDroite, (long)(roues.vitesseDroite*10), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
+roues = lancerCalculsCodeur(te);
 
+sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10),(long)roues.positionDroite, (long)(roues.vitesseDroite*10), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
+*/
 
 /*
 sprintf(bufprint,printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO)); puts2USART (bufprint);
 */
+
 /*
 sprintf(bufprint,printf_main_us,distanceUS()); puts2USART (bufprint);
 lancerUS();
 */
+
+
+	
+
+
+tAccX=acquisition(CH_ACC_X);
+tAccZ=acquisition(CH_ACC_Z);
+tGyro=acquisition(CH_GYRO);
+tangage = angleTangage(tAccX, tAccZ, tGyro, 0, anglePrec, te);
+anglePrec=tangage.teta;
+sprintf(bufprint,printf_main_angle,(short)(tAccX0)); puts2USART (bufprint);
+
+
+
+
 }
 
 

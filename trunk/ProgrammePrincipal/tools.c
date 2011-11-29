@@ -88,7 +88,7 @@ short acquisition(char channel)
 
 char writeEeprom(void* data, unsigned short adress,  unsigned char longueur)
 {
-	unsigned short i;
+	unsigned short i=longueur;
 	unsigned char buffer;
 	
 	if(adress+i>EEPROM_END) return ERREUR;
@@ -106,7 +106,7 @@ char writeEeprom(void* data, unsigned short adress,  unsigned char longueur)
 
 char readEeprom(void* data, unsigned short adress,  unsigned char longueur)
 {
-	unsigned short i;
+	unsigned short i=longueur;
 	unsigned char buffer;
 	
 	if(adress+i>EEPROM_END) return ERREUR;

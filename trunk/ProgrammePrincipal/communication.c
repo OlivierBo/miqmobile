@@ -2,7 +2,7 @@
 #include "communication.h"
 #include "brochage.h"
 #include "variablesGlobales.h"
-
+#include "tangage.h"
 
 
 
@@ -231,7 +231,8 @@ void envoiTrameUart2 (char type, void * data, char data_length) {
 void interruptionRxOctet(unsigned char rxByte) {
 	switch(rxByte)
 	{
-		case 't': LED_ERREUR=!LED_ERREUR; break;
+		case 't': LED_ERREUR=!LED_ERREUR; calibrageTangage(); break;
+		case 'c' : chargerTangage(); break;
 		default: break;
 	}
 }
