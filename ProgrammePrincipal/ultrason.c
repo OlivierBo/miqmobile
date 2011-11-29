@@ -25,17 +25,17 @@ void receptionUS(void)
 	{
 		duree=(unsigned long)(globalTimeMsUs()-debut);
 		EDGE_INT0=1;
-		if(duree>30000) duree=0;
+		if(duree>30000) duree=30000;
 	}
 }
 
 unsigned char lancerUS(void)
 {
-	unsigned long ii;
-	if(globalTimeMsUs()-debut<55000) return ERREUR;
+	static unsigned long ii=0;
+	if(globalTimeMsUs()-ii<55000) return ERREUR;
 	EDGE_INT0=1;
 	ULTRASON_TRIG=1;
-	ii=globalTime;
+	ii=globalTimeMsUs();
 	while(globalTimeMsUs()-ii<20);
 	ULTRASON_TRIG=0;
 }
