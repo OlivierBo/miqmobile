@@ -7,6 +7,7 @@
 #include "consigne.h"
 #include "codeur.h"
 #include "variablesGlobales.h"
+#include "communication.h"
 
 char boucleAsservissement(char reinit) //renvoie false si erreur ou utilisateur "perdu"
 {
@@ -71,7 +72,26 @@ char boucleAsservissement(char reinit) //renvoie false si erreur ou utilisateur 
 
 	// Envoi des consignes de couple moteur droit et gauche au microcontrôleur de commande moteur
 		//rien de spécial, utiliser communication.c
-		envoyerConsigneDeCouple(couples.coupleG, couples.coupleD);
+		if(inf_demandeOnOff<4)
+		{
+			envoiTrameUart2(TYPE_TRAME_CON_COUPLED,(void*)(&couples.coupleD),LG_TRAME_CON_COUPLED);
+			envoiTrameUart2(TYPE_TRAME_CON_COUPLEG,(void*)(&couples.coupleG),LG_TRAME_CON_COUPLEG);
+		}
+
+   //envoi des valeurs dynamiques
+		//tout à zéro : ne rien envoyer
+		if(getbit(verboseMode,1)) envoiTrameUart1(TYPE_TRAME_INF_ETAT,(void*)(&inf_demandeOnOff),LG_TRAME_INF_ETAT);
+		if(getbit(verboseMode,2)) envoiTrameUart1(TYPE_TRAME_INF_ETAT_BATTERIE,(void*)(&tBatterie),LG_TRAME_INF_ETAT_BATTERIE);
+		if(getbit(verboseMode,3)) envoiTrameUart1(TYPE_TRAME_INF_ANGLE_HORS_INTERVALLE,(void*)(&tangage.defautBorne),LG_TRAME_INF_ANGLE_HORS_INTERVALLE);
+		if(getbit(verboseMode,4)) envoiTrameUart1(TYPE_TRAME_INF_ANGLE_TANGAGE,(void*)(&tangage.teta),LG_TRAME_INF_ANGLE_TANGAGE);
+		if(getbit(verboseMode,5)) envoiTrameUart1(TYPE_TRAME_INF_VITESSE_ANGULAIRE,(void*)(&tangage.vitesse),LG_TRAME_INF_VITESSE_ANGULAIRE);
+		if(getbit(verboseMode,6)) envoiTrameUart1(TYPE_TRAME_INF_VITESSED,(void*)(&roues.vitesseDroite),LG_TRAME_INF_VITESSED);
+		if(getbit(verboseMode,7)) envoiTrameUart1(TYPE_TRAME_INF_VITESSEG,(void*)(&roues.vitesseGauche),LG_TRAME_INF_VITESSEG);
+		if(getbit(verboseMode,8)) envoiTrameUart1(TYPE_TRAME_INF_DISTANCE_PARCOURUE,(void*)(&roues.distanceMoyenneParcourue),LG_TRAME_INF_DISTANCE_PARCOURUE);
+		if(getbit(verboseMode,9)) envoiTrameUart1(TYPE_TRAME_INF_ACCELERATION,(void*)(&roues.accMoyenne),LG_TRAME_INF_ACCELERATION);
+		if(getbit(verboseMode,10)) envoiTrameUart1(TYPE_TRAME_INF_COUPLED,(void*)(&inf_coupleD),LG_TRAME_INF_COUPLED);
+		if(getbit(verboseMode,11)) envoiTrameUart1(TYPE_TRAME_INF_COUPLEG,(void*)(&inf_coupleG),LG_TRAME_INF_COUPLEG);
+
 
 	return TRUE;
 }

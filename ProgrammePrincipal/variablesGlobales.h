@@ -56,8 +56,23 @@ void chargerVitesse(void);
 //variables mises à jour par l'uart : valent 0 par défaut
 extern float inf_coupleG, inf_coupleD;
 extern char inf_etatCouple, inf_demandeOnOff;
-extern char verboseMode;
-
+//inf_demandeOnOff
+	//0=off
+	//1=on_normal
+	//2=on_forcé
+	//4=on_test (sans envoi aux moteurs)
+	//8=demande d'arret
+//inf_etatCouple
+	//0 : on ne sait pas encore (valeur au démarrage)
+	//1 : c'est bon, tout va bien (valeur lorsque envoi trame carte moteur ok)
+	//2 : pb gauche (ex : le moteur ne se met pas a tourner -> calbe alim débranché)
+	//4 : pb droit
+	//6 : pb gauche et droit
+	//8 : a décidé de s'arreter (pourquoi pas...)
+	//>=16: autre réponse / pb : peut envoyer ca au démarrage lorsqu'en mode debug par exemple
+extern short verboseMode;
+//verboseMode
+	//chaque bit code pour l'activation d'un envoi en partuculier
 
 #endif
 

@@ -114,8 +114,13 @@ void main (void)
 	{
 		lancerUS();
 		//si le démarrage est autorisé (verifier aussi la batterie un jour..)
-		if((testDemarrage()==OK)&&(0))
+		if((testDemarrage()==OK)||(inf_demandeOnOff==2))
 		{
+			if(inf_demandeOnOff!=2) inf_demandeOnOff=1;
+
+			//on signale qu'on est vivant!
+			envoiTrameUart1(TYPE_TRAME_INF_ETAT,(void*)(&inf_demandeOnOff),LG_TRAME_INF_ETAT);
+
 			boucleAsservissement(1);  //reset des parametres static
 			continuer=1;
 
@@ -124,11 +129,14 @@ void main (void)
 			{
 				lancerUS();
 				if(boucleAsservissement(0)==ERREUR) continuer=0;
-				//envoi de données... peut etre en deplacer une partie ds la fonction d'asserv pour accéder aux variables
-				envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (void*)&globalTime, 2);
+				
 				//si commande STOP, continuer=0;
-				//...
+				if(inf_demandeOnOff==8) continuer=0;
 			}
+
+			//on signale la fin
+			inf_demandeOnOff=0;
+			envoiTrameUart1(TYPE_TRAME_INF_ETAT,(void*)(&inf_demandeOnOff),LG_TRAME_INF_ETAT);
 		}
 		//si on veut entrer en mode paramétrage tangage
 		if(BOUTON_ROUGE)
@@ -140,8 +148,7 @@ void main (void)
 			calibrerGuidon();
 		}
 		//envoi de données...
-		//envoiTrameUart1 (TYPE_TRAME_CON_TEST_COM, (char*)(&globalTime), 1);
-
+		envoyerCoefficientsStatiques();
 
 	}
 
