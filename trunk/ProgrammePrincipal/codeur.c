@@ -34,7 +34,7 @@ struct Sroues roues;
 char determine_sens(char , char );
 float determine_position(float );
 float distance_Moy(long , long );
-float determine_vitesse (float , float , float );
+float determine_vitesse (float , float);// , float );
 float determine_vmoyen(float , float );
 float D_utilisation_moteur (float , float  );
 float determine_acceleration(float , float , float , float , float );
@@ -79,7 +79,7 @@ sensG=1;
 sensD=1;
 deltafrontD=0.;
 deltafrontG=0.;
-//initialisation de la structure
+//initialisation de la structure roues
 roues.positionGauche=0.;
 roues.positionDroite=0.;
 roues.distanceMoyenneParcourue=0.;
@@ -116,11 +116,11 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         //déterminer la distance moyenne parcourue
         roues.distanceMoyenneParcourue=distance_Moy(abs_nb_frontG,abs_nb_frontD); //m
 
- 		vitesse_precG=roues.vitesseGauche;
-		vitesse_precD=roues.vitesseDroite;
+ 		//vitesse_precG=roues.vitesseGauche;
+		//vitesse_precD=roues.vitesseDroite;
 
-		roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT, vitesse_precG);  //°/s
-        roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT, vitesse_precD);
+		roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+        roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
 
 		vitesseG=roues.vitesseGauche;
 		vitesseD=roues.vitesseDroite;
@@ -192,7 +192,7 @@ moyenne=moyenne/1000000.; //en m
 return moyenne;
 }
 
-float determine_vitesse (float deltafront, float deltaT, float vitesseprec)
+float determine_vitesse (float deltafront, float deltaT)//, float vitesseprec)
 {
 //en °/s, angle = DeltaNb_Front*360/1000 pour convertir les impulsions en °
 // vitesse = (angle/deltaT) * 1000 car deltaT en ms
@@ -200,7 +200,7 @@ float vitesse;
 vitesse=deltafront;
 vitesse=vitesse*360.;
 vitesse=vitesse/deltaT;
-vitesse=vitesseprec+vitesse;
+//vitesse=vitesseprec+vitesse;
 return vitesse;
 }
 
