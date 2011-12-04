@@ -16,8 +16,10 @@
 		<Item Name="IDByteToLongData.vi" Type="VI" URL="../IDByteToLongData.vi"/>
 		<Item Name="IDByteToNotes.vi" Type="VI" URL="../IDByteToNotes.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
+		<Item Name="MainForceMeasurement.vi" Type="VI" URL="../TestComPicMoteur/MainForceMeasurement.vi"/>
 		<Item Name="MainPicMot.vi" Type="VI" URL="../TestComPicMoteur/MainPicMot.vi"/>
 		<Item Name="MainV1.vi" Type="VI" URL="../MainV1.vi"/>
+		<Item Name="MainV2.vi" Type="VI" URL="../MainV2.vi"/>
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
 		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
@@ -28,7 +30,18 @@
 				<Item Name="BuildHelpPath.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/BuildHelpPath.vi"/>
 				<Item Name="Check Special Tags.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Check Special Tags.vi"/>
 				<Item Name="Clear Errors.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Clear Errors.vi"/>
+				<Item Name="Convert 1DDbl to DDT 2.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/miscellaneous.llb/Convert 1DDbl to DDT 2.vi"/>
 				<Item Name="Convert property node font to graphics font.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Convert property node font to graphics font.vi"/>
+				<Item Name="DAQmx Control Task.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/configure/task.llb/DAQmx Control Task.vi"/>
+				<Item Name="DAQmx Create Channel (AI-Voltage-Basic).vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/create/channels.llb/DAQmx Create Channel (AI-Voltage-Basic).vi"/>
+				<Item Name="DAQmx Create Channel (TEDS-AI-Voltage-Basic).vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/create/channels.llb/DAQmx Create Channel (TEDS-AI-Voltage-Basic).vi"/>
+				<Item Name="DAQmx Create Task.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/create/task.llb/DAQmx Create Task.vi"/>
+				<Item Name="DAQmx Create Virtual Channel.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/create/channels.llb/DAQmx Create Virtual Channel.vi"/>
+				<Item Name="DAQmx Fill In Error Info.vi" Type="VI" URL="/&lt;vilib&gt;/daqmx/miscellaneous.llb/DAQmx Fill In Error Info.vi"/>
+				<Item Name="DAQmx Read (Analog 1D DBL NChan 1Samp).vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/read.llb/DAQmx Read (Analog 1D DBL NChan 1Samp).vi"/>
+				<Item Name="DAQmx Read.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/read.llb/DAQmx Read.vi"/>
+				<Item Name="DAQmx Start Task.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/configure/task.llb/DAQmx Start Task.vi"/>
+				<Item Name="DAQmx Stop Task.vi" Type="VI" URL="/&lt;vilib&gt;/DAQmx/configure/task.llb/DAQmx Stop Task.vi"/>
 				<Item Name="Details Display Dialog.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/Details Display Dialog.vi"/>
 				<Item Name="DialogType.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/DialogType.ctl"/>
 				<Item Name="DialogTypeEnum.ctl" Type="VI" URL="/&lt;vilib&gt;/Utility/error.llb/DialogTypeEnum.ctl"/>
@@ -69,8 +82,12 @@
 			<Item Name="DataDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/DataDecoderMot.vi"/>
 			<Item Name="GlobalVar.vi" Type="VI" URL="../GlobalVar.vi"/>
 			<Item Name="IDByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/IDByteDecoderMot.vi"/>
+			<Item Name="nilvaiu.dll" Type="Document" URL="nilvaiu.dll">
+				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
+			</Item>
 			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
 			<Item Name="StartByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/StartByteDecoderMot.vi"/>
+			<Item Name="TableToXYGraphMot.vi" Type="VI" URL="../TestComPicMoteur/TableToXYGraphMot.vi"/>
 		</Item>
 		<Item Name="Spécifications de construction" Type="Build"/>
 	</Item>
