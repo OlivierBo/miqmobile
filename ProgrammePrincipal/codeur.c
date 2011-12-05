@@ -17,9 +17,6 @@ char sensD;
 float vitesseG;
 float vitesseD;
 
-//float vitesse_precG;
-//float vitesse_precD;
-
 float vitesseMoyenne;
 float vitesseMoyPrec;
 
@@ -48,7 +45,7 @@ void interruptionCodeurG(char signe)
 deltafrontG=LireCodeurGauche();
 nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb de front
 roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
-EcrireCodeurGauche(0);										//raz timer
+EcrireCodeurGauche(0.);										//raz timer
 sensG=signe;
 roues.signeDroite=signe;
 }
@@ -58,7 +55,7 @@ void interruptionCodeurD(char signe)
 deltafrontG=LireCodeurDroite();
 nb_frontD=determine_nb_front(nb_frontG, deltafrontD, sensD);
 roues.vitesseDroite=0.;		//raz des vitesses
-EcrireCodeurDroite(0);		//raz timer
+EcrireCodeurDroite(0.);		//raz timer
 sensD=signe;
 roues.signeDroite=signe;
 }
@@ -72,8 +69,6 @@ abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
 abs_nb_frontD=0.;
 vitesseG=0.;
 vitesseD=0.;
-//vitesse_precG=0.;
-//vitesse_precD=0.;
 vitesseMoyenne=0.;
 vitesseMoyPrec=0.;
 acc_moyenne=0.;
@@ -148,17 +143,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
 //Fonctions privées
 
-//déterminer le sens
-/*char determine_sens (char voie1, char voie2)
-{
-    char sens;
-
-    if (voie1==1 && voie2==1) sens=1;
-    else if (voie1==1 && voie2==0) sens=0;
-    return sens;
-}
-*/
-
+//calcule le nb de fronts
 float determine_nb_front(float nb_front, float deltafront, char sens)
 {
 if (sens=1) nb_front=nb_front+deltafront;
@@ -166,9 +151,7 @@ else if (sens=0)nb_front=nb_front-deltafront;
 return nb_front;
 }
 
-
 //determine la position
-
 float determine_position(float nb_front)
 {
 float position;
@@ -234,7 +217,7 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
     float acceleration;
     float deltaV;
     
-	acceleration=(1-COEF_FILTRE)*acceleration_prec;
+	acceleration=(1.-COEF_FILTRE)*acceleration_prec;
     
     deltaV=(vitessemoy-vitessemoy_prec);
 	deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
