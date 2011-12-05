@@ -100,10 +100,9 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		
 		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
 		//économie de deux calculs!
-		//abs_nb_frontG=abs_nb_frontG+deltafrontG;
-		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
+		abs_nb_frontG=abs_nb_frontG+deltafrontG;
+		abs_nb_frontD=abs_nb_frontD+deltafrontD;
 		//
-
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
 		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
 
@@ -112,7 +111,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
 
         //déterminer la distance moyenne parcourue
-        roues.distanceMoyenneParcourue=distance_Moy(nb_frontG,nb_frontD);//(abs_nb_frontG,abs_nb_frontD); //m
+        roues.distanceMoyenneParcourue=distance_Moy(abs_nb_frontG,abs_nb_frontD);//(abs_nb_frontG,abs_nb_frontD); //m
 
  		//vitesse_precG=roues.vitesseGauche;
 		//vitesse_precD=roues.vitesseDroite;
