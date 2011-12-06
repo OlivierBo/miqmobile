@@ -233,6 +233,12 @@ void interruptionRxOctet(unsigned char rxByte) {
 	{
 		case 't': LED_ERREUR=!LED_ERREUR; calibrageTangage(); break;
 		case 'c' : chargerTangage(); break;
+
+
+		case 'i': COEF_KALMAN=1.; break;
+		case 'o': COEF_KALMAN=0.; break;
+
+
 		default: break;
 	}
 }
