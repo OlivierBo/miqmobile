@@ -88,6 +88,7 @@
 			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
 			<Item Name="StartByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/StartByteDecoderMot.vi"/>
 			<Item Name="TableToXYGraphMot.vi" Type="VI" URL="../TestComPicMoteur/TableToXYGraphMot.vi"/>
+			<Item Name="visarc" Type="Document" URL="/C/Program Files (x86)/National Instruments/LabVIEW 2010/resource/visarc"/>
 		</Item>
 		<Item Name="Spécifications de construction" Type="Build"/>
 	</Item>
