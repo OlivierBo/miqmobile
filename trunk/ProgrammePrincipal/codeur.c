@@ -26,7 +26,7 @@ float acc_moyenne_prec;
 float deltafrontD;
 float deltafrontG;
 
-struct Sroues roues;
+volatile struct Sroues roues;
 
 //déclaration des fonctions privées
 char determine_sens(char , char );
@@ -95,8 +95,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         deltafrontG=LireCodeurGauche();
 		deltafrontD=LireCodeurDroite();
 		
-		EcrireCodeurGauche(0);
-		EcrireCodeurDroite(0);
+		EcrireCodeurGauche(0.);
+		EcrireCodeurDroite(0.);
 		
 		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
 		//économie de deux calculs!
@@ -116,6 +116,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
  		//vitesse_precG=roues.vitesseGauche;
 		//vitesse_precD=roues.vitesseDroite;
+		
+		//Calcul des vitesses 
 		if (roues.signeGauche=0) roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
 		else if (roues.signeGauche=1) roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
         if (roues.signeDroite=0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
@@ -125,18 +127,18 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		vitesseD=roues.vitesseDroite;
 
         //déterminer la vitesse moyenne
-        vitesseMoyPrec=vitesseMoyenne;
-		vitesseMoyenne=determine_vmoyen(vitesseG, vitesseD); //km/h
-		roues.vitesseMoyenne=vitesseMoyenne;
+        vitesseMoyPrec=roues.vitesseMoyenne;
+		roues.vitesseMoyenne=determine_vmoyen(vitesseG, vitesseD); //km/h
+		vitesseMoyenne=roues.vitesseMoyenne;
         //déterminer le pourcentage d'utilisation moteur
         //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
-        //roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
+        roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, vitesseMoyenne);
 
         //déterminer l'accération moyenne
         
-		acc_moyenne_prec=acc_moyenne;
+		acc_moyenne_prec=roues.accMoyenne;
 		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
-		acc_moyenne=roues.accMoyenne;
+		//acc_moyenne=roues.accMoyenne;
 
         return roues;
 }
@@ -147,7 +149,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 float determine_nb_front(float nb_front, float deltafront, char sens)
 {
 if (sens=1) nb_front=nb_front+deltafront;
-else if (sens=0)nb_front=nb_front-deltafront;
+else if (sens=0) nb_front=nb_front-deltafront;
 return nb_front;
 }
 
@@ -191,7 +193,8 @@ vitesse=vitesse/deltaT;
 return vitesse;
 }
 
-float determine_vmoyen(float vgauche, float vdroite)
+float determine_vmoyen(float v
+, float vdroite)
 {
 	float vmoy;
 	vmoy=vgauche+vdroite;
