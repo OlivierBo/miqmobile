@@ -193,8 +193,7 @@ vitesse=vitesse/deltaT;
 return vitesse;
 }
 
-float determine_vmoyen(float v
-, float vdroite)
+float determine_vmoyen(float vgauche, float vdroite)
 {
 	float vmoy;
 	vmoy=vgauche+vdroite;
