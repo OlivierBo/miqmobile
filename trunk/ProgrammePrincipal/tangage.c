@@ -57,9 +57,10 @@ short calibrageTangage(void)
 	for(i=0;i<3000;i++)
 	{
 		temp+=acquisition(CH_GYRO);
+		temp-=tGyro0;
 		pauseMs(1);
 	}
-	temp-=tGyro0;
+	
 
 	temp/=900;
 	//val_moy*100/30 <-> 1°/cs
@@ -148,15 +149,15 @@ struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, float xpp, f
 
 
 	//conversion tension > vitesse en °/secondes, accélération en m/s²
-	accX = 9.81*(tAccX-tAccX0)/tAccX1;
-	accZ = 9.81*(tAccZ-tAccZ0)/tAccZ1;
-	gyro = -100.*(tGyro-tGyro0)/tGyro1;
+	accX = 9.81*(float)(tAccX-tAccX0)/(float)tAccX1;
+	accZ = -9.81*(float)(tAccZ-tAccZ0)/(float)tAccZ1;
+	gyro = -100.*(float)(tGyro-tGyro0)/(float)tGyro1;
 
 //calcul de l'angle donné par les accéléromètres
 	//rad->deg => *180/pi = 57.3
 	tetaAcc = ((accX+accZ-xpp-9.81)*57.3)/(9.81-xpp);
-	if(tetaAcc>15.) {tetaAcc=15.;  angle.defautBorne=1;}
-	if(tetaAcc<-15.){tetaAcc=-15.; angle.defautBorne=1;}
+//	if(tetaAcc>15.) {tetaAcc=15.;  angle.defautBorne=1;}
+//	if(tetaAcc<-15.){tetaAcc=-15.; angle.defautBorne=1;}
 
 //calcul de l'angle donné par le gyro en decidegrés
 	//°/s * ms  => m° On divise par 1000 pour l'avoir en degrés
