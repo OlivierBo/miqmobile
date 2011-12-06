@@ -84,25 +84,26 @@ pauseMs(100);
 		//printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, (short)guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 
 /*
-interruptionCodeurG(SENS_D);
+
+//interruptionCodeurG(SENS_D);
 roues = lancerCalculsCodeur(te);
 
-sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10),(long)roues.positionDroite, (long)(roues.vitesseDroite*10), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10.),(long)roues.positionDroite, (long)(roues.vitesseDroite*10.), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
 */
 
 /*
 sprintf(bufprint,printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO)); puts2USART (bufprint);
 */
 
-/*
+
 sprintf(bufprint,printf_main_us,distanceUS()); puts2USART (bufprint);
 lancerUS();
-*/
+
 
 
 	
 
-
+/*
 tAccX=acquisition(CH_ACC_X);
 tAccZ=acquisition(CH_ACC_Z);
 tGyro=acquisition(CH_GYRO);
@@ -112,7 +113,7 @@ sprintf(bufprint,printf_main_angle,(short)(tAccX0)); puts2USART (bufprint);
 
 
 
-
+*/
 }
 
 

@@ -8,8 +8,8 @@
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
 float nb_frontD; //compte le nombre de fronts de la voie 1 du codeur de droite
 
-long abs_nb_frontG; //pour le calcul de la distance moyenne parcourue
-long abs_nb_frontD;
+//long abs_nb_frontG; //pour le calcul de la distance moyenne parcourue
+//long abs_nb_frontD;
 
 char sensG;      // pour la détermination du sens de rotation des codeurs DetG
 char sensD;
@@ -44,17 +44,17 @@ void interruptionCodeurG(char signe)
 {
 deltafrontG=LireCodeurGauche();
 nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb de front
-roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
+//roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
 EcrireCodeurGauche(0.);										//raz timer
 sensG=signe;
-roues.signeDroite=signe;
+roues.signeGauche=signe;
 }
 
 void interruptionCodeurD(char signe)
 {
 deltafrontG=LireCodeurDroite();
-nb_frontD=determine_nb_front(nb_frontG, deltafrontD, sensD);
-roues.vitesseDroite=0.;		//raz des vitesses
+nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
+//roues.vitesseDroite=0.;		//raz des vitesses
 EcrireCodeurDroite(0.);		//raz timer
 sensD=signe;
 roues.signeDroite=signe;
@@ -65,8 +65,8 @@ void initCodeurs(void)  //initialisation des codeurs
 {
 nb_frontG=0.; //compte le nombre de fronts de la voie 1 du codeur de gauche
 nb_frontD=0.; //compte le nombre de fronts de la voie 1 du codeur de droite
-abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
-abs_nb_frontD=0.;
+//abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
+//abs_nb_frontD=0.;
 vitesseG=0.;
 vitesseD=0.;
 vitesseMoyenne=0.;
@@ -100,8 +100,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		
 		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
 		//économie de deux calculs!
-		abs_nb_frontG=abs_nb_frontG+deltafrontG;
-		abs_nb_frontD=abs_nb_frontD+deltafrontD;
+		//abs_nb_frontG=abs_nb_frontG+deltafrontG;
+		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
 		//
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
 		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
@@ -111,7 +111,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
 
         //déterminer la distance moyenne parcourue
-        roues.distanceMoyenneParcourue=distance_Moy(abs_nb_frontG,abs_nb_frontD);//(abs_nb_frontG,abs_nb_frontD); //m
+        roues.distanceMoyenneParcourue=distance_Moy(nb_frontG,nb_frontD);//(abs_nb_frontG,abs_nb_frontD); //m
+		// on prend direct le nb_front car a priori, on passe plus de temps a avancer qu'à reculer!
 
  		//vitesse_precG=roues.vitesseGauche;
 		//vitesse_precD=roues.vitesseDroite;
