@@ -45,7 +45,7 @@ void interruptionCodeurG(char signe)
 deltafrontG=LireCodeurGauche();
 nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb de front
 //roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
-EcrireCodeurGauche(0.);										//raz timer
+EcrireCodeurGauche(0);										//raz timer
 sensG=signe;
 roues.signeGauche=signe;
 }
@@ -55,7 +55,7 @@ void interruptionCodeurD(char signe)
 deltafrontG=LireCodeurDroite();
 nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
 //roues.vitesseDroite=0.;		//raz des vitesses
-EcrireCodeurDroite(0.);		//raz timer
+EcrireCodeurDroite(0);		//raz timer
 sensD=signe;
 roues.signeDroite=signe;
 }
@@ -92,6 +92,7 @@ roues.signeDroite=1;
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
 {
+/*
         deltafrontG=LireCodeurGauche();
 		deltafrontD=LireCodeurDroite();
 		
@@ -103,9 +104,10 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//abs_nb_frontG=abs_nb_frontG+deltafrontG;
 		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
 		//
+
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
 		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
-
+*/
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
         roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
