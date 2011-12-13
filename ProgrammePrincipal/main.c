@@ -28,7 +28,7 @@ const far rom char printf_main_angle[]="\r\nang: %d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n acc %ld, pos %ld, 10vit %ld, sgn %d, dist %ld";
+const far rom char printf_main_codeur[]="\r\n posD %ld, vitD %ld, posG %ld, vitG %d, signe %ld";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
 const far rom char printf_main_us[]="\r\n us %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
@@ -85,8 +85,8 @@ pauseMs(100);
 
 
 
-interruptionCodeurD(SENS_D);
-interruptionCodeurG(SENS_G);
+//interruptionCodeurD(SENS_D);
+//interruptionCodeurG(SENS_G);
 roues = lancerCalculsCodeur(te);
 
 pauseMs(20);
