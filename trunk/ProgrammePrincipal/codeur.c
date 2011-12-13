@@ -92,12 +92,12 @@ roues.signeDroite=1;
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
 {
-/*
+
         deltafrontG=LireCodeurGauche();
 		deltafrontD=LireCodeurDroite();
 		
-		EcrireCodeurGauche(0.);
-		EcrireCodeurDroite(0.);
+		EcrireCodeurGauche(0);
+		EcrireCodeurDroite(0);
 		
 		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
 		//économie de deux calculs!
@@ -107,7 +107,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
 		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
-*/
+
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
         roues.positionDroite=determine_position(nb_frontD);         //°  (entre -180 et +180)
@@ -120,11 +120,12 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//vitesse_precD=roues.vitesseDroite;
 		
 		//Calcul des vitesses 
-		if (roues.signeGauche=0) roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-		else if (roues.signeGauche=1) roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+		if (roues.signeGauche=0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+		else if (roues.signeGauche=1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
         if (roues.signeDroite=0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-		else if (roues.signeDroite=1) roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
-	
+		else if (roues.signeDroite=1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+		
+
 		vitesseG=roues.vitesseGauche;
 		vitesseD=roues.vitesseDroite;
 
