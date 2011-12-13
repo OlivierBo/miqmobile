@@ -20,11 +20,12 @@ short calibrageTangage(void)
 
 	
 	//etape 1 : signaler qu'on est en mode calibrage
-	LED_HAUT = LED_ON;
+	LED_HAUT = LED_ON; //led haut = calib tangage
 	LED_BAS = LED_OFF;
 	LED_GAUCHE = LED_OFF;
 	LED_DROITE = LED_OFF;
 	LED_CENTRE_VERTE = LED_OFF;
+	LED_CENTRE_ORANGE = LED_OFF;
 	pauseMs(2000);
 
 
@@ -105,9 +106,9 @@ short calibrageTangage(void)
 			LED_BAS = LED_OFF;
 			LED_GAUCHE = LED_OFF;
 			LED_DROITE = LED_OFF;
-			LED_CENTRE_VERTE = LED_ON;
-			pauseMs(500);
-			LED_CENTRE_VERTE = LED_OFF;
+			LED_CENTRE_ORANGE = LED_ON;
+			pauseMs(1500);
+			LED_CENTRE_ORANGE = LED_OFF;
 			chargerTangage();
 			return ERREUR;
 		}
@@ -117,13 +118,13 @@ short calibrageTangage(void)
 	//etape 9 : si on veut conserver les paramètres, on les enregistre
 	enregistrerTangage();
 
-	LED_CENTRE_VERTE = LED_ON;
-	pauseMs(500);
-	LED_HAUT = LED_OFF;
-	LED_BAS = LED_OFF;
-	LED_GAUCHE = LED_OFF;
-	LED_DROITE = LED_OFF;
-	LED_CENTRE_VERTE = LED_OFF;
+	   	LED_HAUT = LED_OFF;
+		LED_BAS = LED_OFF;
+		LED_GAUCHE = LED_OFF;
+		LED_DROITE = LED_OFF;
+		LED_CENTRE_VERTE = LED_ON;
+		pauseMs(1500);
+		LED_CENTRE_VERTE = LED_OFF;
 
 
 

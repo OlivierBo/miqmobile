@@ -19,10 +19,11 @@ float LIMITE_DISTANCE_UTILISATEUR=1000; //mm :
 float DEMARRAGE_TOL_ANGLE=2; //2 en °
 float DEMARRAGE_TOL_GUIDON=5; //5 en tr/min sur soi meme
 float DEMARRAGE_DELAI_EQUILIBRE=2000; //2000 en ms
+float GUIDONMAX=20;
 
 //GUIDON
 short tGuidon0 , tGuidonMax;
-float GUIDONMAX=20;
+//float GUIDONMAX=20; //cette variable est dans démarrage a la place, pour pouvoir y accéder depuis l'usart
 
 //VITESSE
 float VITESSE_TROITTOIR_MAX;
@@ -90,11 +91,7 @@ void enregistrerTangage()
 void chargerGuidon(void)
 {
 	unsigned short i=EEPROM_GUIDON;
-	unsigned char longueur = 4;
-
-	readEeprom(&GUIDONMAX, i, longueur); i+=longueur;
-
-	longueur = 2;
+	unsigned char longueur = 2;
 	readEeprom(&tGuidon0, i, longueur);   i+=longueur;
 	readEeprom(&tGuidonMax, i, longueur);  i+=longueur;
 
@@ -103,11 +100,7 @@ void chargerGuidon(void)
 void enregistrerGuidon(void)
 {
 	unsigned short i=EEPROM_GUIDON;
-	unsigned char longueur = 4;
-
-	writeEeprom(&GUIDONMAX, i, longueur); i+=longueur;
-
-	longueur=2;
+	unsigned char longueur=2;
 	writeEeprom(&tGuidon0, i, longueur);   i+=longueur;
 	writeEeprom(&tGuidonMax, i, longueur);  i+=longueur;
 }
@@ -123,6 +116,7 @@ void chargerDemarrage(void)
 	readEeprom(&DEMARRAGE_TOL_ANGLE, i, longueur);   i+=longueur;
 	readEeprom(&DEMARRAGE_TOL_GUIDON, i, longueur);  i+=longueur;
 	readEeprom(&DEMARRAGE_DELAI_EQUILIBRE, i, longueur);  i+=longueur;
+	readEeprom(&GUIDONMAX, i, longueur); i+=longueur;
 }
 
 void enregistrerDemarrage(void)
@@ -134,6 +128,8 @@ void enregistrerDemarrage(void)
 	writeEeprom(&DEMARRAGE_TOL_ANGLE, i, longueur);   i+=longueur;
 	writeEeprom(&DEMARRAGE_TOL_GUIDON, i, longueur);  i+=longueur;
 	writeEeprom(&DEMARRAGE_DELAI_EQUILIBRE, i, longueur);  i+=longueur;
+	writeEeprom(&GUIDONMAX, i, longueur); i+=longueur;
+
 }
 
 void chargerVitesse(void)
