@@ -11,8 +11,8 @@ float nb_frontD; //compte le nombre de fronts de la voie 1 du codeur de droite
 //long abs_nb_frontG; //pour le calcul de la distance moyenne parcourue
 //long abs_nb_frontD;
 
-char sensG;      // pour la détermination du sens de rotation des codeurs DetG
-char sensD;
+//char sensG;      // pour la détermination du sens de rotation des codeurs DetG
+//char sensD;
 
 float vitesseG;
 float vitesseD;
@@ -43,20 +43,20 @@ float determine_nb_front(float , float , char );
 void interruptionCodeurG(char signe)
 {
 deltafrontG=LireCodeurGauche();
-nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);//mise a jour du nb de front
+nb_frontG=determine_nb_front(nb_frontG, deltafrontG, roues.signeGauche);//mise a jour du nb de front
 //roues.vitesseGauche=0.;		//raz des vitesses				//la vitesse repasse par 0 car chgt de sens, donc init
 EcrireCodeurGauche(0);										//raz timer
-sensG=signe;
+//sensG=signe;
 roues.signeGauche=signe;
 }
 
 void interruptionCodeurD(char signe)
 {
 deltafrontG=LireCodeurDroite();
-nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
+nb_frontD=determine_nb_front(nb_frontD, deltafrontD, roues.signeDroite);
 //roues.vitesseDroite=0.;		//raz des vitesses
 EcrireCodeurDroite(0);		//raz timer
-sensD=signe;
+//sensD=signe;
 roues.signeDroite=signe;
 }
 
@@ -73,8 +73,8 @@ vitesseD=0.;
 vitesseMoyPrec=0.;
 acc_moyenne=0.;
 acc_moyenne_prec=0.;
-sensG=1;
-sensD=1;
+//sensG=1;
+//sensD=1;
 deltafrontD=0.;
 deltafrontG=0.;
 //initialisation de la structure roues
@@ -105,8 +105,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
 		//
 
-		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, sensG);
-		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, sensD);
+		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, roues.signeGauche);
+		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, roues.signeDroite);
 
         //determiner les positions droites et gauches
         roues.positionGauche=determine_position(nb_frontG);
@@ -120,10 +120,10 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//vitesse_precD=roues.vitesseDroite;
 		
 		//Calcul des vitesses 
-		if (roues.signeGauche=0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-		else if (roues.signeGauche=1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
-        if (roues.signeDroite=0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-		else if (roues.signeDroite=1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+		if (roues.signeGauche==0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+		else if (roues.signeGauche==1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+        if (roues.signeDroite==0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
+		else if (roues.signeDroite==1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
 		
 
 		//vitesseG=roues.vitesseGauche;
@@ -141,6 +141,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         
 		acc_moyenne_prec=roues.accMoyenne;
 		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+//		roues.accMoyenne=0.124;
 		//acc_moyenne=roues.accMoyenne;
 
         return roues;
@@ -151,8 +152,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 //calcule le nb de fronts
 float determine_nb_front(float nb_front, float deltafront, char sens)
 {
-if (sens=1) nb_front=nb_front+deltafront;
-else if (sens=0) nb_front=nb_front-deltafront;
+if (sens==1) nb_front=nb_front+deltafront;
+else if (sens==0) nb_front=nb_front-deltafront;
 return nb_front;
 }
 
@@ -227,7 +228,7 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
     deltaV=(vitessemoy-vitessemoy_prec);
 	deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
     deltaV=deltaV/(deltaT*0.001); //car deltaT en ms
-	
+	//deltaV=deltaV/(deltaT);
 	acceleration=acceleration+COEF_FILTRE*deltaV;
 	
 	return acceleration;
