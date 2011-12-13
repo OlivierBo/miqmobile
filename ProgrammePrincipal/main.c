@@ -28,7 +28,7 @@ const far rom char printf_main_angle[]="\r\nang: %d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n 10acc %ld, pos %ld, 10vit %ld, sgn %d, dist %ld";
+const far rom char printf_main_codeur[]="\r\n acc %ld, pos %ld, 10vit %ld, sgn %d, dist %ld";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
 const far rom char printf_main_us[]="\r\n us %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
@@ -83,23 +83,26 @@ pauseMs(100);
 		}
 		//printf( printf_main_guidon,acquisition(CH_POTENTIOMETRE_GUIDON), tGuidon0, tGuidonMax, (short)guidonTrMin(acquisition(CH_POTENTIOMETRE_GUIDON)));
 
-/*
 
-//interruptionCodeurG(SENS_D);
+
+interruptionCodeurD(SENS_D);
+interruptionCodeurG(SENS_G);
 roues = lancerCalculsCodeur(te);
 
-sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*10.),(long)roues.positionDroite, (long)(roues.vitesseDroite*10.), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
-*/
+pauseMs(20);
+//sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)roues.positionDroite, (long)(roues.vitesseDroite*10.), (char) roues.signeDroite, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
+//sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.), (char) roues.signeGauche, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(long)roues.positionDroite, (long)(roues.vitesseDroite*10.),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.),(char) roues.signeDroite);puts2USART (bufprint);
 
 /*
 sprintf(bufprint,printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO)); puts2USART (bufprint);
 */
 
-
+/*
 sprintf(bufprint,printf_main_us,distanceUS()); puts2USART (bufprint);
 lancerUS();
 
-
+*/
 
 	
 
