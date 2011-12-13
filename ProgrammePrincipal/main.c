@@ -95,6 +95,8 @@ pauseMs(20);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.), (char) roues.signeGauche, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
 sprintf(bufprint,printf_main_codeur,(long)roues.positionDroite, (long)(roues.vitesseDroite*10.),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.),(char) roues.signeGauche);puts2USART (bufprint);
 
+envoiTrameUart1(TYPE_TRAME_INF_VITESSED,(void*)(&roues.accMoyenne),LG_TRAME_INF_VITESSED);
+
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne), (long)(roues.utilisationMoteur*100),(long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (te*10));puts2USART (bufprint);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)(roues.accMoyenne), (long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (ACCELERATION_COEF_FILTRE*10));puts2USART (bufprint);
 
