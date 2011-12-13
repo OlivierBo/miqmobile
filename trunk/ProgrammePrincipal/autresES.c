@@ -32,11 +32,12 @@ short calibrerGuidon(void)
 	tGuidon0 =0;  tGuidonMax =0;  
 
 	//etape 1 : signaler qu'on est en mode calibrage
-	LED_BAS = LED_ON;
+	LED_BAS = LED_ON; //bas = calib guidon
 	LED_HAUT = LED_OFF;
 	LED_GAUCHE = LED_OFF;
 	LED_DROITE = LED_OFF;
 	LED_CENTRE_VERTE = LED_OFF;
+	LED_CENTRE_ORANGE = LED_OFF;
 	pauseMs(2000);
 
 
@@ -58,7 +59,7 @@ short calibrerGuidon(void)
 	//etape 2 : avertir de la mesure de la droite (ou du moins, dans le sens d'augmentation du voltage)
 	LED_HAUT = LED_OFF;
 	LED_DROITE = LED_ON;
-	pauseMs(1500);
+	pauseMs(2500);
 
 	//etape 3 : mesurer la verticale pendant 1s à une fréquence de 20Hz
 	LED_CENTRE_VERTE = LED_ON;
@@ -93,7 +94,7 @@ short calibrerGuidon(void)
 			LED_GAUCHE = LED_OFF;
 			LED_DROITE = LED_OFF;
 			LED_CENTRE_VERTE = LED_ON;
-			pauseMs(500);
+			pauseMs(1500);
 			LED_CENTRE_VERTE = LED_OFF;
 			return ERREUR;
 		}
@@ -103,14 +104,13 @@ short calibrerGuidon(void)
 	//etape 9 : si on veut conserver les paramètres, on les enregistre
 	enregistrerGuidon();
 
-	LED_CENTRE_VERTE = LED_ON;
-	pauseMs(500);
-	LED_HAUT = LED_OFF;
+   	LED_HAUT = LED_OFF;
 	LED_BAS = LED_OFF;
 	LED_GAUCHE = LED_OFF;
 	LED_DROITE = LED_OFF;
+	LED_CENTRE_VERTE = LED_ON;
+	pauseMs(1500);
 	LED_CENTRE_VERTE = LED_OFF;
-
 
 
 	return OK;

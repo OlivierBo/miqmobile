@@ -121,7 +121,8 @@ char testDemarrage(void)
 	LED_DROITE	= (guidon > DEMARRAGE_TOL_GUIDON);
 	LED_HAUT	= (angle >  DEMARRAGE_TOL_ANGLE);
 	LED_BAS		= (angle <  -DEMARRAGE_TOL_ANGLE);
-	//le du centre : un seul des 4 = pas bon
+	LED_CENTRE_VERTE = LED_OFF;
+	//led du centre : un seul des 4 = pas bon
 	LED_CENTRE_ORANGE = !(LED_GAUCHE|LED_DROITE|LED_HAUT|LED_BAS);
 
 	if(LED_CENTRE_ORANGE)

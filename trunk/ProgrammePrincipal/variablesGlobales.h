@@ -32,7 +32,6 @@ void enregistrerAsservissement(void);
 
 //GUIDON
 extern short tGuidon0 , tGuidonMax;
-extern float GUIDONMAX; // tguidonmax : de combien, en valeur can, le guidon peut il bouger?//guidonMax : lorsque le guidon est au max, ca correspond a combien de tour/min
 void chargerGuidon(void);
 void enregistrerGuidon(void);
 
@@ -43,6 +42,7 @@ extern float LIMITE_DISTANCE_UTILISATEUR; //mm :
 extern float DEMARRAGE_TOL_ANGLE; //2 en °
 extern float DEMARRAGE_TOL_GUIDON; //5 en tr/min sur soi meme
 extern float DEMARRAGE_DELAI_EQUILIBRE; //2000 en ms
+extern float GUIDONMAX; // tguidonmax : de combien, en valeur can, le guidon peut il bouger?//guidonMax : lorsque le guidon est au max, ca correspond a combien de tour/min
 void enregistrerDemarrage(void);
 void chargerDemarrage(void);
 

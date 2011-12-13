@@ -136,9 +136,9 @@ void main (void)
 
 
 	char continuer = 1;
-
-
 	initppal();		//Initialisation générale
+	LED_CENTRE_VERTE = LED_ON;
+	LED_CENTRE_ORANGE = LED_ON;
 	chargerAsservissement();
 	chargerVitesse();
 	chargerDemarrage();
@@ -146,7 +146,10 @@ void main (void)
 	chargerGuidon();
 	lancerUS();
 	pauseMs(1000);
+	LED_CENTRE_VERTE = LED_OFF;
+	LED_CENTRE_ORANGE = LED_OFF;
 
+	if(BOUTON_ROUGE)
 	main_test();
 
 	while(1)

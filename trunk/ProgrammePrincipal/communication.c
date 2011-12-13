@@ -238,6 +238,26 @@ void interruptionRxOctet(unsigned char rxByte) {
 		case 'i': COEF_KALMAN=1.; break;
 		case 'o': COEF_KALMAN=0.; break;
 
+		case 'e' : 
+		PRINC_PID_K=1;
+		PRINC_PID_D=2;
+		PRINC_DIR=3;
+		COEF_KALMAN=4; 
+		ACCELERATION_COEF_FILTRE=0.5;
+		enregistrerAsservissement();
+		LIMITE_DISTANCE_UTILISATEUR=200; //mm : 
+		DEMARRAGE_TOL_ANGLE=10; //2 en °
+		DEMARRAGE_TOL_GUIDON=5; //5 en tr/min sur soi meme
+		DEMARRAGE_DELAI_EQUILIBRE=2000; //2000 en ms
+		GUIDONMAX=20;
+		enregistrerDemarrage();
+		VITESSE_TROITTOIR_MAX=15; //km/h
+		POURCENT_SECURITE_MOTEUR=0.8; //a partir de quand activer le freinage de sécurité
+		COEF_HYSTERISIS_SECURITE=42.42; //la variable de réglage de l'hystérisis
+		enregistrerVitesse();
+		break;
+
+
 
 		default: break;
 	}
