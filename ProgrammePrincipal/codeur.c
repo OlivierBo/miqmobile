@@ -26,6 +26,8 @@ float acc_moyenne_prec;
 float deltafrontD;
 float deltafrontG;
 
+float deltaV;
+
 volatile struct Sroues roues;
 
 //déclaration des fonctions privées
@@ -140,7 +142,13 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         //déterminer l'accération moyenne
         
 		acc_moyenne_prec=roues.accMoyenne;
-		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+		roues.accMoyenne==(1.-ACCELERATION_COEF_FILTRE)*acc_moyenne_prec;
+    	deltaV=(roues.vitesseMoyenne-vitesseMoyPrec);
+		deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
+    	deltaV=deltaV/(deltaT*0.001); //car deltaT en ms
+		roues.accMoyenne=roues.accMoyenne;//+COEF_FILTRE*deltaV;
+	
+	//	roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
 //		roues.accMoyenne=0.124;
 		//acc_moyenne=roues.accMoyenne;
 
