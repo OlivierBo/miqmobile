@@ -182,8 +182,11 @@ void main (void)
 		while(1);
 	}
 
+
 	if(BOUTON_ROUGE)
 	main_test();
+
+
 
 	while(1)
 	{
