@@ -141,7 +141,7 @@ struct Stangage angleTangage(short tAccX, short tAccZ, short tGyro, float xpp, f
 //tAccX, tAccZ, tGyro
 	//sortie brute du CAN entre 0 et 1024
 //te en ms
-//tetaPrec en decidegrés
+//tetaPrec en degrés
 //xpp est l'accélération lue par les codeurs, à donner en m/s²
 	
 

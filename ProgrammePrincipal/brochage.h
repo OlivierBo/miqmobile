@@ -1,3 +1,12 @@
+/** \file 
+Brochage du pic.
+Chaque pin porte un nom.
+Chaque CAN utilisé porte un nom.
+Les timers "compteur de front" pour les codeurs portent des noms.
+Les zones mémoires de l'eeprom portent un nom.
+\author    Adrien Jaegy
+*/
+
 #ifndef BROCHAGE_H
 #define BROCHAGE_H
 
@@ -37,7 +46,6 @@
 #define BATTERIE PORTEbits.RE1
 #define ACC_X PORTEbits.RE2
 #define MCLR_VPP PORTEbits.RE3
-
 
 
 #define CH_GYRO ADC_CH0

@@ -25,11 +25,11 @@ envoiTrameUart1(TYPE_TRAME_INF_VERBOSE,(void*)(&verboseMode),LG_TRAME_INF_VERBOS
 }
 
 
-//! Fonction gÃ©nÃ©rique d'envoi de trame (sans buffer !)
+//! Fonction générique d'envoi de trame (sans buffer !)
 void envoiTrameUart1 (char type, void * data, char data_length) {
 	char checksum, i;
 	
-	//Envoi de l'octet de dÃ©but
+	//Envoi de l'octet de début
 	while(Busy1USART());
 	Write1USART(DEBUT_TRAME);
 	checksum = DEBUT_TRAME;
@@ -37,7 +37,7 @@ void envoiTrameUart1 (char type, void * data, char data_length) {
 	while(Busy1USART());
 	Write1USART(type);
 	checksum ^= type;
-	//Envoi des donnÃ©es
+	//Envoi des données
 	for (i = 0; i < data_length; i++) {
 		while(Busy1USART());
 		Write1USART(((char*)(data))[i]);
@@ -51,32 +51,32 @@ void envoiTrameUart1 (char type, void * data, char data_length) {
 
 
 void interruptionRxTrame(unsigned char rxByte) {
-// Tampon rÃ©ception de caractÃ¨re
+// Tampon réception de caractère
     unsigned char resetTrame = FALSE;					// Flag de reset des compteurs de trame (en cas de fin de trame ou d'erreur)
     //Ces variables sont en statique car leur valeur ne change pas entre 2 appels MAIS on n'en a pas besoin ailleurs
-    static unsigned char rxCount = 0;					//Nombre d'octets rÃ©ceptionnÃ©s
-    static char checkSum = 0;					//Somme de contrÃ´le courante
+    static unsigned char rxCount = 0;					//Nombre d'octets réceptionnés
+    static char checkSum = 0;					//Somme de contrôle courante
     static unsigned char trameErr = TRAME_ERR_NOERR;	//Indique si une erreur est survenue
-    static unsigned char trameBuf [10];	//Buffer de rÃ©ception trame
+    static unsigned char trameBuf [10];	//Buffer de réception trame
     static unsigned char curTrameType = 0;				//Le XBee peut recevoir plusieurs types de trames 
     static unsigned char curTrameLength = 0;			//Ces deux variables contiennent le type et la longueur de la trame actuelle
 
 	char temp;	
 
-	//Teste s'il y a dÃ©passement de capacitÃ© du tampon de rÃ©ception
+	//Teste s'il y a dépassement de capacité du tampon de réception
 	if (RCSTA1bits.OERR) {
 		rxCount = 0;	//On recommence Ã  0
 		checkSum = 0;
 		trameErr = TRAME_ERR_NOERR;
 	} RCSTA1bits.OERR = 0;
 	
-    trameBuf[rxCount] = rxByte;		//Enregistre l'octet reÃ§u dans le buffer de rÃ©ception
+    trameBuf[rxCount] = rxByte;		//Enregistre l'octet reçu dans le buffer de réception
 
-    //Premier octet de la trame : on attend l'octet de dÃ©part (@)
+    //Premier octet de la trame : on attend l'octet de départ (@)
     if (rxCount == 0) {
 	    trameErr += TRAME_ERR_DEBUT * (rxByte != DEBUT_TRAME);
 	}  
-	//DeuxiÃ¨me octet : indique le type de trame. On enregistre le type et la longueur de trame attendue
+	//Deuxième octet : indique le type de trame. On enregistre le type et la longueur de trame attendue
 	else if (rxCount == 1) {
 		curTrameType = rxByte;
 		switch (curTrameType) {
@@ -142,7 +142,7 @@ void interruptionRxTrame(unsigned char rxByte) {
 			default: trameErr += TRAME_ERR_TYPE;
 		}	
 	}
-	//Octets suivants : donnÃ©es de la trame
+	//Octets suivants : données de la trame
 	//Dernier octet : checksum
 	else if (rxCount == curTrameLength +2) {
 		trameErr += TRAME_ERR_CHECK * (rxByte != checkSum);
@@ -155,7 +155,7 @@ void interruptionRxTrame(unsigned char rxByte) {
 				case TYPE_TRAME_INF_COUPLED: memcpy((void*)&inf_coupleD, (void*)(trameBuf+2), 4)  ; break;
 				case TYPE_TRAME_INF_COUPLEG: memcpy((void*)&inf_coupleG, (void*)(trameBuf+2), 4) ; break;
 				case TYPE_TRAME_INF_ERREUR_CARTE_COURANT:  memcpy((void*)&inf_etatCouple, (void*)(trameBuf+2), LG_TRAME_INF_ERREUR_CARTE_COURANT)  ; break;
-				case TYPE_TRAME_INF_PRET:  inf_etatCouple=1 ; break;
+				case TYPE_TRAME_INF_PRET:  inf_etatCouple=1 ;  LED_ERREUR=!LED_ERREUR; envoiTrameUart1 (TYPE_TRAME_INF_PRET, (void*)(trameBuf+2), LG_TRAME_INF_PRET)  ; break;
 				case TYPE_TRAME_CON_VERBOSE: memcpy((void*)&verboseMode, (void*)(trameBuf+2), LG_TRAME_CON_VERBOSE)  ; break;
 				case TYPE_TRAME_CON_DEMANDE_COEFFICIENTS:  envoyerCoefficientsStatiques() ; break;
 				case TYPE_TRAME_CON_CHARGER_VITESSE: chargerVitesse()  ; break;
@@ -168,7 +168,7 @@ void interruptionRxTrame(unsigned char rxByte) {
 
 				case TYPE_TRAME_CON_PRINC_PID_K:  	 			memcpy((void*)&PRINC_PID_K, (void*)(trameBuf+2), 4) ; 			break;
 				case TYPE_TRAME_CON_PRINC_PID_D:   				memcpy((void*)&PRINC_PID_D, (void*)(trameBuf+2), 4) ; 			break;
-				case TYPE_TRAME_CON_PRINC_DIR:   				memcpy((void*)&PRINC_DIR, (void*)(trameBuf+2), 4) ; 				break;
+				case TYPE_TRAME_CON_PRINC_DIR:   				memcpy((void*)&PRINC_DIR, (void*)(trameBuf+2), 4) ; 			break;
 				case TYPE_TRAME_CON_COEF_KALMAN:   				memcpy((void*)&COEF_KALMAN, (void*)(trameBuf+2), 4) ; 			break;
 				case TYPE_TRAME_CON_ACCELERATION_COEF_FILTRE:   memcpy((void*)&ACCELERATION_COEF_FILTRE, (void*)(trameBuf+2), 4) ;break;
 				case TYPE_TRAME_CON_GUIDONMAX:   				memcpy((void*)&GUIDONMAX, (void*)(trameBuf+2), 4) ; 				break;
@@ -188,13 +188,13 @@ void interruptionRxTrame(unsigned char rxByte) {
 	}
 		
 	//Si fin de trame ou erreur
-	//Remet le compteur de trame, la somme de controle et l'erreur Ã  zÃ©ro
+	//Remet le compteur de trame, la somme de controle et l'erreur à  zéro
 	if (resetTrame || trameErr != TRAME_ERR_NOERR) {		
 		rxCount = 0;	//On recommence Ã  0
 		checkSum = 0;
 		trameErr = TRAME_ERR_NOERR;
 	} 
-	//Met Ã  jour la somme de contrÃ´le avec l'octer reÃ§u et passe Ã  l'octet suivant pour le prochain appel
+	//Met à  jour la somme de contrôle avec l'octer reçu et passe à  l'octet suivant pour le prochain appel
 	else {	
 		if (rxCount == 0) 	checkSum = rxByte;
 		else checkSum ^= rxByte;
@@ -203,11 +203,11 @@ void interruptionRxTrame(unsigned char rxByte) {
 }
 //*********************************************************************************************************************************
 
-//! Fonction gÃ©nÃ©rique d'envoi de trame (sans buffer !)
+//! Fonction générique d'envoi de trame (sans buffer !)
 void envoiTrameUart2 (char type, void * data, char data_length) {
 	char checksum, i;
 	
-	//Envoi de l'octet de dÃ©but
+	//Envoi de l'octet de début
 	while(Busy2USART());
 	Write2USART(DEBUT_TRAME);
 	checksum = DEBUT_TRAME;
@@ -215,7 +215,7 @@ void envoiTrameUart2 (char type, void * data, char data_length) {
 	while(Busy2USART());
 	Write2USART(type);
 	checksum ^= type;
-	//Envoi des donnÃ©es
+	//Envoi des données
 	for (i = 0; i < data_length; i++) {
 		while(Busy2USART());
 		Write2USART(((char*)(data))[i]);
