@@ -62,7 +62,7 @@ nb_frontD=0.; //compte le nombre de fronts de la voie 1 du codeur de droite
 
 vitesseG=0.;
 vitesseD=0.;
-//vitesseMoyenne=0.;
+
 vitesseMoyPrec=0.;
 acc_moyenne_prec=0.;
 
@@ -130,7 +130,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, roues.vitesseMoyenne);
 
         //déterminer l'accélération moyenne
-		roues.accMoyenne=329.0;
+		//roues.accMoyenne=0.;
 		acc_moyenne_prec=roues.accMoyenne;
 		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
 		
@@ -226,7 +226,7 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	
 
 	if(acceleration<0.) acceleration=-acceleration;
-	while(acceleration<100. && acceleration!=0) acceleration*=10;	
+	while(acceleration<100. && acceleration!=0.) acceleration*=10.;	
 
 
 	return acceleration;
