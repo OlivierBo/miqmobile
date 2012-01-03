@@ -8,16 +8,9 @@
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
 float nb_frontD; //compte le nombre de fronts de la voie 1 du codeur de droite
 
-//long abs_nb_frontG; //pour le calcul de la distance moyenne parcourue
-//long abs_nb_frontD;
-
-//char sensG;      // pour la détermination du sens de rotation des codeurs DetG
-//char sensD;
-
 float vitesseG;
 float vitesseD;
 
-//float vitesseMoyenne;
 float vitesseMoyPrec;
 
 float acc_moyenne;
@@ -34,7 +27,7 @@ volatile struct Sroues roues;
 char determine_sens(char , char );
 float determine_position(float );
 float distance_Moy(long , long );
-float determine_vitesse (float , float);// , float );
+float determine_vitesse (float , float);
 float determine_vmoyen(float , float );
 float D_utilisation_moteur (float , float  );
 float determine_acceleration(float , float , float , float , float );
@@ -67,18 +60,17 @@ void initCodeurs(void)  //initialisation des codeurs
 {
 nb_frontG=0.; //compte le nombre de fronts de la voie 1 du codeur de gauche
 nb_frontD=0.; //compte le nombre de fronts de la voie 1 du codeur de droite
-//abs_nb_frontG=0.; //pour le calcul de la distance moyenne parcourue
-//abs_nb_frontD=0.;
+
 vitesseG=0.;
 vitesseD=0.;
 //vitesseMoyenne=0.;
 vitesseMoyPrec=0.;
 acc_moyenne=0.;
 acc_moyenne_prec=0.;
-//sensG=1;
-//sensD=1;
+
 deltafrontD=0.;
 deltafrontG=0.;
+
 //initialisation de la structure roues
 roues.positionGauche=0.;
 roues.positionDroite=0.;
@@ -134,24 +126,16 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         //déterminer la vitesse moyenne
         vitesseMoyPrec=roues.vitesseMoyenne;
 		roues.vitesseMoyenne=determine_vmoyen(roues.vitesseGauche, roues.vitesseDroite); //km/h
-		//vitesseMoyenne=roues.vitesseMoyenne;
+		
         //déterminer le pourcentage d'utilisation moteur
         //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
         roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, roues.vitesseMoyenne);
 
-        //déterminer l'accération moyenne
-        
+        //déterminer l'accélération moyenne
 		acc_moyenne_prec=roues.accMoyenne;
-		roues.accMoyenne==(1.-ACCELERATION_COEF_FILTRE)*acc_moyenne_prec;
-    	deltaV=(roues.vitesseMoyenne-vitesseMoyPrec);
-		deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
-    	deltaV=deltaV/(deltaT*0.001); //car deltaT en ms
-		roues.accMoyenne=roues.accMoyenne;//+COEF_FILTRE*deltaV;
-	
-	//	roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
-//		roues.accMoyenne=0.124;
-		//acc_moyenne=roues.accMoyenne;
-
+		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+		//roues.accMoyenne=0.124;
+		
         return roues;
 }
 
@@ -218,7 +202,7 @@ float determine_vmoyen(float vgauche, float vdroite)
 
 float D_utilisation_moteur(float vmax, float vmoyenne)
 {
-//entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
+//entre 0 et 1, vaut 0,6 si en moyenne, les moteurs tournent à 60% de leur vitesse maxi
 float umoteur;
 vmoyenne=vmoyenne/GRANDEUR_RAYON_ROUE;		//vmoyenne*10^6/(2PI.R.60)
 vmoyenne=vmoyenne*377.;						//conversion en tour par minute pour comparer
@@ -235,8 +219,8 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
     
     deltaV=(vitessemoy-vitessemoy_prec);
 	deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
-    deltaV=deltaV/(deltaT*0.001); //car deltaT en ms
-	//deltaV=deltaV/(deltaT);
+    deltaV=deltaV*1000./(deltaT); //car deltaT en ms
+	
 	acceleration=acceleration+COEF_FILTRE*deltaV;
 	
 	return acceleration;
