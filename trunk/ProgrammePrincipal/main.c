@@ -99,7 +99,7 @@ envoiTrameUart1(TYPE_TRAME_INF_VITESSED,(void*)(&roues.accMoyenne),LG_TRAME_INF_
 
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne), (long)(roues.utilisationMoteur*100),(long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (te*10));puts2USART (bufprint);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)(roues.accMoyenne), (long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (ACCELERATION_COEF_FILTRE*10));puts2USART (bufprint);
-sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*100),(long)roues.vitesseMoyenne, (long)(roues.vitesseDroite*10.), (char) roues.signeDroite, (char) roues.signeGauche); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)roues.vitesseMoyenne, (long)(roues.vitesseDroite*10.), (char) roues.signeDroite, (char) roues.signeGauche); puts2USART (bufprint); 
 /*
 sprintf(bufprint,printf_main_testgyro, acquisition(CH_ACC_X),acquisition(CH_ACC_Z),acquisition(CH_GYRO)); puts2USART (bufprint);
 */
