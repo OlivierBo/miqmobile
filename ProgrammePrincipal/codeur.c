@@ -13,7 +13,6 @@ float vitesseD;
 
 float vitesseMoyPrec;
 
-float acc_moyenne;
 float acc_moyenne_prec;
 
 float deltafrontD;
@@ -65,7 +64,6 @@ vitesseG=0.;
 vitesseD=0.;
 //vitesseMoyenne=0.;
 vitesseMoyPrec=0.;
-acc_moyenne=0.;
 acc_moyenne_prec=0.;
 
 deltafrontD=0.;
@@ -132,9 +130,9 @@ struct Sroues lancerCalculsCodeur(float deltaT)
         roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, roues.vitesseMoyenne);
 
         //déterminer l'accélération moyenne
+		roues.accMoyenne=329.0;
 		acc_moyenne_prec=roues.accMoyenne;
 		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
-		//roues.accMoyenne=0.124;
 		
         return roues;
 }
@@ -215,7 +213,10 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
     float acceleration;
     float deltaV;
     
+
 	acceleration=(1.-COEF_FILTRE)*acceleration_prec;
+//vitessemoy_prec=vitessemoy;
+//deltaT=1.0;
     
     deltaV=(vitessemoy-vitessemoy_prec);
 	deltaV=deltaV*0.28; //conversion des km/h en m/s (deltaV*1000/3600)
@@ -223,6 +224,11 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	
 	acceleration=acceleration+COEF_FILTRE*deltaV;
 	
+
+	if(acceleration<0.) acceleration=-acceleration;
+	while(acceleration<100. && acceleration!=0) acceleration*=10;	
+
+
 	return acceleration;
 }
 
