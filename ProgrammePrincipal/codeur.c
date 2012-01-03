@@ -69,6 +69,9 @@ acc_moyenne_prec=0.;
 deltafrontD=0.;
 deltafrontG=0.;
 
+EcrireCodeurGauche(0);
+EcrireCodeurDroite(0);
+
 //initialisation de la structure roues
 roues.positionGauche=0.;
 roues.positionDroite=0.;
@@ -112,28 +115,32 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//vitesse_precD=roues.vitesseDroite;
 		
 		//Calcul des vitesses 
-		if (roues.signeGauche==0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-		else if (roues.signeGauche==1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
-        if (roues.signeDroite==0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-		else if (roues.signeDroite==1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
-		
+		if (deltaT>0.5)
+		{
+			if (roues.signeGauche==0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+			else if (roues.signeGauche==1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+	        if (roues.signeDroite==0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
+			else if (roues.signeDroite==1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+			
+	
+			//vitesseG=roues.vitesseGauche;
+			//vitesseD=roues.vitesseDroite;
+	
+	        //déterminer la vitesse moyenne
+	        vitesseMoyPrec=roues.vitesseMoyenne;
+			roues.vitesseMoyenne=determine_vmoyen(roues.vitesseGauche, roues.vitesseDroite); //km/h
+			
+	        //déterminer le pourcentage d'utilisation moteur
+	        //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
+	        roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, roues.vitesseMoyenne);
+	
+	        //déterminer l'accélération moyenne
+			//roues.accMoyenne=0.;
+			acc_moyenne_prec=roues.accMoyenne;
+			//roues.accMoyenne++;
+			roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+		}
 
-		//vitesseG=roues.vitesseGauche;
-		//vitesseD=roues.vitesseDroite;
-
-        //déterminer la vitesse moyenne
-        vitesseMoyPrec=roues.vitesseMoyenne;
-		roues.vitesseMoyenne=determine_vmoyen(roues.vitesseGauche, roues.vitesseDroite); //km/h
-		
-        //déterminer le pourcentage d'utilisation moteur
-        //entre 0 et 1, vaut 0,6 si en moyenne, les moteur tournent à 60% de leur vitesse maxi
-        roues.utilisationMoteur = D_utilisation_moteur(GRANDEUR_VITESSE_MAX, roues.vitesseMoyenne);
-
-        //déterminer l'accélération moyenne
-		//roues.accMoyenne=0.;
-		acc_moyenne_prec=roues.accMoyenne;
-		roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
-		
         return roues;
 }
 
@@ -193,8 +200,8 @@ float determine_vmoyen(float vgauche, float vdroite)
 	vmoy=vgauche+vdroite;
 	vmoy=vmoy/2.;
 	vmoy=vmoy*GRANDEUR_RAYON_ROUE;
-	vmoy=vmoy*3600.;	//conversion mm/s en km/h
-	vmoy=vmoy/1000000.;
+	vmoy=vmoy*36.;	//conversion mm/s en km/h
+	vmoy=vmoy/10000.;
 	return vmoy;
 }
 
@@ -225,8 +232,8 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	acceleration=acceleration+COEF_FILTRE*deltaV;
 	
 
-	if(acceleration<0.) acceleration=-acceleration;
-	while(acceleration<100. && acceleration!=0.) acceleration*=10.;	
+//	if(acceleration<0.) acceleration=-acceleration;
+//	while(acceleration<100. && acceleration!=0.) acceleration*=10.;	
 
 
 	return acceleration;
