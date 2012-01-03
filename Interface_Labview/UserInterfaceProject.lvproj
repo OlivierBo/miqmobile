@@ -21,6 +21,7 @@
 		<Item Name="MainV1.vi" Type="VI" URL="../MainV1.vi"/>
 		<Item Name="MainV2.vi" Type="VI" URL="../MainV2.vi"/>
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
+		<Item Name="Sans titre 1.vi" Type="VI" URL="../Sans titre 1.vi"/>
 		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
 		<Item Name="testgraphe.vi" Type="VI" URL="../testgraphe.vi"/>
