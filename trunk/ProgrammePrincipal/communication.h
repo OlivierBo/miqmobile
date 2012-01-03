@@ -1,3 +1,8 @@
+/** \file 
+Fichier traitant de la communication série (UART).
+\author    Adrien Jaegy
+ */
+
 #ifndef COMMUNICATION_H
 #define COMMUNICATION_H
 
@@ -124,13 +129,38 @@
 #define TRAME_ERR_CHECK 2
 #define TRAME_ERR_DEBUT 3
 
+/*!
+Pour envoyer une donnée sous forme de trame sur le port 1.
+\param[in] type   type de trame (voir liste des defines commancants par TYPE_TRAME_...
+\param[in] data   le pointeur de la donnée à envoyer
+\param[in] data_length  longueur de la trame (voir liste des defines commancants par LG_TRAME_...
+*/
 void envoiTrameUart1 (char type, void * data, char data_length);
+
+/*!
+A appeler à chaque réception d'octet afin de traiter les données en tant que trame.
+\param[in] rxByte   octet recu par la série
+*/
 void interruptionRxTrame(unsigned char rxByte);
 
+/*!
+Pour envoyer une donnée sous forme de trame sur le port 2.
+\param[in] type   type de trame (voir liste des defines commancants par TYPE_TRAME_...
+\param[in] data   le pointeur de la donnée à envoyer
+\param[in] data_length  longueur de la trame (voir liste des defines commancants par LG_TRAME_...
+*/
 void envoiTrameUart2 (char type, void * data, char data_length);
+
+/*!
+Réception d'un octet mais sans traitement en tant que trame. 
+\param[in] rxByte   octet recu par la série
+*/
 void interruptionRxOctet(unsigned char rxByte);
 
-void envoyerCoefficientsStatiques(void);//envoyer tous les coef présent en eeprom + verbose
+/*!
+Pour envoyer tous les coef présents en eeprom + le verbose
+*/
+void envoyerCoefficientsStatiques(void);
 
 
 #endif

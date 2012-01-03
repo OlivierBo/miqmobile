@@ -37,7 +37,7 @@ ram char bufprint[TAILLE_BUFPRINT];
 //déclaration de la fonction main (il n'y a pas de main.h, donc on la déclare ici)
 void main (void);
 void main_test(void);
-
+void testLumiere(void);
 
 void main_test(void)
 {
@@ -95,7 +95,7 @@ pauseMs(20);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.), (char) roues.signeGauche, (long) roues.distanceMoyenneParcourue); puts2USART (bufprint); 
 //sprintf(bufprint,printf_main_codeur,(long)roues.positionDroite, (long)(roues.vitesseDroite*10.),(long)roues.positionGauche, (long)(roues.vitesseGauche*10.),(char) roues.signeGauche);puts2USART (bufprint);
 
-envoiTrameUart1(TYPE_TRAME_INF_VITESSED,(void*)(&roues.accMoyenne),LG_TRAME_INF_VITESSED);
+envoiTrameUart1(TYPE_TRAME_INF_ACCELERATION,(void*)(&roues.accMoyenne),LG_TRAME_INF_ACCELERATION);
 
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne), (long)(roues.utilisationMoteur*100),(long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (te*10));puts2USART (bufprint);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)(roues.accMoyenne), (long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (ACCELERATION_COEF_FILTRE*10));puts2USART (bufprint);
@@ -129,7 +129,29 @@ sprintf(bufprint,printf_main_angle,(short)(tAccX0)); puts2USART (bufprint);
 while(1);
 }
 
+//=============================================================================
 
+void testLumiere(void)
+{
+	pauseMs(1);
+	LED_HAUT = LED_ON;
+	pauseMs(1);
+	LED_BAS = LED_ON;
+	pauseMs(1);
+	LED_GAUCHE = LED_ON;
+	pauseMs(1);
+	LED_DROITE = LED_ON;
+	pauseMs(1);
+	LED_CENTRE_VERTE = LED_ON;
+	pauseMs(1);
+	LED_CENTRE_ORANGE = LED_ON;
+	pauseMs(1);
+	LED_ERREUR = LED_ON;
+	pauseMs(1);
+	LED_USART1 = LED_ON;
+	pauseMs(1);
+	LED_USART2 = LED_ON;
+}
 
 
 //=============================================================================
@@ -152,6 +174,13 @@ void main (void)
 	pauseMs(1000);
 	LED_CENTRE_VERTE = LED_OFF;
 	LED_CENTRE_ORANGE = LED_OFF;
+
+
+	if(BOUTON_VERT)
+	{
+		testLumiere(); 
+		while(1);
+	}
 
 	if(BOUTON_ROUGE)
 	main_test();

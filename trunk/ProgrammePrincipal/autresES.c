@@ -93,9 +93,9 @@ short calibrerGuidon(void)
 			LED_BAS = LED_OFF;
 			LED_GAUCHE = LED_OFF;
 			LED_DROITE = LED_OFF;
-			LED_CENTRE_VERTE = LED_ON;
+			LED_CENTRE_ORANGE = LED_ON;
 			pauseMs(1500);
-			LED_CENTRE_VERTE = LED_OFF;
+			LED_CENTRE_ORANGE = LED_OFF;
 			return ERREUR;
 		}
 	}

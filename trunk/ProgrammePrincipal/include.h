@@ -1,3 +1,9 @@
+/** \file 
+Contient des macros de gestion des bits, les bibliothèques indispensables à tous les fichiers (pic18cxxx, timers, usart, string...), quelques defines (OK, ERREUR, LED_ON, OUI, NON) et le buffer pour les printf.
+\author    Adrien Jaegy
+ */
+
+
 #ifndef INCLUDE_H
 #define INCLUDE_H
 
