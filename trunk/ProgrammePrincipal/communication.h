@@ -119,7 +119,7 @@ Fichier traitant de la communication série (UART).
 #define LG_TRAME_CON_COUPLEG 4
 #define LG_TRAME_INF_COUPLEG 4
 #define LG_TRAME_INF_ERREUR_CARTE_COURANT 1
-#define LG_TRAME_INF_PRET 1
+#define LG_TRAME_INF_PRET 0
 #define LG_TRAME_CON_DEMANDE_COEFFICIENTS 0
 
 
