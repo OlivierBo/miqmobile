@@ -28,6 +28,8 @@ struct Sroues{
 	char signeGauche;
 ///signe du codeur Gauche (donné par la dascule D)
 	char signeDroite;
+///nb de front moyen
+	float nbFtMoy;
 };
 
 
