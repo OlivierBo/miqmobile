@@ -2,7 +2,7 @@
 #include "codeur.h"
 #include "brochage.h"
 #include "variablesGlobales.h"
-
+#define COEF_NBFT 0.1
 //déclaration des variables globales internes au fichier
 
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
@@ -17,6 +17,9 @@ float acc_moyenne_prec;
 
 float deltafrontD;
 float deltafrontG;
+float deltaft;
+float deltaftprec;
+float ftmoyprec;
 
 float deltaV;
 
@@ -31,6 +34,7 @@ float determine_vmoyen(float , float );
 float D_utilisation_moteur (float , float  );
 float determine_acceleration(float , float , float , float , float );
 float determine_nb_front(float , float , char );
+float determine_ftMoy(float , float , float , float );
 
 // Fonction publiques
 
@@ -69,6 +73,10 @@ acc_moyenne_prec=0.;
 deltafrontD=0.;
 deltafrontG=0.;
 
+deltaft=0.;
+deltaftprec=0.;
+ftmoyprec=0.;
+
 EcrireCodeurGauche(0);
 EcrireCodeurDroite(0);
 
@@ -83,6 +91,8 @@ roues.utilisationMoteur=0.;
 roues.accMoyenne=0.;
 roues.signeGauche=1;
 roues.signeDroite=1;
+roues.nbFtMoy=0.;
+
 }
 struct Sroues lancerCalculsCodeur(float deltaT)
 //struct Sroues, float deltaT,float ACCELERATION_COEF_FILTRE, float GRANDEUR_RAYON_ROUE,GRANDEUR_VITESSE_MAX, long nb_frontG, long nb_frontD)
@@ -90,16 +100,12 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 
         deltafrontG=LireCodeurGauche();
 		deltafrontD=LireCodeurDroite();
+		deltaftprec=deltaft;
+		deltaft=(deltafrontG+deltafrontD)/2.;
 		
 		EcrireCodeurGauche(0);
 		EcrireCodeurDroite(0);
 		
-		//peut être supprimé si l'on considère que le segway ne fait qu'avancer
-		//économie de deux calculs!
-		//abs_nb_frontG=abs_nb_frontG+deltafrontG;
-		//abs_nb_frontD=abs_nb_frontD+deltafrontD;
-		//
-
 		nb_frontG=determine_nb_front(nb_frontG, deltafrontG, roues.signeGauche);
 		nb_frontD=determine_nb_front(nb_frontD, deltafrontD, roues.signeDroite);
 
@@ -123,10 +129,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 			else if (roues.signeDroite==1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
 			
 	
-			//vitesseG=roues.vitesseGauche;
-			//vitesseD=roues.vitesseDroite;
-	
-	        //déterminer la vitesse moyenne
+		//déterminer la vitesse moyenne
 	        vitesseMoyPrec=roues.vitesseMoyenne;
 			roues.vitesseMoyenne=determine_vmoyen(roues.vitesseGauche, roues.vitesseDroite); //km/h
 			
@@ -139,6 +142,10 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 			acc_moyenne_prec=roues.accMoyenne;
 			//roues.accMoyenne++;
 			roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
+			//calcul du nb de fronts moyen
+			ftmoyprec=roues.nbFtMoy;
+			roues.nbFtMoy=determine_ftMoy(ftmoyprec,deltaftprec,deltaft,COEF_NBFT);
+
 		}
 
         return roues;
@@ -239,3 +246,11 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	return acceleration;
 }
 
+float determine_ftMoy(float ftmoyprec, float deltaft, float deltaftprec, float COEF_FILTRE)
+{
+float ftmoy;
+ftmoy=deltaft-deltaftprec;
+ftmoy=ftmoy+COEF_FILTRE*ftmoy;
+return ftmoy;
+
+}
