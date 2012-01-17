@@ -23,7 +23,6 @@
 		<Item Name="Reception.vi" Type="VI" URL="../Reception.vi"/>
 		<Item Name="Send.vi" Type="VI" URL="../Send.vi"/>
 		<Item Name="TableToXYGraph.vi" Type="VI" URL="../TableToXYGraph.vi"/>
-		<Item Name="testgraphe.vi" Type="VI" URL="../testgraphe.vi"/>
 		<Item Name="Variable globale 1.vi" Type="VI" URL="../TestComPicMoteur/Variable globale 1.vi"/>
 		<Item Name="Dépendances" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -94,6 +93,7 @@
 			<Item Name="StartByteDecoder.vi" Type="VI" URL="../StartByteDecoder.vi"/>
 			<Item Name="StartByteDecoderMot.vi" Type="VI" URL="../TestComPicMoteur/StartByteDecoderMot.vi"/>
 			<Item Name="TableToXYGraphMot.vi" Type="VI" URL="../TestComPicMoteur/TableToXYGraphMot.vi"/>
+			<Item Name="visarc" Type="Document" URL="/C/Program Files (x86)/National Instruments/LabVIEW 2010/resource/visarc"/>
 		</Item>
 		<Item Name="Spécifications de construction" Type="Build"/>
 	</Item>
