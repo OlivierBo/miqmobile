@@ -2,7 +2,7 @@
 #include "codeur.h"
 #include "brochage.h"
 #include "variablesGlobales.h"
-#define COEF_NBFT 0.1
+#define COEF_NBFT 0.2
 //déclaration des variables globales internes au fichier
 
 float nb_frontG; //compte le nombre de fronts de la voie 1 du codeur de gauche
@@ -34,7 +34,7 @@ float determine_vmoyen(float , float );
 float D_utilisation_moteur (float , float  );
 float determine_acceleration(float , float , float , float , float );
 float determine_nb_front(float , float , char );
-float determine_ftMoy(float , float , float , float );
+float determine_ftMoy(float , float , float );
 
 // Fonction publiques
 
@@ -144,7 +144,7 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 			roues.accMoyenne=determine_acceleration(acc_moyenne_prec, roues.vitesseMoyenne, vitesseMoyPrec, ACCELERATION_COEF_FILTRE, deltaT);
 			//calcul du nb de fronts moyen
 			ftmoyprec=roues.nbFtMoy;
-			roues.nbFtMoy=determine_ftMoy(ftmoyprec,deltaftprec,deltaft,COEF_NBFT);
+			roues.nbFtMoy=determine_ftMoy(ftmoyprec,deltaft,COEF_NBFT);
 
 		}
 
@@ -246,11 +246,12 @@ float determine_acceleration(float acceleration_prec, float vitessemoy, float vi
 	return acceleration;
 }
 
-float determine_ftMoy(float ftmoyprec, float deltaft, float deltaftprec, float COEF_FILTRE)
+float determine_ftMoy(float ftmoyprec, float deltaft, float COEF_FILTRE)
 {
-float ftmoy;
-ftmoy=deltaft-deltaftprec;
-ftmoy=ftmoy+COEF_FILTRE*ftmoy;
+float ftmoy, delta;
+ftmoy=ftmoyprec*(1.-COEF_FILTRE);
+delta=deltaft;
+ftmoy=ftmoy+COEF_FILTRE*delta;
 return ftmoy;
 
 }
