@@ -89,7 +89,7 @@ roues.vitesseDroite=0.;
 roues.vitesseMoyenne=0.;
 roues.utilisationMoteur=0.;
 roues.accMoyenne=0.;
-roues.signeGauche=0;
+roues.signeGauche=1;
 roues.signeDroite=1;
 roues.nbFtMoy=0.;
 
@@ -123,10 +123,10 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 		//Calcul des vitesses 
 		if (deltaT>0.5)
 		{
-			if (roues.signeGauche==1)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
-			else if (roues.signeGauche==0)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
-	        if (roues.signeDroite==1)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
-			else if (roues.signeDroite==0)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
+			if (roues.signeGauche==0)roues.vitesseGauche=-determine_vitesse(deltafrontG,deltaT);//, vitesse_precG);  //°/s
+			else if (roues.signeGauche==1)roues.vitesseGauche=determine_vitesse(deltafrontG,deltaT);
+	        if (roues.signeDroite==0)roues.vitesseDroite=-determine_vitesse(deltafrontD,deltaT);//, vitesse_precD);
+			else if (roues.signeDroite==1)roues.vitesseDroite=determine_vitesse(deltafrontD,deltaT);
 			
 	
 		//déterminer la vitesse moyenne
@@ -156,8 +156,8 @@ struct Sroues lancerCalculsCodeur(float deltaT)
 //calcule le nb de fronts
 float determine_nb_front(float nb_front, float deltafront, char sens)
 {
-if (sens==1) nb_front=nb_front-deltafront;
-else if (sens==0) nb_front=nb_front+deltafront;
+if (sens==1) nb_front=nb_front+deltafront;
+else if (sens==0) nb_front=nb_front-deltafront;
 return nb_front;
 }
 
