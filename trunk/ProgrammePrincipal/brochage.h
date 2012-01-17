@@ -14,7 +14,7 @@ Les zones mémoires de l'eeprom portent un nom.
 #define ACC_CENTRIFUGE PORTAbits.RA1
 #define VREF_MOINS PORTAbits.RA2
 #define VREF_PLUS PORTAbits.RA3
-#define LED_HAUT LATAbits.LATA4
+#define LED_DROITE LATAbits.LATA4
 #define ACC_Z PORTAbits.RA5
 #define LED_CENTRE_VERTE LATAbits.LATA6
 #define LED_CENTRE_ORANGE LATAbits.LATA7
@@ -22,7 +22,7 @@ Les zones mémoires de l'eeprom portent un nom.
 #define SENS_G PORTBbits.RB1
 #define SENS_D PORTBbits.RB2
 #define LED_GAUCHE LATBbits.LATB3
-#define LED_DROITE LATBbits.LATB4
+#define LED_HAUT LATBbits.LATB4
 #define CODEUR_GAUCHE PORTBbits.RB5
 #define PATTE_PGC PORTBbits.RB6
 #define PATTE_PGD PORTBbits.RB7
@@ -50,10 +50,11 @@ Les zones mémoires de l'eeprom portent un nom.
 
 #define CH_GYRO ADC_CH0
 #define CH_ACC_CENTRIFUGE ADC_CH1
-#define CH_ACC_Z ADC_CH4
 #define CH_POTENTIOMETRE_GUIDON ADC_CH5
 #define CH_BATTERIE ADC_CH6
-#define CH_ACC_X ADC_CH7
+
+#define CH_ACC_Z ADC_CH7
+#define CH_ACC_X ADC_CH4
 
 
 #define EcrireCodeurGauche(s) WriteTimer3(s)
