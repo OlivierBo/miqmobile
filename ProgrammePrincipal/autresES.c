@@ -59,7 +59,7 @@ short calibrerGuidon(void)
 	//etape 2 : avertir de la mesure de la droite (ou du moins, dans le sens d'augmentation du voltage)
 	LED_HAUT = LED_OFF;
 	LED_DROITE = LED_ON;
-	pauseMs(2500);
+	pauseMs(5000);
 
 	//etape 3 : mesurer la verticale pendant 1s à une fréquence de 20Hz
 	LED_CENTRE_VERTE = LED_ON;
