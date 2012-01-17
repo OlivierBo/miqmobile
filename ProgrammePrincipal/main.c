@@ -28,8 +28,8 @@ const far rom char printf_main_angle[]="\r\nang: %d";
 const far rom char printf_main_testgyro[]="\r\nX:%d Z:%d G:%d";
 const far rom char printf_main_ok[]="\r\nok!";
 const far rom char printf_main_guidon[]="\r\nraw %d, 0 %d, max %d, lu %d";
-const far rom char printf_main_codeur[]="\r\n nbftmoy %ld, vmoy %ld";
-//const far rom char printf_main_codeur[]="\r\n accMoy %ld, umot %ld, vmoy %ld, dmoy %ld, coef %ld";
+//const far rom char printf_main_codeur[]="\r\n nbftmoy %ld, vmoy %ld";
+const far rom char printf_main_codeur[]="\r\n accMoy %ld, umot %ld, vmoy %ld, vdroite %ld, signe %d";
 const far rom char printf_main_tmr[]="\r\n t1 %d, t3 %d, t5 %d";
 const far rom char printf_main_us[]="\r\n us %d";
 ram char bufprint[TAILLE_BUFPRINT]; 
@@ -103,7 +103,7 @@ envoiTrameUart1(TYPE_TRAME_INF_ACCELERATION,(void*)(&roues.accMoyenne),LG_TRAME_
 
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne), (long)(roues.utilisationMoteur*100),(long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (te*10));puts2USART (bufprint);
 //sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne),(long)(roues.accMoyenne), (long)(roues.vitesseMoyenne*10), (long)(roues.distanceMoyenneParcourue*100),(long) (ACCELERATION_COEF_FILTRE*10));puts2USART (bufprint);
-sprintf(bufprint,printf_main_codeur,(long)(roues.nbFtMoy),(long)roues.vitesseMoyenne*10); puts2USART (bufprint); 
+sprintf(bufprint,printf_main_codeur,(long)(roues.accMoyenne*100),(long)roues.utilisationMoteur*10, (long) roues.vitesseMoyenne,(long)roues.vitesseDroite, (char) roues.signeDroite); puts2USART (bufprint); 
 
 
 /*
