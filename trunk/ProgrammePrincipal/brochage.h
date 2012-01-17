@@ -28,8 +28,8 @@ Les zones mémoires de l'eeprom portent un nom.
 #define PATTE_PGD PORTBbits.RB7
 #define CODEUR_DROITE PORTCbits.RC0
 #define LED_TEMOIN LATCbits.LATC1
-#define BOUTON_VERT PORTCbits.RC2
-#define BOUTON_ROUGE PORTCbits.RC3
+#define BOUTON_VERT !PORTCbits.RC2       //attention, les boutons sont inversés !
+#define BOUTON_ROUGE !PORTCbits.RC3
 #define LED_ERREUR LATCbits.LATC4
 #define LED_BAS LATCbits.LATC5
 #define USART_TX1 LATCbits.LATC6
